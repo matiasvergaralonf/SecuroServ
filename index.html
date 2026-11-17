@@ -213,41 +213,375 @@
         <p id="map-feedback" style="color:#aaa; font-size:14px; margin-top:8px;">Haz clic en el punto exacto del mapa...</p>
     </div>
 
-    <!-- ================= PASO 6: GTA V HEIST ================= -->
-    <div id="escena-5" class="escena">
-        <img src="chiliad.jpg" class="fondo-blur" alt="Monte Chiliad">
-        
-        <div class="heist-board">
-            <div class="heist-title">El Gran Golpe (Al Bolsillo)</div>
-            <p>Rellene el % correcto del Robo del Siglo (Botín Total: $3.000.000 USD)</p>
+    <!-- Agrega esta fuente en el <head> de tu HTML para que parezca escrito con plumón de pizarra -->
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
 
-            <div class="crew-row">
-                <span>👑 <strong>FELIPE</strong> (Cerebro Supremo)</span>
-                <div>
-                    <button class="cut-btn" onclick="ajustarCut(-1)">-</button>
-                    <span id="pct-felipe" style="margin: 0 15px; font-size: 20px;">50%</span>
-                    <button class="cut-btn" onclick="ajustarCut(1)">+</button>
+<style>
+    /* ================= ESTILOS PIZARRA GTA V HEIST (FIEL AL ORIGINAL) ================= */
+    .gta-whiteboard {
+        width: 90vw;
+        max-width: 1050px;
+        background: linear-gradient(135deg, #f2f4f7 0%, #dcdfe6 100%);
+        border: 14px solid #adb5bd;
+        border-radius: 6px;
+        box-shadow: inset 0 0 25px rgba(0,0,0,0.25), 0 20px 60px rgba(0,0,0,0.9);
+        color: #1c3d5a;
+        font-family: 'Rajdhani', sans-serif;
+        padding: 20px 30px;
+        position: relative;
+    }
+
+    /* Esquinas negras del marco de aluminio */
+    .gta-whiteboard::before, .gta-whiteboard::after {
+        content: ''; position: absolute; width: 20px; height: 20px; background: #222; z-index: 2;
+    }
+    .gta-whiteboard::before { top: -14px; left: -14px; }
+    .gta-whiteboard::after { top: -14px; right: -14px; }
+
+    /* Cabecera escrita con plumón azul */
+    .wb-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 3px solid #2b5c8f;
+        padding-bottom: 6px;
+        margin-bottom: 18px;
+        font-family: 'Permanent Marker', cursive;
+        color: #2b5c8f;
+    }
+    .wb-header h1 { margin: 0; font-size: 26px; letter-spacing: 1px; }
+    .wb-header h2 { margin: 0; font-size: 32px; color: #1a3a5c; }
+    .wb-header span { font-size: 20px; }
+
+    /* Cuerpo principal: Izquierda (Gráfico Circular) | Derecha (Tabla de Jugadores) */
+    .wb-body {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+
+    /* Gráfico de Dona "THE TAKE" */
+    .take-section { text-align: center; }
+    .wb-subtitle {
+        font-family: 'Permanent Marker', cursive;
+        font-size: 22px;
+        color: #2b5c8f;
+        border-bottom: 2px solid #2b5c8f;
+        display: inline-block;
+        padding: 0 15px;
+        margin-bottom: 15px;
+    }
+    .donut-chart {
+        width: 220px;
+        height: 220px;
+        margin: 0 auto;
+        border-radius: 50%;
+        /* Se actualiza en vivo con JS */
+        background: conic-gradient(#2b5c8f 0% 50%, #e67e22 50% 75%, #27ae60 75% 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid #1c3d5a;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        position: relative;
+    }
+    .donut-hole {
+        width: 135px;
+        height: 135px;
+        background: #e6e9ef;
+        border-radius: 50%;
+        border: 3px solid #1c3d5a;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Permanent Marker', cursive;
+        color: #2b5c8f;
+    }
+    .donut-hole small { font-size: 14px; letter-spacing: 1px; }
+    .donut-hole strong { font-size: 24px; color: #1a3a5c; }
+
+    /* Tabla de Roles y Cortes (Derecha) */
+    .crew-headers {
+        display: grid;
+        grid-template-columns: 30px 2.2fr 1.3fr 1.2fr;
+        font-family: 'Permanent Marker', cursive;
+        color: #2b5c8f;
+        font-size: 18px;
+        padding-bottom: 5px;
+    }
+    .gta-row {
+        display: grid;
+        grid-template-columns: 30px 2.2fr 1.3fr 1.2fr;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .row-num {
+        font-family: 'Permanent Marker', cursive;
+        font-size: 24px;
+        color: #2b5c8f;
+    }
+    .row-box {
+        grid-column: 2 / 5;
+        display: grid;
+        grid-template-columns: 2.2fr 1.3fr 1.2fr;
+        align-items: center;
+        background: rgba(255,255,255,0.65);
+        border: 2px solid #2b5c8f;
+        height: 64px;
+    }
+    .player-info {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        border-right: 2px solid #2b5c8f;
+        padding-right: 10px;
+    }
+    .player-avatar {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        background: #222;
+        margin-right: 12px;
+    }
+    .player-role { font-size: 18px; font-weight: 700; color: #111; line-height: 1.1; }
+    .player-gamertag { font-size: 15px; color: #2b5c8f; font-weight: 700; }
+
+    /* Columna CUT (Porcentaje + Dinero) */
+    .cut-cell {
+        border-right: 2px solid #2b5c8f;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.1;
+    }
+    .cut-controls { display: flex; align-items: center; gap: 8px; }
+    .btn-arrow {
+        background: #1c3d5a; color: white; border: none; width: 24px; height: 24px;
+        font-weight: bold; cursor: pointer; border-radius: 3px;
+    }
+    .btn-arrow:hover { background: #ff9900; color: black; }
+    .cut-pct { font-size: 20px; font-weight: 700; color: #111; }
+    .cut-money { font-size: 15px; color: #2b5c8f; font-weight: 700; }
+
+    /* Columna STATUS (READY / NOT READY) */
+    .status-cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 700;
+        font-size: 17px;
+    }
+    .status-ready { color: #27ae60; border: 2px solid #27ae60; padding: 2px 10px; background: rgba(39,174,96,0.1); }
+    .status-not-ready { color: #c0392b; border: 2px solid #c0392b; padding: 2px 10px; background: rgba(192,57,43,0.1); }
+
+    /* Parte inferior: Fotos pegadas con cinta adhesiva */
+    .wb-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 2px dashed rgba(43, 92, 143, 0.4);
+    }
+    .taped-photos { display: flex; gap: 25px; }
+    .polaroid {
+        background: #fff; padding: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transform: rotate(-2deg); position: relative; width: 150px; text-align: center;
+    }
+    .polaroid:nth-child(2) { transform: rotate(2deg); }
+    .tape {
+        position: absolute; top: -10px; left: 35px; width: 80px; height: 22px;
+        background: rgba(160, 175, 170, 0.75); font-family: 'Permanent Marker', cursive;
+        font-size: 13px; color: #222; line-height: 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .polaroid img { width: 100%; height: 75px; object-fit: cover; filter: grayscale(40%) contrast(1.2); }
+</style>
+
+<!-- ================= PASO 6: GTA V HEIST ================= -->
+<div id="escena-5" class="escena">
+    <img src="chiliad.jpg" class="fondo-blur" alt="Monte Chiliad">
+    
+    <div class="gta-whiteboard">
+        <!-- Cabecera estilo plumón -->
+        <div class="wb-header">
+            <h1>El Gran Golpe (Al Bolsillo)</h1>
+            <h2>HEIST</h2>
+            <span>Costo de Preparación: $54,000</span>
+        </div>
+
+        <div class="wb-body">
+            <!-- Izquierda: Gráfico Circular THE TAKE -->
+            <div class="take-section">
+                <div class="wb-subtitle">THE TAKE</div>
+                <div class="donut-chart" id="heist-donut">
+                    <div class="donut-hole">
+                        <small>REWARD</small>
+                        <strong>$3,000,000</strong>
+                    </div>
                 </div>
-                <span id="usd-felipe" style="color:#88ff88; width: 120px; font-weight:bold;">$1,500,000</span>
+                <p style="font-family:'Permanent Marker', cursive; font-size:15px; margin-top:15px; color:#2b5c8f;">
+                    PLAN: Rellene el % correcto del Robo del Siglo
+                </p>
             </div>
 
-            <div class="crew-row">
-                <span>🚗 <strong>DIEGO</strong> (Peón sacrificable)</span>
-                <span id="pct-diego">25%</span>
-                <span id="usd-diego" style="color:#88ff88; width: 120px;">$750,000</span>
+            <!-- Derecha: Tabla ROLE | CUT | STATUS -->
+            <div>
+                <div class="crew-headers">
+                    <div></div>
+                    <div>ROLE</div>
+                    <div style="text-align:center;">CUT</div>
+                    <div style="text-align:center;">STATUS</div>
+                </div>
+
+                <!-- Jugador 1: FELIPE -->
+                <div class="gta-row">
+                    <div class="row-num">1</div>
+                    <div class="row-box">
+                        <div class="player-info">
+                            <!-- Puedes cambiar src por foto-felipe.jpg -->
+                            <img src="meme1.jpg" class="player-avatar" alt="Felipe">
+                            <div>
+                                <div class="player-role">Líder Supremo</div>
+                                <div class="player-gamertag">FelipeSoSo2022 👑</div>
+                            </div>
+                        </div>
+                        <div class="cut-cell">
+                            <div class="cut-controls">
+                                <button class="btn-arrow" onclick="ajustarCutGTA(-1)">◄</button>
+                                <span id="pct-felipe" class="cut-pct">50%</span>
+                                <button class="btn-arrow" onclick="ajustarCutGTA(1)">►</button>
+                            </div>
+                            <span id="usd-felipe" class="cut-money">$1,500,000</span>
+                        </div>
+                        <div class="status-cell">
+                            <span class="status-ready">☑ READY</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jugador 2: DIEGO -->
+                <div class="gta-row">
+                    <div class="row-num">2</div>
+                    <div class="row-box">
+                        <div class="player-info">
+                            <!-- Puedes cambiar src por foto-diego.jpg -->
+                            <img src="meme2.jpg" class="player-avatar" alt="Diego">
+                            <div>
+                                <div class="player-role">Conductor / Carnada</div>
+                                <div class="player-gamertag">D1eg0_23</div>
+                            </div>
+                        </div>
+                        <div class="cut-cell">
+                            <span id="pct-diego" class="cut-pct">25%</span>
+                            <span id="usd-diego" class="cut-money">$750,000</span>
+                        </div>
+                        <div class="status-cell">
+                            <span id="status-diego" class="status-not-ready">☒ NOT READY</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jugador 3: MATÍAS -->
+                <div class="gta-row">
+                    <div class="row-num">3</div>
+                    <div class="row-box">
+                        <div class="player-info">
+                            <!-- Puedes cambiar src por foto-matias.jpg -->
+                            <img src="chiliad.jpg" class="player-avatar" alt="Matías">
+                            <div>
+                                <div class="player-role">Equipo de Tierra</div>
+                                <div class="player-gamertag">Matías</div>
+                            </div>
+                        </div>
+                        <div class="cut-cell">
+                            <span id="pct-matias" class="cut-pct">25%</span>
+                            <span id="usd-matias" class="cut-money">$750,000</span>
+                        </div>
+                        <div class="status-cell">
+                            <span id="status-matias" class="status-not-ready">☒ NOT READY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pie de pizarra con fotos pegadas y botón de inicio -->
+        <div class="wb-footer">
+            <div class="taped-photos">
+                <div class="polaroid">
+                    <div class="tape">VEHICLE</div>
+                    <img src="chiliad.jpg" alt="Helicópteros">
+                </div>
+                <div class="polaroid">
+                    <div class="tape">TARGET</div>
+                    <img src="meme1.jpg" alt="Objetivo">
+                </div>
             </div>
 
-            <div class="crew-row">
-                <span>🔫 <strong>MATÍAS</strong> (Peón sacrificable)</span>
-                <span id="pct-matias">25%</span>
-                <span id="usd-matias" style="color:#88ff88; width: 120px;">$750,000</span>
+            <div style="text-align: right;">
+                <p id="error-heist" style="color:#c0392b; font-weight:bold; margin:0 0 8px 0; height:20px;"></p>
+                <button onclick="verificarGolpeGTA()" style="padding: 12px 32px; font-size:20px; font-family:'Rajdhani', sans-serif; background:#1c3d5a; color:white; border:3px solid #2b5c8f; font-weight:bold; cursor:pointer; text-transform:uppercase;">
+                    ▶ Iniciar Golpe
+                </button>
             </div>
-
-            <button onclick="verificarGolpe()" style="margin-top:20px; padding: 12px 35px; font-size:18px; background:#ff9900; border:none; font-weight:bold; cursor:pointer; border-radius:5px;">EJECUTAR GOLPE</button>
-            <p id="error-heist" style="color:#ff4444; height:20px; margin-top:10px;"></p>
         </div>
     </div>
+</div>
 
+<script>
+    // ================= LÓGICA PIZARRA GTA V INTERACTIVA =================
+    let pctFelipe = 50;
+    const botinTotal = 3000000; // $3,000,000 -> 0.5% son exactamente $15,000 USD
+
+    function ajustarCutGTA(cambio) {
+        if (pctFelipe + cambio >= 50 && pctFelipe + cambio <= 99) {
+            pctFelipe += cambio;
+            let restoIndividual = (100 - pctFelipe) / 2;
+
+            // Actualizar textos de porcentaje y dólares
+            document.getElementById('pct-felipe').innerText = pctFelipe + "%";
+            document.getElementById('usd-felipe').innerText = "$" + ((botinTotal * pctFelipe) / 100).toLocaleString();
+
+            document.getElementById('pct-diego').innerText = restoIndividual + "%";
+            document.getElementById('usd-diego').innerText = "$" + ((botinTotal * restoIndividual) / 100).toLocaleString();
+
+            document.getElementById('pct-matias').innerText = restoIndividual + "%";
+            document.getElementById('usd-matias').innerText = "$" + ((botinTotal * restoIndividual) / 100).toLocaleString();
+
+            // Actualizar el Gráfico Circular (THE TAKE) en vivo
+            let corte1 = pctFelipe;
+            let corte2 = pctFelipe + restoIndividual;
+            document.getElementById('heist-donut').style.background = 
+                `conic-gradient(#2b5c8f 0% ${corte1}%, #e67e22 ${corte1}% ${corte2}%, #27ae60 ${corte2}% 100%)`;
+
+            // Cambiar NOT READY a READY cuando llegan al 99% (15,000 USD c/u)
+            const sDiego = document.getElementById('status-diego');
+            const sMatias = document.getElementById('status-matias');
+            if (pctFelipe === 99) {
+                sDiego.className = "status-ready"; sDiego.innerText = "☑ READY";
+                sMatias.className = "status-ready"; sMatias.innerText = "☑ READY";
+                document.getElementById('error-heist').style.color = "#27ae60";
+                document.getElementById('error-heist').innerText = "¡Porcentaje justo alcanzado! ($15,000 para la plebe)";
+            } else {
+                sDiego.className = "status-not-ready"; sDiego.innerText = "☒ NOT READY";
+                sMatias.className = "status-not-ready"; sMatias.innerText = "☒ NOT READY";
+            }
+        }
+    }
+
+    function verificarGolpeGTA() {
+        if (pctFelipe === 99) {
+            cambiarEscena(6);
+        } else {
+            document.getElementById('error-heist').style.color = "#c0392b";
+            document.getElementById('error-heist').innerText = "⚠️ Felipe rechaza iniciar si no tiene su 99% reglamentario.";
+        }
+    }
+</script>
     <!-- ================= PASO 7: BÓVEDA FINAL ================= -->
     <div id="escena-6" class="escena">
         <h1 style="color: gold; font-size: 50px;">¡GOLPE SUPERADO!</h1>

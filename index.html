@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SecuroServ - Terminal Bloqueada</title>
+    <style>
+        * { box-sizing: border-box; user-select: none; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #0a0a0a; color: white; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
+        
+        /* Sistema de Escenas */
+        .escena { display: none; width: 100vw; height: 100vh; position: relative; justify-content: center; align-items: center; flex-direction: column; }
+        .activa { display: flex; }
+
+        /* Fondos difuminados */
+        .fondo-blur { position: absolute; width: 100%; height: 100%; object-fit: cover; filter: blur(10px) brightness(0.5); z-index: -1; }
+
+        /* ESTILOS NIVEL 2: ROCKET LEAGUE */
+        .rl-layout { display: flex; width: 80%; justify-content: space-between; align-items: center; }
+        .d-pad { display: grid; grid-template-columns: 70px 70px 70px; grid-template-rows: 70px 70px 70px; gap: 8px; }
+        .btn-dpad { background: rgba(255,255,255,0.15); border: 2px solid #00d2ff; color: white; font-size: 24px; border-radius: 10px; cursor: pointer; transition: 0.1s; }
+        .btn-dpad:active { background: #00d2ff; color: black; }
+        .chat-box { background: rgba(0, 0, 0, 0.75); border-left: 4px solid #ff9900; padding: 20px; width: 380px; border-radius: 6px; font-size: 18px; line-height: 1.6; }
+        .chat-you { color: #88ff88; font-weight: bold; }
+        .chat-sys { color: #ffcc00; font-style: italic; }
+
+        /* ESTILOS NIVEL 6: GTA V HEIST */
+        .heist-board { background: rgba(15, 25, 15, 0.9); border: 3px solid #4caf50; padding: 30px; border-radius: 8px; width: 650px; text-align: center; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+        .heist-title { font-size: 28px; color: #4caf50; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+        .crew-row { display: flex; justify-content: space-between; align-items: center; margin: 15px 0; background: rgba(255,255,255,0.05); padding: 12px 20px; border-radius: 5px; }
+        .cut-btn { background: #4caf50; border: none; color: white; font-weight: bold; padding: 5px 12px; cursor: pointer; font-size: 18px; border-radius: 4px; }
+        
+        /* Barra de testeo (Bórrala cuando termines el proyecto) */
+        #debug-bar { position: fixed; bottom: 5px; left: 5px; z-index: 9999; background: rgba(0,0,0,0.8); padding: 5px; border-radius: 5px; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA PARA QUE TÚ PRUEBES LAS ESCENAS RÁPIDO (Borrar al final) -->
+    <div id="debug-bar">
+        Ir a: 
+        <button onclick="cambiarEscena(1)">2. RL</button>
+        <button onclick="cambiarEscena(2)">3. Phasmo</button>
+        <button onclick="cambiarEscena(3)">4. Cueva UV</button>
+        <button onclick="cambiarEscena(4)">5. Mapa Forest</button>
+        <button onclick="cambiarEscena(5)">6. GTA Golpe</button>
+        <button onclick="cambiarEscena(6)">7. Bóveda</button>
+    </div>
+
+    <!-- ================= PASO 2: ROCKET LEAGUE ================= -->
+    <div id="escena-1" class="escena activa">
+        <!-- Reemplazar src por tu video o imagen de RL -->
+        <div class="fondo-blur" style="background: linear-gradient(45deg, #001133, #331100);"></div>
+        
+        <h2>AUTENTICACIÓN DE QUICK CHAT REQUERIDA</h2>
+        <div class="rl-layout">
+            <!-- Cruceta -->
+            <div class="d-pad">
+                <div></div>
+                <button class="btn-dpad" onclick="inputRL('U')">▲</button>
+                <div></div>
+                <button class="btn-dpad" onclick="inputRL('L')">◄</button>
+                <div style="display:flex;align-items:center;justify-content:center;font-size:12px;color:#aaa;" id="rl-hint">Pulsa</div>
+                <button class="btn-dpad" onclick="inputRL('R')">►</button>
+                <div></div>
+                <button class="btn-dpad" onclick="inputRL('D')">▼</button>
+                <div></div>
+            </div>
+
+            <!-- Chat de RL -->
+            <div class="chat-box">
+                <div><span class="chat-you">Diego:</span> ¡Buen disparo!</div>
+                <div><span class="chat-you">Diego:</span> ¡Buen disparo!</div>
+                <div><span class="chat-you">Diego:</span> ¡Buen disparo!</div>
+                <div class="chat-sys">Chat deshabilitado por 3 segundos...</div>
+                <div><span class="chat-you">Matías:</span> ¡Buen pase!</div>
+                <div><span class="chat-you">Matías:</span> ¡Buen pase!</div>
+                <div><span class="chat-you">Matías:</span> ¡Buen pase!</div>
+                <div><span class="chat-you">Felipe:</span> ¡Gracias!</div>
+                <div id="chat-faltante" style="color: #ff4444; margin-top:8px;">[Esperando tu respuesta...]</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= PASO 3: PHASMOPHOBIA ================= -->
+    <div id="escena-2" class="escena">
+        <h2>SPIRIT BOX (En construcción)</h2>
+        <p>Aquí irá la perilla sintonizadora, los audios troll y los ojos en la oscuridad.</p>
+        <button onclick="cambiarEscena(3)">Simular coordenada correcta -></button>
+    </div>
+
+    <!-- ================= PASO 4: CUEVA THE FOREST ================= -->
+    <div id="escena-3" class="escena">
+        <h2>CUEVA UV + INVENTARIO TROLL (En construcción)</h2>
+        <p>Linterna UV, items que se escapan por 15s, mouse invertido y fotos distractoras.</p>
+        <button onclick="cambiarEscena(4)">Simular antorcha creada -></button>
+    </div>
+
+    <!-- ================= PASO 5: MAPA THE FOREST ================= -->
+    <div id="escena-4" class="escena">
+        <h2 style="color:#88ff88;">"Lograste escapar del encierro, Mapaman"</h2>
+        <h3>Indique el lugar del cataclismo (La tragedia de los 100.000 troncos)</h3>
+        <p>[Aquí pondremos la imagen del mapa con detección de coordenadas al hacer clic]</p>
+        <button onclick="cambiarEscena(5)">Simular clic correcto en el mapa -></button>
+    </div>
+
+    <!-- ================= PASO 6: GTA V HEIST ================= -->
+    <div id="escena-5" class="escena">
+        <!-- Reemplazar con imagen de los 3 helicópteros en el Monte Chiliad -->
+        <div class="fondo-blur" style="background: #1a2a1a;"></div>
+        
+        <div class="heist-board">
+            <div class="heist-title">El Gran Golpe (Al Bolsillo)</div>
+            <p>Rellene el % correcto del Robo del Siglo (Botín Total: $3.000.000 USD)</p>
+
+            <div class="crew-row">
+                <span>👑 <strong>FELIPE</strong> (Líder Supremo)</span>
+                <div>
+                    <button class="cut-btn" onclick="ajustarCut('felipe', -1)">-</button>
+                    <span id="pct-felipe" style="margin: 0 15px; font-size: 20px;">50%</span>
+                    <button class="cut-btn" onclick="ajustarCut('felipe', 1)">+</button>
+                </div>
+                <span id="usd-felipe" style="color:#88ff88; width: 120px;">$1,500,000</span>
+            </div>
+
+            <div class="crew-row">
+                <span>🚗 <strong>DIEGO</strong> (Peón)</span>
+                <span id="pct-diego">25%</span>
+                <span id="usd-diego" style="color:#88ff88; width: 120px;">$750,000</span>
+            </div>
+
+            <div class="crew-row">
+                <span>🔫 <strong>MATÍAS</strong> (Peón)</span>
+                <span id="pct-matias">25%</span>
+                <span id="usd-matias" style="color:#88ff88; width: 120px;">$750,000</span>
+            </div>
+
+            <button onclick="verificarGolpe()" style="margin-top:20px; padding: 12px 30px; font-size:18px; background:#ff9900; border:none; font-weight:bold; cursor:pointer; border-radius:5px;">INICIAR GOLPE</button>
+            <p id="error-heist" style="color:#ff4444; height:20px;"></p>
+        </div>
+    </div>
+
+    <!-- ================= PASO 7: BÓVEDA FINAL ================= -->
+    <div id="escena-6" class="escena">
+        <h1 style="color: gold; font-size: 50px;">¡GOLPE SUPERADO!</h1>
+        <p>Aquí se abrirá la bóveda con tu video y el regalo de Diego.</p>
+    </div>
+
+    <script>
+        // --- NAVEGACIÓN ENTRE ESCENAS ---
+        function cambiarEscena(num) {
+            document.querySelectorAll('.escena').forEach(e => e.classList.remove('activa'));
+            document.getElementById('escena-' + num).classList.add('activa');
+        }
+
+        // --- LÓGICA NIVEL 2: ROCKET LEAGUE ---
+        // En RL, "Cumplidos" es Izquierda (L) y "¡Gracias!" es Arriba (U). 
+        // Si prefieres que sea otra combinación, cámbiala en 'comboCorrecto'.
+        let bufferRL = [];
+        const comboCorrecto = "LU"; 
+
+        function inputRL(dir) {
+            bufferRL.push(dir);
+            if (bufferRL.length === 1 && dir === 'L') {
+                document.getElementById('rl-hint').innerText = "[Cumplidos]";
+            } else if (bufferRL.length >= 2) {
+                let intento = bufferRL.join('');
+                bufferRL = [];
+                document.getElementById('rl-hint').innerText = "Pulsa";
+                
+                if (intento === comboCorrecto) {
+                    let chat = document.getElementById('chat-faltante');
+                    chat.style.color = "#88ff88";
+                    chat.innerHTML = "<span class='chat-you'>Diego:</span> ¡Gracias!";
+                    setTimeout(() => cambiarEscena(2), 1500);
+                } else {
+                    let chat = document.getElementById('chat-faltante');
+                    chat.innerText = "¡Qué salvada! (Combo incorrecto, intenta Izquierda -> Arriba)";
+                }
+            }
+        }
+
+        // --- LÓGICA NIVEL 6: GTA V HEIST ---
+        // Si el botín total es $3,000,000:
+        // 99% para Felipe = $2,970,000
+        // 0.5% para Diego = $15,000 USD | 0.5% para Matías = $15,000 USD
+        let pctFelipe = 50;
+        const botinTotal = 3000000;
+
+        function ajustarCut(quien, cambio) {
+            if (pctFelipe + cambio >= 50 && pctFelipe + cambio <= 99) {
+                pctFelipe += cambio;
+                let restoIndividual = (100 - pctFelipe) / 2;
+                
+                document.getElementById('pct-felipe').innerText = pctFelipe + "%";
+                document.getElementById('usd-felipe').innerText = "$" + ((botinTotal * pctFelipe) / 100).toLocaleString();
+
+                document.getElementById('pct-diego').innerText = restoIndividual + "%";
+                document.getElementById('usd-diego').innerText = "$" + ((botinTotal * restoIndividual) / 100).toLocaleString();
+
+                document.getElementById('pct-matias').innerText = restoIndividual + "%";
+                document.getElementById('usd-matias').innerText = "$" + ((botinTotal * restoIndividual) / 100).toLocaleString();
+            }
+        }
+
+        function verificarGolpe() {
+            if (pctFelipe === 99) {
+                cambiarEscena(6);
+            } else {
+                document.getElementById('error-heist').innerText = "Felipe ha rechazado el corte. (Él merece más)";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>SecuroServ - Terminal Bloqueada</title>
+    <!-- Fuentes para la pizarra de GTA V -->
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; user-select: none; }
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #050505; color: white; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
@@ -25,60 +27,103 @@
         .phasmo-stage { position: relative; width: 85vw; max-width: 1000px; aspect-ratio: 16/10; border: 2px solid #222; box-shadow: 0 0 60px rgba(0,0,0,0.95); overflow: hidden; background: #000; }
         .phasmo-bg { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75) contrast(1.15); }
         
-        /* Controles superpuestos sobre la Spirit Box editada */
         .hitbox-rueda { position: absolute; left: 51.5%; top: 72%; width: 5.5%; height: 13%; border-radius: 10px; cursor: ns-resize; border: 2px dashed rgba(0, 255, 255, 0.5); display: flex; align-items: center; justify-content: center; background: rgba(0,255,255,0.08); transition: 0.2s; }
         .hitbox-rueda:hover { background: rgba(0,255,255,0.25); box-shadow: 0 0 15px cyan; }
         .hitbox-palanca { position: absolute; left: 60.5%; top: 75%; width: 5%; height: 8%; border-radius: 50%; cursor: pointer; border: 2px dashed rgba(255, 165, 0, 0.6); background: rgba(255,165,0,0.1); transition: 0.2s; }
         .hitbox-palanca:hover { background: rgba(255,165,0,0.3); box-shadow: 0 0 15px orange; }
         
-        /* Pantalla digital simulada encima de la radio */
         .spirit-led { position: absolute; left: 58%; top: 62%; background: rgba(10, 0, 0, 0.85); border: 1px solid #ff3300; color: #ff3300; font-family: 'Courier New', monospace; font-size: 22px; font-weight: bold; padding: 4px 12px; border-radius: 4px; text-shadow: 0 0 8px #ff3300; pointer-events: none; }
-
-        /* Ojos y sustos en el fondo oscuro de la casa */
         .scare-popup { position: absolute; pointer-events: none; opacity: 0; transition: opacity 0.15s; filter: drop-shadow(0 0 10px red); }
 
         /* ================= ESTILOS NIVEL 4: CUEVA UV + INVENTARIO THE FOREST ================= */
         .cave-container { position: relative; width: 100vw; height: 100vh; background-image: url('cueva-forest.jpg'); background-size: cover; background-position: center; overflow: hidden; cursor: none; }
-        
-        /* Máscara negra que deja ver solo un círculo UV donde está el mouse */
         .uv-mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; background: radial-gradient(circle 130px at 50% 50%, rgba(150, 0, 255, 0.22) 0%, rgba(70, 0, 140, 0.65) 55%, rgba(0, 0, 0, 0.995) 100%); }
-        
         .cave-item { position: absolute; width: 85px; height: 85px; object-fit: contain; cursor: pointer; z-index: 5; filter: drop-shadow(0 0 12px #b700ff); transition: transform 0.15s; }
         .cave-item:hover { transform: scale(1.2); }
-
         .btn-open-inv { position: fixed; top: 20px; right: 25px; z-index: 30; background: #2b1d0e; border: 2px solid #c8963e; color: #f5d7a1; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.8); }
 
-        /* Lona del Inventario */
         .inv-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 5, 0, 0.94); z-index: 40; justify-content: center; align-items: center; flex-direction: column; cursor: none; }
         .tarp-mat { position: relative; width: 85vw; height: 80vh; background: radial-gradient(circle, #3d2a1d 0%, #1f140d 100%); border: 4px solid #5c4028; border-radius: 16px; box-shadow: inset 0 0 80px #000; overflow: hidden; }
         .craft-gear-zone { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 220px; height: 220px; border: 3px dashed #c8963e; border-radius: 50%; background: rgba(0,0,0,0.45); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 15px; }
-        
         .inv-object { position: absolute; width: 95px; height: 95px; object-fit: contain; transition: top 0.18s ease-out, left 0.18s ease-out; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.8)); }
-        
-        /* Cursor Falso (Para poder invertir el movimiento en JS) */
         #custom-cursor { display: none; position: fixed; width: 26px; height: 26px; border: 3px solid #00ffcc; border-radius: 50%; background: rgba(0, 255, 204, 0.3); pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); box-shadow: 0 0 12px #00ffcc; }
 
         /* ================= ESTILOS NIVEL 5: MAPA THE FOREST ================= */
         .map-wrapper { position: relative; height: 78vh; aspect-ratio: 1/1; border: 4px solid #c8963e; border-radius: 8px; overflow: hidden; cursor: crosshair; box-shadow: 0 0 40px rgba(0,0,0,0.9); }
         .map-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* ================= ESTILOS NIVEL 6: GTA V HEIST ================= */
-        .heist-board { background: rgba(12, 22, 12, 0.92); border: 3px solid #4caf50; padding: 30px; border-radius: 8px; width: 680px; text-align: center; box-shadow: 0 0 40px rgba(0,0,0,0.9); }
-        .heist-title { font-size: 30px; color: #4caf50; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-weight: 900; }
-        .crew-row { display: flex; justify-content: space-between; align-items: center; margin: 15px 0; background: rgba(255,255,255,0.06); padding: 12px 20px; border-radius: 6px; }
-        .cut-btn { background: #4caf50; border: none; color: white; font-weight: bold; padding: 6px 14px; cursor: pointer; font-size: 18px; border-radius: 4px; }
+        /* ================= ESTILOS NIVEL 6: PIZARRA GTA V HEIST ================= */
+        .gta-whiteboard {
+            width: 90vw; max-width: 1050px;
+            background: linear-gradient(135deg, #f2f4f7 0%, #dcdfe6 100%);
+            border: 14px solid #adb5bd; border-radius: 6px;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.25), 0 20px 60px rgba(0,0,0,0.9);
+            color: #1c3d5a; font-family: 'Rajdhani', sans-serif;
+            padding: 20px 30px; position: relative;
+        }
+        .gta-whiteboard::before, .gta-whiteboard::after { content: ''; position: absolute; width: 20px; height: 20px; background: #222; z-index: 2; }
+        .gta-whiteboard::before { top: -14px; left: -14px; }
+        .gta-whiteboard::after { top: -14px; right: -14px; }
 
-        /* Barra de testeo rápida (Borrar antes de enviárselo a Diego) */
+        .wb-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid #2b5c8f; padding-bottom: 6px; margin-bottom: 18px; font-family: 'Permanent Marker', cursive; color: #2b5c8f; }
+        .wb-header h1 { margin: 0; font-size: 26px; }
+        .wb-header h2 { margin: 0; font-size: 32px; color: #1a3a5c; }
+        .wb-header span { font-size: 20px; }
+
+        .wb-body { display: grid; grid-template-columns: 280px 1fr; gap: 30px; align-items: start; }
+        .take-section { text-align: center; }
+        .wb-subtitle { font-family: 'Permanent Marker', cursive; font-size: 22px; color: #2b5c8f; border-bottom: 2px solid #2b5c8f; display: inline-block; padding: 0 15px; margin-bottom: 15px; }
+        
+        .donut-chart {
+            width: 220px; height: 220px; margin: 0 auto; border-radius: 50%;
+            background: conic-gradient(#2b5c8f 0% 50%, #e67e22 50% 75%, #27ae60 75% 100%);
+            display: flex; align-items: center; justify-content: center;
+            border: 3px solid #1c3d5a; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .donut-hole {
+            width: 135px; height: 135px; background: #e6e9ef; border-radius: 50%;
+            border: 3px solid #1c3d5a; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-family: 'Permanent Marker', cursive; color: #2b5c8f;
+        }
+        .donut-hole small { font-size: 14px; }
+        .donut-hole strong { font-size: 24px; color: #1a3a5c; }
+
+        .crew-headers { display: grid; grid-template-columns: 30px 2.2fr 1.3fr 1.2fr; font-family: 'Permanent Marker', cursive; color: #2b5c8f; font-size: 18px; padding-bottom: 5px; }
+        .gta-row { display: grid; grid-template-columns: 30px 2.2fr 1.3fr 1.2fr; align-items: center; margin-bottom: 10px; }
+        .row-num { font-family: 'Permanent Marker', cursive; font-size: 24px; color: #2b5c8f; }
+        .row-box { grid-column: 2 / 5; display: grid; grid-template-columns: 2.2fr 1.3fr 1.2fr; align-items: center; background: rgba(255,255,255,0.65); border: 2px solid #2b5c8f; height: 64px; }
+        .player-info { display: flex; align-items: center; height: 100%; border-right: 2px solid #2b5c8f; padding-right: 10px; }
+        .player-avatar { width: 60px; height: 60px; object-fit: cover; background: #222; margin-right: 12px; }
+        .player-role { font-size: 18px; font-weight: 700; color: #111; line-height: 1.1; }
+        .player-gamertag { font-size: 15px; color: #2b5c8f; font-weight: 700; }
+
+        .cut-cell { border-right: 2px solid #2b5c8f; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.1; }
+        .cut-controls { display: flex; align-items: center; gap: 8px; }
+        .btn-arrow { background: #1c3d5a; color: white; border: none; width: 24px; height: 24px; font-weight: bold; cursor: pointer; border-radius: 3px; }
+        .btn-arrow:hover { background: #ff9900; color: black; }
+        .cut-pct { font-size: 20px; font-weight: 700; color: #111; }
+        .cut-money { font-size: 15px; color: #2b5c8f; font-weight: 700; }
+
+        .status-cell { display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 17px; }
+        .status-ready { color: #27ae60; border: 2px solid #27ae60; padding: 2px 10px; background: rgba(39,174,96,0.1); }
+        .status-not-ready { color: #c0392b; border: 2px solid #c0392b; padding: 2px 10px; background: rgba(192,57,43,0.1); }
+
+        .wb-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 10px; border-top: 2px dashed rgba(43, 92, 143, 0.4); }
+        .taped-photos { display: flex; gap: 25px; }
+        .polaroid { background: #fff; padding: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transform: rotate(-2deg); position: relative; width: 150px; text-align: center; }
+        .polaroid:nth-child(2) { transform: rotate(2deg); }
+        .tape { position: absolute; top: -10px; left: 35px; width: 80px; height: 22px; background: rgba(160, 175, 170, 0.75); font-family: 'Permanent Marker', cursive; font-size: 13px; color: #222; line-height: 22px; }
+        .polaroid img { width: 100%; height: 75px; object-fit: cover; filter: grayscale(40%) contrast(1.2); }
+
+        /* Barra de prueba rápida */
         #debug-bar { position: fixed; bottom: 8px; left: 8px; z-index: 10000; background: rgba(0,0,0,0.85); padding: 6px 10px; border-radius: 6px; border: 1px solid #444; font-size: 12px; }
         #debug-bar button { cursor: pointer; margin: 0 2px; }
     </style>
 </head>
 <body>
 
-    <!-- Cursor Virtual para el nivel del inventario con mouse invertido -->
     <div id="custom-cursor"></div>
 
-    <!-- BARRA DE PRUEBA PARA TI (Bórrala cuando todo esté listo) -->
     <div id="debug-bar">
         🔧 Saltar a: 
         <button onclick="cambiarEscena(1)">2. RL</button>
@@ -89,24 +134,18 @@
         <button onclick="cambiarEscena(6)">7. Bóveda</button>
     </div>
 
-    <!-- ================= PASO 2: ROCKET LEAGUE ================= -->
+    <!-- PASO 2: ROCKET LEAGUE -->
     <div id="escena-1" class="escena activa">
         <img src="fondo-rl.jpg" class="fondo-blur" alt="Fondo RL">
-        
         <h2 style="text-shadow: 0 2px 10px #000;">AUTENTICACIÓN DE QUICK CHAT REQUERIDA</h2>
         <div class="rl-layout">
             <div class="d-pad">
-                <div></div>
-                <button class="btn-dpad" onclick="inputRL('U')">▲</button>
-                <div></div>
+                <div></div><button class="btn-dpad" onclick="inputRL('U')">▲</button><div></div>
                 <button class="btn-dpad" onclick="inputRL('L')">◄</button>
                 <div style="display:flex;align-items:center;justify-content:center;font-size:13px;color:#00d2ff;text-align:center;" id="rl-hint">Pulsa</div>
                 <button class="btn-dpad" onclick="inputRL('R')">►</button>
-                <div></div>
-                <button class="btn-dpad" onclick="inputRL('D')">▼</button>
-                <div></div>
+                <div></div><button class="btn-dpad" onclick="inputRL('D')">▼</button><div></div>
             </div>
-
             <div class="chat-box">
                 <div><span class="chat-you">Diego:</span> ¡Buen disparo!</div>
                 <div><span class="chat-you">Diego:</span> ¡Buen disparo!</div>
@@ -121,475 +160,185 @@
         </div>
     </div>
 
-    <!-- ================= PASO 3: PHASMOPHOBIA ================= -->
+    <!-- PASO 3: PHASMOPHOBIA -->
     <div id="escena-2" class="escena">
         <div style="margin-bottom: 10px; text-align: center;">
             <h2 style="margin:0;">SINTONIZACIÓN PARANORMAL (SPIRIT BOX)</h2>
             <p id="phasmo-status" style="margin:4px 0; color:#aaa;">Haz clic en la palanca inferior para encender y luego gira la rueda izquierda...</p>
         </div>
-
         <div class="phasmo-stage">
             <img src="fondo-phasmo.jpg" class="phasmo-bg" alt="Phasmophobia">
-            
-            <!-- Ojos perturbadores / memes que parpadean al fondo -->
             <div id="scare-eyes" class="scare-popup" style="top:28%; left:12%; font-size:45px;">👀</div>
             <img id="scare-meme" src="meme1.jpg" class="scare-popup" style="top:20%; left:32%; width:120px; border-radius:50%;">
-
-            <!-- Pantalla de frecuencia sobre la Spirit Box -->
             <div id="spirit-freq" class="spirit-led">OFF</div>
-
-            <!-- Rueda izquierda (Sintonizar) -->
             <div class="hitbox-rueda" onclick="girarRuedaSpirit()" title="Girar sintonizador"></div>
-
-            <!-- Palanca inferior (Encender/Apagar) -->
             <div class="hitbox-palanca" onclick="togglePowerSpirit()" title="Interruptor Power"></div>
         </div>
-
-        <!-- Aparece solo cuando sintoniza el 3er audio real -->
         <div id="phasmo-code-panel" style="display:none; margin-top: 15px; gap: 10px; align-items: center;">
             <input type="text" id="input-coord-phasmo" placeholder="Ingresa la clave o coordenada del audio..." style="padding: 10px; width: 280px; font-size: 16px; border-radius: 5px; border: 1px solid #ff3300; background: #111; color: white;">
             <button onclick="validarPhasmo()" style="padding: 10px 20px; background: #ff3300; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 5px;">Ingresar</button>
         </div>
-
-        <!-- Tus archivos de audio -->
         <audio id="audio-troll1" src="audio-troll1.mp3"></audio>
         <audio id="audio-troll2" src="audio-troll2.mp3"></audio>
         <audio id="audio-clave" src="audio-clave.mp3"></audio>
     </div>
 
-    <!-- ================= PASO 4: CUEVA THE FOREST + INVENTARIO ================= -->
+    <!-- PASO 4: CUEVA THE FOREST + INVENTARIO -->
     <div id="escena-3" class="escena">
         <button class="btn-open-inv" onclick="toggleInventario()">🎒 Abrir Inventario (Tecla I) [<span id="count-recolectados">0</span>/3]</button>
-
         <div class="cave-container" id="cave-area" onmousemove="moverLinternaUV(event)">
-            <!-- Ítems ocultos en la cueva -->
             <img src="palo.png" class="cave-item" id="cave-palo" style="top: 68%; left: 18%;" onclick="recolectarItem('palo', this)" alt="Palo">
             <img src="tela.png" class="cave-item" id="cave-tela" style="top: 25%; left: 78%;" onclick="recolectarItem('tela', this)" alt="Tela">
             <img src="alcohol.png" class="cave-item" id="cave-alcohol" style="top: 75%; left: 82%;" onclick="recolectarItem('alcohol', this)" alt="Alcohol">
-            
-            <!-- Distractores ocultos en la cueva -->
-            <img src="meme1.jpg" class="cave-item" style="top: 20%; left: 22%; border-radius:10px;" onclick="alert('¡Encontraste un recuerdo perturbador en la cueva! Pero no sirve para hacer fuego.')" alt="Meme">
-
-            <!-- Capa oscura con agujero UV -->
+            <img src="meme1.jpg" class="cave-item" style="top: 20%; left: 22%; border-radius:10px;" onclick="alert('¡Recuerdo perturbador en la cueva!')" alt="Meme">
             <div class="uv-mask" id="uv-mask"></div>
         </div>
 
-        <!-- Lona del Inventario -->
         <div class="inv-overlay" id="inv-overlay" onmousemove="moverCursorInventario(event)">
             <div style="margin-bottom:10px; text-align:center;">
                 <h2 style="margin:0; color:#f5d7a1;">LONA DE CRAFTEO</h2>
-                <p id="inv-msg" style="margin:5px 0; color:#ffae00;">Haz clic en los materiales usando tu puntero turquesa para llevarlos al centro (Palo + Tela + Alcohol)</p>
+                <p id="inv-msg" style="margin:5px 0; color:#ffae00;">Haz clic en los materiales usando tu puntero turquesa para llevarlos al centro</p>
             </div>
-
             <div class="tarp-mat" id="tarp-mat">
-                <!-- Zona central de combinación -->
                 <div class="craft-gear-zone" id="craft-zone">
                     <span style="font-size:35px;">⚙️</span>
                     <strong style="color:#f5d7a1;">CRAFTEAR ANTORCHA</strong>
                     <div id="crafted-list" style="color:#88ff88; font-size:14px; margin-top:6px;">0 / 3 materiales</div>
                     <button id="btn-craft-final" onclick="completarAntorcha()" style="display:none; margin-top:10px; padding:8px 16px; background:#ff6600; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">🔥 ENCENDER ANTORCHA</button>
                 </div>
-
-                <!-- Ítems dentro del inventario (se muestran según los recolecte) -->
                 <img src="palo.png" id="inv-palo" class="inv-object" style="display:none; top: 20%; left: 15%;" data-item="palo">
                 <img src="tela.png" id="inv-tela" class="inv-object" style="display:none; top: 65%; left: 20%;" data-item="tela">
                 <img src="alcohol.png" id="inv-alcohol" class="inv-object" style="display:none; top: 30%; left: 75%;" data-item="alcohol">
-
-                <!-- Fotos distractoras / Easter Eggs -->
                 <img src="meme1.jpg" class="inv-object" style="top: 15%; left: 45%; border-radius:8px;" data-distractor="1">
                 <img src="meme2.jpg" class="inv-object" style="top: 70%; left: 70%; border-radius:8px;" data-distractor="2">
             </div>
         </div>
     </div>
 
-    <!-- ================= PASO 5: MAPA THE FOREST ================= -->
+    <!-- PASO 5: MAPA THE FOREST -->
     <div id="escena-4" class="escena">
         <h2 style="color:#88ff88; margin: 0;">"¡Lograste escapar del encierro, Mapaman!"</h2>
-        <h3 style="margin: 8px 0 15px 0; color:#f5d7a1;">Indique el lugar del cataclismo, también conocido como <span style="color:#ff5555;">La Tragedia de los 100.000 Troncos</span></h3>
-        
+        <h3 style="margin: 8px 0 15px 0; color:#f5d7a1;">Indique el lugar del cataclismo (<span style="color:#ff5555;">La Tragedia de los 100.000 Troncos</span>)</h3>
         <div class="map-wrapper" onclick="verificarClickMapa(event, this)">
             <img src="mapa-forest.jpg" alt="Mapa The Forest">
         </div>
         <p id="map-feedback" style="color:#aaa; font-size:14px; margin-top:8px;">Haz clic en el punto exacto del mapa...</p>
     </div>
 
-    <!-- Agrega esta fuente en el <head> de tu HTML para que parezca escrito con plumón de pizarra -->
-<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-
-<style>
-    /* ================= ESTILOS PIZARRA GTA V HEIST (FIEL AL ORIGINAL) ================= */
-    .gta-whiteboard {
-        width: 90vw;
-        max-width: 1050px;
-        background: linear-gradient(135deg, #f2f4f7 0%, #dcdfe6 100%);
-        border: 14px solid #adb5bd;
-        border-radius: 6px;
-        box-shadow: inset 0 0 25px rgba(0,0,0,0.25), 0 20px 60px rgba(0,0,0,0.9);
-        color: #1c3d5a;
-        font-family: 'Rajdhani', sans-serif;
-        padding: 20px 30px;
-        position: relative;
-    }
-
-    /* Esquinas negras del marco de aluminio */
-    .gta-whiteboard::before, .gta-whiteboard::after {
-        content: ''; position: absolute; width: 20px; height: 20px; background: #222; z-index: 2;
-    }
-    .gta-whiteboard::before { top: -14px; left: -14px; }
-    .gta-whiteboard::after { top: -14px; right: -14px; }
-
-    /* Cabecera escrita con plumón azul */
-    .wb-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        border-bottom: 3px solid #2b5c8f;
-        padding-bottom: 6px;
-        margin-bottom: 18px;
-        font-family: 'Permanent Marker', cursive;
-        color: #2b5c8f;
-    }
-    .wb-header h1 { margin: 0; font-size: 26px; letter-spacing: 1px; }
-    .wb-header h2 { margin: 0; font-size: 32px; color: #1a3a5c; }
-    .wb-header span { font-size: 20px; }
-
-    /* Cuerpo principal: Izquierda (Gráfico Circular) | Derecha (Tabla de Jugadores) */
-    .wb-body {
-        display: grid;
-        grid-template-columns: 280px 1fr;
-        gap: 30px;
-        align-items: start;
-    }
-
-    /* Gráfico de Dona "THE TAKE" */
-    .take-section { text-align: center; }
-    .wb-subtitle {
-        font-family: 'Permanent Marker', cursive;
-        font-size: 22px;
-        color: #2b5c8f;
-        border-bottom: 2px solid #2b5c8f;
-        display: inline-block;
-        padding: 0 15px;
-        margin-bottom: 15px;
-    }
-    .donut-chart {
-        width: 220px;
-        height: 220px;
-        margin: 0 auto;
-        border-radius: 50%;
-        /* Se actualiza en vivo con JS */
-        background: conic-gradient(#2b5c8f 0% 50%, #e67e22 50% 75%, #27ae60 75% 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 3px solid #1c3d5a;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        position: relative;
-    }
-    .donut-hole {
-        width: 135px;
-        height: 135px;
-        background: #e6e9ef;
-        border-radius: 50%;
-        border: 3px solid #1c3d5a;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Permanent Marker', cursive;
-        color: #2b5c8f;
-    }
-    .donut-hole small { font-size: 14px; letter-spacing: 1px; }
-    .donut-hole strong { font-size: 24px; color: #1a3a5c; }
-
-    /* Tabla de Roles y Cortes (Derecha) */
-    .crew-headers {
-        display: grid;
-        grid-template-columns: 30px 2.2fr 1.3fr 1.2fr;
-        font-family: 'Permanent Marker', cursive;
-        color: #2b5c8f;
-        font-size: 18px;
-        padding-bottom: 5px;
-    }
-    .gta-row {
-        display: grid;
-        grid-template-columns: 30px 2.2fr 1.3fr 1.2fr;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-    .row-num {
-        font-family: 'Permanent Marker', cursive;
-        font-size: 24px;
-        color: #2b5c8f;
-    }
-    .row-box {
-        grid-column: 2 / 5;
-        display: grid;
-        grid-template-columns: 2.2fr 1.3fr 1.2fr;
-        align-items: center;
-        background: rgba(255,255,255,0.65);
-        border: 2px solid #2b5c8f;
-        height: 64px;
-    }
-    .player-info {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        border-right: 2px solid #2b5c8f;
-        padding-right: 10px;
-    }
-    .player-avatar {
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        background: #222;
-        margin-right: 12px;
-    }
-    .player-role { font-size: 18px; font-weight: 700; color: #111; line-height: 1.1; }
-    .player-gamertag { font-size: 15px; color: #2b5c8f; font-weight: 700; }
-
-    /* Columna CUT (Porcentaje + Dinero) */
-    .cut-cell {
-        border-right: 2px solid #2b5c8f;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        line-height: 1.1;
-    }
-    .cut-controls { display: flex; align-items: center; gap: 8px; }
-    .btn-arrow {
-        background: #1c3d5a; color: white; border: none; width: 24px; height: 24px;
-        font-weight: bold; cursor: pointer; border-radius: 3px;
-    }
-    .btn-arrow:hover { background: #ff9900; color: black; }
-    .cut-pct { font-size: 20px; font-weight: 700; color: #111; }
-    .cut-money { font-size: 15px; color: #2b5c8f; font-weight: 700; }
-
-    /* Columna STATUS (READY / NOT READY) */
-    .status-cell {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: 700;
-        font-size: 17px;
-    }
-    .status-ready { color: #27ae60; border: 2px solid #27ae60; padding: 2px 10px; background: rgba(39,174,96,0.1); }
-    .status-not-ready { color: #c0392b; border: 2px solid #c0392b; padding: 2px 10px; background: rgba(192,57,43,0.1); }
-
-    /* Parte inferior: Fotos pegadas con cinta adhesiva */
-    .wb-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 15px;
-        padding-top: 10px;
-        border-top: 2px dashed rgba(43, 92, 143, 0.4);
-    }
-    .taped-photos { display: flex; gap: 25px; }
-    .polaroid {
-        background: #fff; padding: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        transform: rotate(-2deg); position: relative; width: 150px; text-align: center;
-    }
-    .polaroid:nth-child(2) { transform: rotate(2deg); }
-    .tape {
-        position: absolute; top: -10px; left: 35px; width: 80px; height: 22px;
-        background: rgba(160, 175, 170, 0.75); font-family: 'Permanent Marker', cursive;
-        font-size: 13px; color: #222; line-height: 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    }
-    .polaroid img { width: 100%; height: 75px; object-fit: cover; filter: grayscale(40%) contrast(1.2); }
-</style>
-
-<!-- ================= PASO 6: GTA V HEIST ================= -->
-<div id="escena-5" class="escena">
-    <img src="chiliad.jpg" class="fondo-blur" alt="Monte Chiliad">
-    
-    <div class="gta-whiteboard">
-        <!-- Cabecera estilo plumón -->
-        <div class="wb-header">
-            <h1>El Gran Golpe (Al Bolsillo)</h1>
-            <h2>HEIST</h2>
-            <span>Costo de Preparación: $54,000</span>
-        </div>
-
-        <div class="wb-body">
-            <!-- Izquierda: Gráfico Circular THE TAKE -->
-            <div class="take-section">
-                <div class="wb-subtitle">THE TAKE</div>
-                <div class="donut-chart" id="heist-donut">
-                    <div class="donut-hole">
-                        <small>REWARD</small>
-                        <strong>$3,000,000</strong>
-                    </div>
-                </div>
-                <p style="font-family:'Permanent Marker', cursive; font-size:15px; margin-top:15px; color:#2b5c8f;">
-                    PLAN: Rellene el % correcto del Robo del Siglo
-                </p>
+    <!-- PASO 6: GTA V HEIST (PIZARRA PROFESIONAL) -->
+    <div id="escena-5" class="escena">
+        <img src="chiliad.jpg" class="fondo-blur" alt="Monte Chiliad">
+        
+        <div class="gta-whiteboard">
+            <div class="wb-header">
+                <h1>El Gran Golpe (Al Bolsillo)</h1>
+                <h2>HEIST</h2>
+                <span>Costo de Preparación: $54,000</span>
             </div>
 
-            <!-- Derecha: Tabla ROLE | CUT | STATUS -->
-            <div>
-                <div class="crew-headers">
-                    <div></div>
-                    <div>ROLE</div>
-                    <div style="text-align:center;">CUT</div>
-                    <div style="text-align:center;">STATUS</div>
-                </div>
-
-                <!-- Jugador 1: FELIPE -->
-                <div class="gta-row">
-                    <div class="row-num">1</div>
-                    <div class="row-box">
-                        <div class="player-info">
-                            <!-- Puedes cambiar src por foto-felipe.jpg -->
-                            <img src="meme1.jpg" class="player-avatar" alt="Felipe">
-                            <div>
-                                <div class="player-role">Líder Supremo</div>
-                                <div class="player-gamertag">FelipeSoSo2022 👑</div>
-                            </div>
-                        </div>
-                        <div class="cut-cell">
-                            <div class="cut-controls">
-                                <button class="btn-arrow" onclick="ajustarCutGTA(-1)">◄</button>
-                                <span id="pct-felipe" class="cut-pct">50%</span>
-                                <button class="btn-arrow" onclick="ajustarCutGTA(1)">►</button>
-                            </div>
-                            <span id="usd-felipe" class="cut-money">$1,500,000</span>
-                        </div>
-                        <div class="status-cell">
-                            <span class="status-ready">☑ READY</span>
+            <div class="wb-body">
+                <div class="take-section">
+                    <div class="wb-subtitle">THE TAKE</div>
+                    <div class="donut-chart" id="heist-donut">
+                        <div class="donut-hole">
+                            <small>REWARD</small>
+                            <strong>$3,000,000</strong>
                         </div>
                     </div>
+                    <p style="font-family:'Permanent Marker', cursive; font-size:15px; margin-top:15px; color:#2b5c8f;">
+                        PLAN: Rellene el % correcto del Robo del Siglo
+                    </p>
                 </div>
 
-                <!-- Jugador 2: DIEGO -->
-                <div class="gta-row">
-                    <div class="row-num">2</div>
-                    <div class="row-box">
-                        <div class="player-info">
-                            <!-- Puedes cambiar src por foto-diego.jpg -->
-                            <img src="meme2.jpg" class="player-avatar" alt="Diego">
-                            <div>
-                                <div class="player-role">Conductor / Carnada</div>
-                                <div class="player-gamertag">D1eg0_23</div>
+                <div>
+                    <div class="crew-headers">
+                        <div></div><div>ROLE</div>
+                        <div style="text-align:center;">CUT</div>
+                        <div style="text-align:center;">STATUS</div>
+                    </div>
+
+                    <div class="gta-row">
+                        <div class="row-num">1</div>
+                        <div class="row-box">
+                            <div class="player-info">
+                                <img src="meme1.jpg" class="player-avatar" alt="Felipe">
+                                <div>
+                                    <div class="player-role">Líder Supremo</div>
+                                    <div class="player-gamertag">FelipeSoSo2022 👑</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="cut-cell">
-                            <span id="pct-diego" class="cut-pct">25%</span>
-                            <span id="usd-diego" class="cut-money">$750,000</span>
-                        </div>
-                        <div class="status-cell">
-                            <span id="status-diego" class="status-not-ready">☒ NOT READY</span>
+                            <div class="cut-cell">
+                                <div class="cut-controls">
+                                    <button class="btn-arrow" onclick="ajustarCutGTA(-1)">◄</button>
+                                    <span id="pct-felipe" class="cut-pct">50%</span>
+                                    <button class="btn-arrow" onclick="ajustarCutGTA(1)">►</button>
+                                </div>
+                                <span id="usd-felipe" class="cut-money">$1,500,000</span>
+                            </div>
+                            <div class="status-cell"><span class="status-ready">☑ READY</span></div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Jugador 3: MATÍAS -->
-                <div class="gta-row">
-                    <div class="row-num">3</div>
-                    <div class="row-box">
-                        <div class="player-info">
-                            <!-- Puedes cambiar src por foto-matias.jpg -->
-                            <img src="chiliad.jpg" class="player-avatar" alt="Matías">
-                            <div>
-                                <div class="player-role">Equipo de Tierra</div>
-                                <div class="player-gamertag">Matías</div>
+                    <div class="gta-row">
+                        <div class="row-num">2</div>
+                        <div class="row-box">
+                            <div class="player-info">
+                                <img src="meme2.jpg" class="player-avatar" alt="Diego">
+                                <div>
+                                    <div class="player-role">Conductor / Carnada</div>
+                                    <div class="player-gamertag">D1eg0_23</div>
+                                </div>
                             </div>
+                            <div class="cut-cell">
+                                <span id="pct-diego" class="cut-pct">25%</span>
+                                <span id="usd-diego" class="cut-money">$750,000</span>
+                            </div>
+                            <div class="status-cell"><span id="status-diego" class="status-not-ready">☒ NOT READY</span></div>
                         </div>
-                        <div class="cut-cell">
-                            <span id="pct-matias" class="cut-pct">25%</span>
-                            <span id="usd-matias" class="cut-money">$750,000</span>
-                        </div>
-                        <div class="status-cell">
-                            <span id="status-matias" class="status-not-ready">☒ NOT READY</span>
+                    </div>
+
+                    <div class="gta-row">
+                        <div class="row-num">3</div>
+                        <div class="row-box">
+                            <div class="player-info">
+                                <img src="chiliad.jpg" class="player-avatar" alt="Matías">
+                                <div>
+                                    <div class="player-role">Equipo de Tierra</div>
+                                    <div class="player-gamertag">Matías</div>
+                                </div>
+                            </div>
+                            <div class="cut-cell">
+                                <span id="pct-matias" class="cut-pct">25%</span>
+                                <span id="usd-matias" class="cut-money">$750,000</span>
+                            </div>
+                            <div class="status-cell"><span id="status-matias" class="status-not-ready">☒ NOT READY</span></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Pie de pizarra con fotos pegadas y botón de inicio -->
-        <div class="wb-footer">
-            <div class="taped-photos">
-                <div class="polaroid">
-                    <div class="tape">VEHICLE</div>
-                    <img src="chiliad.jpg" alt="Helicópteros">
+            <div class="wb-footer">
+                <div class="taped-photos">
+                    <div class="polaroid"><div class="tape">VEHICLE</div><img src="chiliad.jpg" alt="Heli"></div>
+                    <div class="polaroid"><div class="tape">TARGET</div><img src="meme1.jpg" alt="Target"></div>
                 </div>
-                <div class="polaroid">
-                    <div class="tape">TARGET</div>
-                    <img src="meme1.jpg" alt="Objetivo">
+                <div style="text-align: right;">
+                    <p id="error-heist" style="color:#c0392b; font-weight:bold; margin:0 0 8px 0; height:20px;"></p>
+                    <button onclick="verificarGolpeGTA()" style="padding: 12px 32px; font-size:20px; font-family:'Rajdhani', sans-serif; background:#1c3d5a; color:white; border:3px solid #2b5c8f; font-weight:bold; cursor:pointer; text-transform:uppercase;">
+                        ▶ Iniciar Golpe
+                    </button>
                 </div>
-            </div>
-
-            <div style="text-align: right;">
-                <p id="error-heist" style="color:#c0392b; font-weight:bold; margin:0 0 8px 0; height:20px;"></p>
-                <button onclick="verificarGolpeGTA()" style="padding: 12px 32px; font-size:20px; font-family:'Rajdhani', sans-serif; background:#1c3d5a; color:white; border:3px solid #2b5c8f; font-weight:bold; cursor:pointer; text-transform:uppercase;">
-                    ▶ Iniciar Golpe
-                </button>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    // ================= LÓGICA PIZARRA GTA V INTERACTIVA =================
-    let pctFelipe = 50;
-    const botinTotal = 3000000; // $3,000,000 -> 0.5% son exactamente $15,000 USD
-
-    function ajustarCutGTA(cambio) {
-        if (pctFelipe + cambio >= 50 && pctFelipe + cambio <= 99) {
-            pctFelipe += cambio;
-            let restoIndividual = (100 - pctFelipe) / 2;
-
-            // Actualizar textos de porcentaje y dólares
-            document.getElementById('pct-felipe').innerText = pctFelipe + "%";
-            document.getElementById('usd-felipe').innerText = "$" + ((botinTotal * pctFelipe) / 100).toLocaleString();
-
-            document.getElementById('pct-diego').innerText = restoIndividual + "%";
-            document.getElementById('usd-diego').innerText = "$" + ((botinTotal * restoIndividual) / 100).toLocaleString();
-
-            document.getElementById('pct-matias').innerText = restoIndividual + "%";
-            document.getElementById('usd-matias').innerText = "$" + ((botinTotal * restoIndividual) / 100).toLocaleString();
-
-            // Actualizar el Gráfico Circular (THE TAKE) en vivo
-            let corte1 = pctFelipe;
-            let corte2 = pctFelipe + restoIndividual;
-            document.getElementById('heist-donut').style.background = 
-                `conic-gradient(#2b5c8f 0% ${corte1}%, #e67e22 ${corte1}% ${corte2}%, #27ae60 ${corte2}% 100%)`;
-
-            // Cambiar NOT READY a READY cuando llegan al 99% (15,000 USD c/u)
-            const sDiego = document.getElementById('status-diego');
-            const sMatias = document.getElementById('status-matias');
-            if (pctFelipe === 99) {
-                sDiego.className = "status-ready"; sDiego.innerText = "☑ READY";
-                sMatias.className = "status-ready"; sMatias.innerText = "☑ READY";
-                document.getElementById('error-heist').style.color = "#27ae60";
-                document.getElementById('error-heist').innerText = "¡Porcentaje justo alcanzado! ($15,000 para la plebe)";
-            } else {
-                sDiego.className = "status-not-ready"; sDiego.innerText = "☒ NOT READY";
-                sMatias.className = "status-not-ready"; sMatias.innerText = "☒ NOT READY";
-            }
-        }
-    }
-
-    function verificarGolpeGTA() {
-        if (pctFelipe === 99) {
-            cambiarEscena(6);
-        } else {
-            document.getElementById('error-heist').style.color = "#c0392b";
-            document.getElementById('error-heist').innerText = "⚠️ Felipe rechaza iniciar si no tiene su 99% reglamentario.";
-        }
-    }
-</script>
-    <!-- ================= PASO 7: BÓVEDA FINAL ================= -->
+    <!-- PASO 7: BÓVEDA FINAL -->
     <div id="escena-6" class="escena">
         <h1 style="color: gold; font-size: 50px;">¡GOLPE SUPERADO!</h1>
         <p>Aquí pondremos la bóveda abriéndose y el video final.</p>
     </div>
 
     <script>
-        // --- NAVEGACIÓN ---
         function cambiarEscena(num) {
             document.querySelectorAll('.escena').forEach(e => e.classList.remove('activa'));
             document.getElementById('escena-' + num).classList.add('activa');
@@ -598,36 +347,33 @@
             }
         }
 
-        // ================= LÓGICA NIVEL 2: ROCKET LEAGUE =================
+        // ROCKET LEAGUE
         let bufferRL = [];
-        const comboCorrecto = "LU"; // Izquierda (Cumplidos) -> Arriba (¡Gracias!)
-
+        const comboCorrecto = "LU";
         function inputRL(dir) {
             bufferRL.push(dir);
             if (bufferRL.length === 1 && dir === 'L') {
-                document.getElementById('rl-hint').innerText = "1. Cumplidos\n2. No hay problema\n3. Lo siento\n4. Disculpas";
+                document.getElementById('rl-hint').innerText = "1. Cumplidos\n2. No hay problema...";
             } else if (bufferRL.length >= 2) {
                 let intento = bufferRL.join('');
                 bufferRL = [];
                 document.getElementById('rl-hint').innerText = "Pulsa";
-                
                 if (intento === comboCorrecto) {
                     let chat = document.getElementById('chat-faltante');
                     chat.style.color = "#88ff88";
                     chat.innerHTML = "<span class='chat-you'>Diego:</span> ¡Gracias!";
                     setTimeout(() => cambiarEscena(2), 1400);
                 } else {
-                    let chat = document.getElementById('chat-faltante');
-                    chat.innerText = "¡Qué salvada! (Ese no es el '¡Gracias!', intenta de nuevo)";
+                    document.getElementById('chat-faltante').innerText = "¡Qué salvada! Intenta de nuevo";
                 }
             }
         }
 
-        // ================= LÓGICA NIVEL 3: PHASMOPHOBIA =================
+        // PHASMOPHOBIA
         let spiritEncendida = false;
         let spiritBloqueada = false;
         let frecuencia = 87.1;
-        let etapaAudio = 0; // 0 = busca troll 1, 1 = busca troll 2, 2 = busca clave final
+        let etapaAudio = 0;
         let audioCtx = null;
 
         function sonarEstaticaCorto() {
@@ -649,18 +395,16 @@
             if (spiritBloqueada) return;
             spiritEncendida = !spiritEncendida;
             document.getElementById('spirit-freq').innerText = spiritEncendida ? frecuencia.toFixed(1) + " MHz" : "OFF";
-            document.getElementById('phasmo-status').innerText = spiritEncendida ? "Haz clic repetidamente en la rueda izquierda para barrer frecuencias..." : "Spirit Box apagada.";
+            document.getElementById('phasmo-status').innerText = spiritEncendida ? "Gira la rueda izquierda..." : "Apagada.";
         }
 
         function girarRuedaSpirit() {
             if (!spiritEncendida || spiritBloqueada) return;
-            
             sonarEstaticaCorto();
             frecuencia += 0.4;
             if (frecuencia > 108.0) frecuencia = 87.1;
             document.getElementById('spirit-freq').innerText = frecuencia.toFixed(1) + " MHz";
 
-            // Apariciones aleatorias de ojos o memes en la oscuridad
             if (Math.random() < 0.45) {
                 let el = Math.random() < 0.6 ? document.getElementById('scare-eyes') : document.getElementById('scare-meme');
                 el.style.top = (15 + Math.random() * 50) + "%";
@@ -669,15 +413,14 @@
                 setTimeout(() => el.style.opacity = 0, 450);
             }
 
-            // Disparadores de las 3 estaciones
             if (etapaAudio === 0 && frecuencia >= 91.0) {
-                dispararEstacionSpirit('audio-troll1', "⚠️ INTERFERENCIA DETECTADA (Controles bloqueados)...", false);
+                dispararEstacionSpirit('audio-troll1', "⚠️ INTERFERENCIA...", false);
                 etapaAudio = 1;
             } else if (etapaAudio === 1 && frecuencia >= 96.5) {
-                dispararEstacionSpirit('audio-troll2', "⚠️ SEGUNDA ENTIDAD EN LA LÍNEA (Controles bloqueados)...", false);
+                dispararEstacionSpirit('audio-troll2', "⚠️ SEGUNDA ENTIDAD...", false);
                 etapaAudio = 2;
             } else if (etapaAudio === 2 && frecuencia >= 102.0) {
-                dispararEstacionSpirit('audio-clave', "💀 TRANSMISIÓN REAL CAPTURADA. Escucha con atención...", true);
+                dispararEstacionSpirit('audio-clave', "💀 TRANSMISIÓN CAPTURADA...", true);
                 etapaAudio = 3;
             }
         }
@@ -686,12 +429,8 @@
             spiritBloqueada = true;
             document.getElementById('phasmo-status').style.color = "#ff4444";
             document.getElementById('phasmo-status').innerText = textoEstado;
-            
             let audioEl = document.getElementById(idAudio);
-            audioEl.play().catch(() => {
-                // Si aún no has puesto los archivos .mp3 en la carpeta, simula que duran 3 segundos
-                setTimeout(() => desbloquearSpirit(esFinal), 3000);
-            });
+            audioEl.play().catch(() => setTimeout(() => desbloquearSpirit(esFinal), 3000));
             audioEl.onended = () => desbloquearSpirit(esFinal);
         }
 
@@ -699,24 +438,20 @@
             spiritBloqueada = false;
             document.getElementById('phasmo-status').style.color = "#88ff88";
             if (esFinal) {
-                document.getElementById('phasmo-status').innerText = "Frecuencia fijada. Ingresa la coordenada o palabra que dijo el fantasma:";
+                document.getElementById('phasmo-status').innerText = "Ingresa la clave:";
                 document.getElementById('phasmo-code-panel').style.display = 'flex';
             } else {
-                document.getElementById('phasmo-status').innerText = "Controles desbloqueados. Sigue girando la rueda izquierda...";
+                document.getElementById('phasmo-status').innerText = "Desbloqueado. Sigue girando...";
             }
         }
 
         function validarPhasmo() {
             let val = document.getElementById('input-coord-phasmo').value.trim().toLowerCase();
-            // CONFIGURA AQUÍ LA RESPUESTA QUE DIRÁS EN TU AUDIO DE PHASMOPHOBIA
-            if (val !== "") { 
-                cambiarEscena(3);
-            } else {
-                alert("Escribe la coordenada del audio.");
-            }
+            if (val !== "") cambiarEscena(3);
+            else alert("Escribe la coordenada.");
         }
 
-        // ================= LÓGICA NIVEL 4: CUEVA UV + INVENTARIO TROLL =================
+        // CUEVA / INVENTARIO
         let recolectados = [];
         let crafteados = [];
         let inventarioAbierto = false;
@@ -737,7 +472,6 @@
             }
         }
 
-        // Abrir/Cerrar inventario con tecla 'I'
         window.addEventListener('keydown', (e) => {
             if (document.getElementById('escena-3').classList.contains('activa') && e.key.toLowerCase() === 'i') {
                 toggleInventario();
@@ -755,30 +489,23 @@
 
         function moverCursorInventario(e) {
             if (!inventarioAbierto) return;
-
             if (modoInvertidoActivo) {
-                // Invierte ambos ejes respecto al centro de la pantalla
                 virtualX = window.innerWidth - e.clientX;
                 virtualY = window.innerHeight - e.clientY;
             } else {
                 virtualX = e.clientX;
                 virtualY = e.clientY;
             }
-
             const cursor = document.getElementById('custom-cursor');
             cursor.style.left = virtualX + 'px';
             cursor.style.top = virtualY + 'px';
 
-            // Si está en los 15 segundos de huida (mouse normal), los ítems que faltan se escapan al acercarse
             if (modoHuidaActivo) {
                 ['palo', 'tela', 'alcohol'].forEach(item => {
                     if (recolectados.includes(item) && !crafteados.includes(item)) {
                         let el = document.getElementById('inv-' + item);
                         let rect = el.getBoundingClientRect();
-                        let centroX = rect.left + rect.width / 2;
-                        let centroY = rect.top + rect.height / 2;
-                        
-                        let dist = Math.hypot(virtualX - centroX, virtualY - centroY);
+                        let dist = Math.hypot(virtualX - (rect.left + rect.width/2), virtualY - (rect.top + rect.height/2));
                         if (dist < 130) {
                             el.style.left = (10 + Math.random() * 75) + "%";
                             el.style.top = (15 + Math.random() * 65) + "%";
@@ -788,19 +515,14 @@
             }
         }
 
-        // Detectar clics usando la posición del cursor virtual (para que la inversión sea 100% real)
         document.getElementById('inv-overlay').addEventListener('mousedown', () => {
             if (!inventarioAbierto) return;
-
-            // Revisar si hizo clic sobre un distractor
             document.querySelectorAll('[data-distractor]').forEach(d => {
                 let r = d.getBoundingClientRect();
                 if (virtualX >= r.left && virtualX <= r.right && virtualY >= r.top && virtualY <= r.bottom) {
-                    alert("😂 ¡Eso es un recuerdo clasificado! No sirve para armar una antorcha.");
+                    alert("😂 ¡Recuerdo clasificado! No sirve para la antorcha.");
                 }
             });
-
-            // Revisar si hizo clic sobre un material real
             ['palo', 'tela', 'alcohol'].forEach(item => {
                 if (recolectados.includes(item) && !crafteados.includes(item)) {
                     let el = document.getElementById('inv-' + item);
@@ -813,37 +535,31 @@
         });
 
         function agregarAlCrafteo(item, el) {
-            if (modoHuidaActivo) return; // Mientras huyen no se dejan atrapar
-
+            if (modoHuidaActivo) return;
             crafteados.push(item);
-            // Mueve el objeto al centro de la lona
             el.style.left = (46 + crafteados.length * 2) + "%";
             el.style.top = "45%";
             document.getElementById('crafted-list').innerText = `${crafteados.length} / 3 materiales listos`;
 
             if (crafteados.length === 1) {
-                // Al poner el 1er ítem, los otros se escapan durante 15 segundos con mouse normal
                 modoHuidaActivo = true;
                 let segs = 15;
                 document.getElementById('inv-msg').style.color = "#ff4444";
-                document.getElementById('inv-msg').innerText = `¡Los materiales tienen miedo y se escapan de tu mouse! Espera ${segs}s...`;
-                
                 let timer = setInterval(() => {
                     segs--;
                     if (segs > 0) {
-                        document.getElementById('inv-msg').innerText = `¡Los materiales se escapan! Se cansarán en ${segs}s...`;
+                        document.getElementById('inv-msg').innerText = `¡Se escapan! Cansancio en ${segs}s...`;
                     } else {
                         clearInterval(timer);
                         modoHuidaActivo = false;
-                        modoInvertidoActivo = true; // Activa el mouse invertido para el resto del crafteo
+                        modoInvertidoActivo = true;
                         document.getElementById('inv-msg').style.color = "#00ffcc";
-                        document.getElementById('inv-msg').innerText = "Ya se cansaron de correr... ¡pero la locura de la cueva INVIRTIÓ TU MOUSE!";
+                        document.getElementById('inv-msg').innerText = "¡Se cansaron... pero tu mouse se INVIRTIÓ!";
                     }
                 }, 1000);
-
             } else if (crafteados.length === 3) {
-                modoInvertidoActivo = false; // Devuelve el mouse a la normalidad para apretar el botón final
-                document.getElementById('inv-msg').innerText = "¡Materiales listos! Enciende la antorcha.";
+                modoInvertidoActivo = false;
+                document.getElementById('inv-msg').innerText = "¡Materiales listos!";
                 document.getElementById('btn-craft-final').style.display = 'inline-block';
             }
         }
@@ -853,40 +569,34 @@
             cambiarEscena(4);
         }
 
-        // ================= LÓGICA NIVEL 5: MAPA THE FOREST =================
-        // Cambia estas coordenadas por el % que te salga cuando hagas clic en el lugar real de tu mapa
+        // MAPA
         const targetMapaX = 50; 
         const targetMapaY = 50;
-        const toleranciaMapa = 12; // Radio de error permitido (en porcentaje)
+        const toleranciaMapa = 12;
 
         function verificarClickMapa(e, contenedor) {
             const rect = contenedor.getBoundingClientRect();
             const clickX = ((e.clientX - rect.left) / rect.width) * 100;
             const clickY = ((e.clientY - rect.top) / rect.height) * 100;
-
             const dist = Math.hypot(clickX - targetMapaX, clickY - targetMapaY);
-
-            // Muestra en pantalla las coordenadas exactas donde hiciste clic para que tú puedas configurarlo fácil
-            console.log(`Clic en Mapa -> X: ${clickX.toFixed(1)}%, Y: ${clickY.toFixed(1)}%`);
-
             if (dist <= toleranciaMapa) {
-                alert("🌲 ¡Ubicación del cataclismo confirmada! Nunca olvidaremos esos 100.000 troncos.");
+                alert("🌲 ¡Ubicación confirmada!");
                 cambiarEscena(5);
             } else {
                 document.getElementById('map-feedback').style.color = "#ff5555";
-                document.getElementById('map-feedback').innerText = `Ahí no fue el cataclismo (Clic en X:${clickX.toFixed(0)}%, Y:${clickY.toFixed(0)}%). Intenta de nuevo, Mapaman.`;
+                document.getElementById('map-feedback').innerText = `Ahí no fue (X:${clickX.toFixed(0)}%, Y:${clickY.toFixed(0)}%).`;
             }
         }
 
-        // ================= LÓGICA NIVEL 6: GTA V HEIST =================
+        // GTA V HEIST INTERACTIVO
         let pctFelipe = 50;
         const botinTotal = 3000000;
 
-        function ajustarCut(cambio) {
+        function ajustarCutGTA(cambio) {
             if (pctFelipe + cambio >= 50 && pctFelipe + cambio <= 99) {
                 pctFelipe += cambio;
                 let restoIndividual = (100 - pctFelipe) / 2;
-                
+
                 document.getElementById('pct-felipe').innerText = pctFelipe + "%";
                 document.getElementById('usd-felipe').innerText = "$" + ((botinTotal * pctFelipe) / 100).toLocaleString();
 
@@ -895,14 +605,32 @@
 
                 document.getElementById('pct-matias').innerText = restoIndividual + "%";
                 document.getElementById('usd-matias').innerText = "$" + ((botinTotal * restoIndividual) / 100).toLocaleString();
+
+                let corte1 = pctFelipe;
+                let corte2 = pctFelipe + restoIndividual;
+                document.getElementById('heist-donut').style.background = 
+                    `conic-gradient(#2b5c8f 0% ${corte1}%, #e67e22 ${corte1}% ${corte2}%, #27ae60 ${corte2}% 100%)`;
+
+                const sDiego = document.getElementById('status-diego');
+                const sMatias = document.getElementById('status-matias');
+                if (pctFelipe === 99) {
+                    sDiego.className = "status-ready"; sDiego.innerText = "☑ READY";
+                    sMatias.className = "status-ready"; sMatias.innerText = "☑ READY";
+                    document.getElementById('error-heist').style.color = "#27ae60";
+                    document.getElementById('error-heist').innerText = "¡Porcentaje justo alcanzado! ($15,000 para cada uno)";
+                } else {
+                    sDiego.className = "status-not-ready"; sDiego.innerText = "☒ NOT READY";
+                    sMatias.className = "status-not-ready"; sMatias.innerText = "☒ NOT READY";
+                }
             }
         }
 
-        function verificarGolpe() {
+        function verificarGolpeGTA() {
             if (pctFelipe === 99) {
                 cambiarEscena(6);
             } else {
-                document.getElementById('error-heist').innerText = "Felipe ha rechazado el porcentaje. (Él exige su 99% reglamentario)";
+                document.getElementById('error-heist').style.color = "#c0392b";
+                document.getElementById('error-heist').innerText = "⚠️ Felipe exige su 99% reglamentario.";
             }
         }
     </script>

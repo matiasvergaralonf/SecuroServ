@@ -11,7 +11,6 @@
         .escena { display: none; width: 100vw; height: 100vh; position: relative; justify-content: center; align-items: center; flex-direction: column; overflow: hidden; }
         .activa { display: flex; }
 
-        /* CORREGIDO: z-index: 0 para que NO se esconda detrás del fondo negro */
         .fondo-blur { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: blur(12px) brightness(0.45); transform: scale(1.06); z-index: 0; pointer-events: none; }
         .contenido-frente { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; width: 100%; }
 
@@ -22,7 +21,6 @@
         .btn-dpad { background: rgba(0, 15, 30, 0.75); border: 2px solid #00d2ff; color: white; font-size: 26px; border-radius: 12px; cursor: pointer; transition: 0.1s; box-shadow: 0 0 15px rgba(0,210,255,0.3); }
         .btn-dpad:active { background: #00d2ff; color: black; transform: scale(0.95); }
         
-        /* Menú HUD de Quick Chat estilo RL */
         .rl-hud-menu { background: rgba(0, 10, 25, 0.88); border: 1px solid #00d2ff; border-radius: 6px; padding: 10px 16px; min-width: 230px; font-size: 14px; color: #cceeff; min-height: 95px; display: flex; flex-direction: column; justify-content: center; }
         .rl-hud-title { color: #ff9900; font-weight: bold; border-bottom: 1px solid rgba(255,255,255,0.2); margin-bottom: 4px; padding-bottom: 2px; }
 
@@ -32,13 +30,35 @@
 
         /* ================= ESTILOS NIVEL 3: PHASMOPHOBIA ================= */
         .phasmo-stage { position: relative; width: 85vw; max-width: 1000px; aspect-ratio: 16/10; border: 2px solid #222; box-shadow: 0 0 60px rgba(0,0,0,0.95); overflow: hidden; background: #000; }
-        .phasmo-bg { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75) contrast(1.15); }
-        .hitbox-rueda { position: absolute; left: 51.5%; top: 72%; width: 5.5%; height: 13%; border-radius: 10px; cursor: ns-resize; border: 2px dashed rgba(0, 255, 255, 0.5); background: rgba(0,255,255,0.08); transition: 0.2s; }
+        .phasmo-bg { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.78) contrast(1.12); }
+        .hitbox-rueda { position: absolute; left: 51.5%; top: 72%; width: 5.5%; height: 13%; border-radius: 10px; cursor: ns-resize; border: 2px dashed rgba(0, 255, 255, 0.5); background: rgba(0,255,255,0.08); transition: 0.2s; z-index: 4; }
         .hitbox-rueda:hover { background: rgba(0,255,255,0.25); box-shadow: 0 0 15px cyan; }
-        .hitbox-palanca { position: absolute; left: 60.5%; top: 75%; width: 5%; height: 8%; border-radius: 50%; cursor: pointer; border: 2px dashed rgba(255, 165, 0, 0.6); background: rgba(255,165,0,0.1); transition: 0.2s; }
+        .hitbox-palanca { position: absolute; left: 60.5%; top: 75%; width: 5%; height: 8%; border-radius: 50%; cursor: pointer; border: 2px dashed rgba(255, 165, 0, 0.6); background: rgba(255,165,0,0.1); transition: 0.2s; z-index: 4; }
         .hitbox-palanca:hover { background: rgba(255,165,0,0.3); box-shadow: 0 0 15px orange; }
-        .spirit-led { position: absolute; left: 58%; top: 62%; background: rgba(10, 0, 0, 0.85); border: 1px solid #ff3300; color: #ff3300; font-family: 'Courier New', monospace; font-size: 22px; font-weight: bold; padding: 4px 12px; border-radius: 4px; text-shadow: 0 0 8px #ff3300; pointer-events: none; }
-        .scare-popup { position: absolute; pointer-events: none; opacity: 0; transition: opacity 0.15s; filter: drop-shadow(0 0 10px red); }
+        .spirit-led { position: absolute; left: 58%; top: 62%; background: rgba(10, 0, 0, 0.85); border: 1px solid #ff3300; color: #ff3300; font-family: 'Courier New', monospace; font-size: 22px; font-weight: bold; padding: 4px 12px; border-radius: 4px; text-shadow: 0 0 8px #ff3300; pointer-events: none; z-index: 4; }
+
+        /* Ojos ubicados exclusivamente dentro del cristal oscuro de la ventana */
+        .ventana-ojos {
+            position: absolute;
+            top: 34%;
+            left: 17%;
+            width: 34px;
+            height: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            z-index: 2;
+        }
+        .ventana-ojos .ojo-punto {
+            width: 7px;
+            height: 7px;
+            background: rgba(235, 242, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(190, 215, 255, 0.85);
+        }
 
         /* ================= ESTILOS NIVEL 4: CUEVA UV + INVENTARIO REALISTA THE FOREST ================= */
         .cave-container { position: relative; width: 100vw; height: 100vh; background-image: url('cueva-forest.jpg'); background-size: cover; background-position: center; overflow: hidden; cursor: none; }
@@ -47,56 +67,11 @@
         .cave-item:hover { transform: scale(1.2); }
         .btn-open-inv { position: fixed; top: 20px; right: 25px; z-index: 30; background: #1e2d2f; border: 2px solid #c8963e; color: #f5d7a1; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 6px; box-shadow: 0 0 15px rgba(0,0,0,0.8); }
 
-        /* Lona Azul Realista de The Forest */
         .inv-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.92); z-index: 40; justify-content: center; align-items: center; flex-direction: column; cursor: none; }
-        .tarp-mat {
-            position: relative;
-            width: 88vw;
-            max-width: 1150px;
-            aspect-ratio: 16/9;
-            background-image: url('inventario-forest.jpg');
-            background-size: cover;
-            background-position: center;
-            border: 3px solid #3a4f52;
-            border-radius: 10px;
-            box-shadow: 0 0 60px #000;
-            overflow: hidden;
-        }
-        /* Zona central sobre el pañuelo blanco de la lona */
-        .craft-gear-zone {
-            position: absolute;
-            top: 53%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 24%;
-            height: 36%;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            text-align: center;
-            padding-bottom: 10px;
-            z-index: 2;
-        }
-        .craft-badge {
-            background: rgba(0, 0, 0, 0.78);
-            border: 1px solid #c8963e;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            color: #f5d7a1;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-        }
-        .inv-object {
-            position: absolute;
-            width: 110px;
-            height: 110px;
-            object-fit: contain;
-            transition: top 0.18s ease-out, left 0.18s ease-out, transform 0.15s;
-            filter: drop-shadow(0 12px 10px rgba(0,0,0,0.85));
-            z-index: 5;
-        }
+        .tarp-mat { position: relative; width: 88vw; max-width: 1150px; aspect-ratio: 16/9; background-image: url('inventario-forest.jpg'); background-size: cover; background-position: center; border: 3px solid #3a4f52; border-radius: 10px; box-shadow: 0 0 60px #000; overflow: hidden; }
+        .craft-gear-zone { position: absolute; top: 53%; left: 50%; transform: translate(-50%, -50%); width: 24%; height: 36%; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; text-align: center; padding-bottom: 10px; z-index: 2; }
+        .craft-badge { background: rgba(0, 0, 0, 0.78); border: 1px solid #c8963e; padding: 5px 12px; border-radius: 20px; font-size: 13px; color: #f5d7a1; box-shadow: 0 4px 10px rgba(0,0,0,0.6); }
+        .inv-object { position: absolute; width: 110px; height: 110px; object-fit: contain; transition: top 0.18s ease-out, left 0.18s ease-out, transform 0.15s; filter: drop-shadow(0 12px 10px rgba(0,0,0,0.85)); z-index: 5; }
         #custom-cursor { display: none; position: fixed; width: 26px; height: 26px; border: 3px solid #00ffcc; border-radius: 50%; background: rgba(0, 255, 204, 0.3); pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); box-shadow: 0 0 12px #00ffcc; }
 
         /* ================= ESTILOS NIVEL 5: MAPA THE FOREST ================= */
@@ -177,7 +152,6 @@
                         <div></div><button class="btn-dpad" onclick="inputRL('D')">▼</button><div></div>
                     </div>
 
-                    <!-- HUD estilo Rocket League mostrando las categorías reales -->
                     <div class="rl-hud-menu" id="rl-hud-box">
                         <div class="rl-hud-title">CATEGORÍAS QUICK CHAT:</div>
                         <div>▲ Información</div>
@@ -195,7 +169,7 @@
                     <div><span class="chat-you">Lonford123:</span> ¡Buen pase!</div>
                     <div><span class="chat-you">Lonford123:</span> ¡Buen pase!</div>
                     <div><span class="chat-you">Lonford123:</span> ¡Buen pase!</div>
-                    <div><span class="chat-you">D1eg0_23:</span> ¡Gracias!</div>
+                    <div><span class="chat-you">Lonford123:</span> ¡Gracias!</div>
                     <div id="chat-faltante" style="color: #ff5555; margin-top:8px;">[Completa la secuencia...]</div>
                 </div>
             </div>
@@ -210,8 +184,13 @@
         </div>
         <div class="phasmo-stage">
             <img src="fondo-phasmo.jpg" class="phasmo-bg" alt="Phasmophobia">
-            <div id="scare-eyes" class="scare-popup" style="top:28%; left:12%; font-size:45px;">👀</div>
-            <img id="scare-meme" src="meme1.jpg" class="scare-popup" style="top:20%; left:32%; width:120px; border-radius:50%;">
+            
+            <!-- Ojos dentro de la ventana oscura -->
+            <div id="ventana-ojos" class="ventana-ojos">
+                <span class="ojo-punto"></span>
+                <span class="ojo-punto"></span>
+            </div>
+
             <div id="spirit-freq" class="spirit-led">OFF</div>
             <div class="hitbox-rueda" onclick="girarRuedaSpirit()" title="Girar sintonizador"></div>
             <div class="hitbox-palanca" onclick="togglePowerSpirit()" title="Interruptor Power"></div>
@@ -236,7 +215,6 @@
             <div class="uv-mask" id="uv-mask"></div>
         </div>
 
-        <!-- Lona Azul Realista (Usa tu imagen inventario-forest.jpg) -->
         <div class="inv-overlay" id="inv-overlay" onmousemove="moverCursorInventario(event)">
             <div style="margin-bottom:8px; text-align:center;">
                 <p id="inv-msg" style="margin:0; font-size: 18px; font-weight: bold; color:#ffae00; text-shadow: 0 2px 6px #000;">
@@ -244,7 +222,6 @@
                 </p>
             </div>
             <div class="tarp-mat" id="tarp-mat">
-                <!-- Pañuelo blanco central de crafteo -->
                 <div class="craft-gear-zone" id="craft-zone">
                     <div class="craft-badge" id="crafted-list">⚙️ Pañuelo: 0 / 3</div>
                     <button id="btn-craft-final" onclick="completarAntorcha()" style="display:none; margin-top:8px; padding:8px 16px; background:#ff6600; color:white; border:2px solid #fff; border-radius:6px; font-weight:bold; cursor:pointer; box-shadow: 0 0 15px #ff6600;">
@@ -252,12 +229,10 @@
                     </button>
                 </div>
 
-                <!-- Materiales recolectados sobre la lona azul -->
                 <img src="palo.png" id="inv-palo" class="inv-object" style="display:none; top: 18%; left: 28%; width: 160px; transform: rotate(-15deg);" data-item="palo">
                 <img src="tela.png" id="inv-tela" class="inv-object" style="display:none; top: 34%; left: 33%; width: 95px;" data-item="tela">
                 <img src="alcohol.png" id="inv-alcohol" class="inv-object" style="display:none; top: 55%; left: 66%; width: 85px;" data-item="alcohol">
 
-                <!-- Fotos distractoras / Easter Eggs -->
                 <img src="meme1.jpg" class="inv-object" style="top: 66%; left: 32%; width: 90px; height: 90px; border-radius:8px; transform: rotate(-8deg);" data-distractor="1">
                 <img src="meme2.jpg" class="inv-object" style="top: 25%; left: 68%; width: 90px; height: 90px; border-radius:8px; transform: rotate(10deg);" data-distractor="2">
             </div>
@@ -396,8 +371,7 @@
             }
         }
 
-        // ================= ROCKET LEAGUE (CONTROLES DEFAULT REALES) =================
-        // Abajo (D) abre Reacciones -> Izquierda (L) envía "¡Gracias!"
+        // ================= ROCKET LEAGUE =================
         let bufferRL = [];
         const comboCorrecto = "DL";
         const hudDefault = `<div class="rl-hud-title">CATEGORÍAS QUICK CHAT:</div><div>▲ Información</div><div>◄ Cumplidos</div><div>► Disculpas</div><div>▼ Reacciones</div>`;
@@ -424,7 +398,7 @@
                 if (intento === comboCorrecto) {
                     let chat = document.getElementById('chat-faltante');
                     chat.style.color = "#55ff77";
-                    chat.innerHTML = "<span class='chat-you'>Lonford123:</span> ¡Gracias!";
+                    chat.innerHTML = "<span class='chat-you'>D1eg0_23:</span> ¡Gracias!";
                     setTimeout(() => cambiarEscena(2), 1400);
                 } else {
                     document.getElementById('chat-faltante').innerText = "¡Qué salvada! (Ese no era '¡Gracias!', prueba Abajo -> Izquierda)";
@@ -437,21 +411,78 @@
         let spiritBloqueada = false;
         let frecuencia = 87.1;
         let etapaAudio = 0;
+        let girosTotales = 0;
+        let aparicionesOjos = 0;
         let audioCtx = null;
 
-        function sonarEstaticaCorto() {
+        function obtenerAudioCtx() {
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const bufferSize = audioCtx.sampleRate * 0.25;
-            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            return audioCtx;
+        }
+
+        function sonarEstaticaCorto() {
+            const ctx = obtenerAudioCtx();
+            const bufferSize = ctx.sampleRate * 0.16;
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
             const data = buffer.getChannelData(0);
             for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-            const noise = audioCtx.createBufferSource();
+            const noise = ctx.createBufferSource();
             noise.buffer = buffer;
-            const gain = audioCtx.createGain();
-            gain.gain.value = 0.08;
+            const gain = ctx.createGain();
+            gain.gain.value = 0.045;
             noise.connect(gain);
-            gain.connect(audioCtx.destination);
+            gain.connect(ctx.destination);
             noise.start();
+        }
+
+        // Sonido raro, corto y suave tipo stinger inquietante de video
+        function sonarStingRaroSuave() {
+            const ctx = obtenerAudioCtx();
+            const ahora = ctx.currentTime;
+            const duracion = 0.35;
+
+            const osc = ctx.createOscillator();
+            const lfo = ctx.createOscillator();
+            const lfoGain = ctx.createGain();
+            const gain = ctx.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(390, ahora);
+            osc.frequency.exponentialRampToValueAtTime(145, ahora + duracion);
+
+            lfo.type = 'sine';
+            lfo.frequency.setValueAtTime(18, ahora);
+            lfoGain.gain.setValueAtTime(22, ahora);
+
+            gain.gain.setValueAtTime(0.001, ahora);
+            gain.gain.linearRampToValueAtTime(0.04, ahora + 0.03);
+            gain.gain.exponentialRampToValueAtTime(0.0008, ahora + duracion);
+
+            lfo.connect(lfoGain);
+            lfoGain.connect(osc.frequency);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            lfo.start(ahora);
+            osc.start(ahora);
+            lfo.stop(ahora + duracion);
+            osc.stop(ahora + duracion);
+        }
+
+        function mostrarOjosEnVentana() {
+            const ojos = document.getElementById('ventana-ojos');
+            // Pequeña variación solo dentro del cristal oscuro de la ventana
+            const tops = ['34%', '39%'];
+            const lefts = ['16.5%', '18.5%'];
+            ojos.style.top = tops[aparicionesOjos % tops.length];
+            ojos.style.left = lefts[aparicionesOjos % lefts.length];
+            ojos.style.opacity = 1;
+            sonarStingRaroSuave();
+            aparicionesOjos++;
+
+            setTimeout(() => {
+                ojos.style.opacity = 0;
+            }, 650);
         }
 
         function togglePowerSpirit() {
@@ -464,16 +495,14 @@
         function girarRuedaSpirit() {
             if (!spiritEncendida || spiritBloqueada) return;
             sonarEstaticaCorto();
+            girosTotales++;
             frecuencia += 0.4;
             if (frecuencia > 108.0) frecuencia = 87.1;
             document.getElementById('spirit-freq').innerText = frecuencia.toFixed(1) + " MHz";
 
-            if (Math.random() < 0.45) {
-                let el = Math.random() < 0.6 ? document.getElementById('scare-eyes') : document.getElementById('scare-meme');
-                el.style.top = (15 + Math.random() * 50) + "%";
-                el.style.left = (8 + Math.random() * 35) + "%";
-                el.style.opacity = 1;
-                setTimeout(() => el.style.opacity = 0, 450);
+            // Solo 2 apariciones en toda la secuencia, únicamente en la ventana
+            if (aparicionesOjos < 2 && (girosTotales === 5 || girosTotales === 14)) {
+                mostrarOjosEnVentana();
             }
 
             if (etapaAudio === 0 && frecuencia >= 91.0) {
@@ -600,7 +629,6 @@
         function agregarAlCrafteo(item, el) {
             if (modoHuidaActivo) return;
             crafteados.push(item);
-            // Coloca el objeto justo encima del pañuelo blanco central
             el.style.left = (43 + crafteados.length * 2.5) + "%";
             el.style.top = "44%";
             document.getElementById('crafted-list').innerText = `⚙️ Pañuelo: ${crafteados.length} / 3`;

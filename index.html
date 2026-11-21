@@ -12,7 +12,6 @@
             font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden;
         }
 
-        /* Viñeta atmosférica general */
         body::after {
             content: '';
             position: fixed; inset: 0;
@@ -21,7 +20,6 @@
             box-shadow: inset 0 0 110px rgba(0, 0, 0, 0.78);
         }
 
-        /* Sistema de Escenas con transición suave */
         .escena {
             display: none; width: 100vw; height: 100vh;
             position: relative; justify-content: center; align-items: center;
@@ -40,7 +38,6 @@
             transform: scale(0.985);
         }
 
-        /* Screen shake leve para fallos o ignición */
         @keyframes screenShake {
             0%, 100% { transform: translate(0, 0); }
             20% { transform: translate(-6px, 3px); }
@@ -50,7 +47,6 @@
         }
         .shake { animation: screenShake 0.28s ease; }
 
-        /* Botón discreto de Audio Ambiente */
         .btn-audio-toggle {
             position: fixed; top: 18px; left: 20px; z-index: 950;
             background: rgba(12, 16, 24, 0.78);
@@ -156,7 +152,6 @@
             text-shadow: 0 0 10px rgba(255, 51, 0, 0.8); pointer-events: none; z-index: 4;
         }
 
-        /* Ojos exclusivamente dentro del cristal oscuro de la ventana */
         .ventana-ojos {
             position: absolute; top: 36%; left: 17.5%; width: 34px; height: 14px;
             display: flex; justify-content: space-between; align-items: center;
@@ -200,7 +195,6 @@
             align-items: center; flex-direction: column; cursor: none;
             transition: background 0.5s ease;
         }
-        /* Efecto cálido de antorcha encendida al craftear */
         .inv-overlay.antorcha-encendida {
             background: radial-gradient(circle at center, rgba(255, 130, 15, 0.34) 0%, rgba(120, 35, 0, 0.65) 55%, rgba(15, 6, 0, 0.96) 100%);
         }
@@ -302,12 +296,31 @@
         .polaroid:nth-child(2) { transform: rotate(2deg); }
         .tape { position: absolute; top: -10px; left: 35px; width: 80px; height: 22px; background: rgba(160, 175, 170, 0.75); font-family: 'Permanent Marker', cursive; font-size: 13px; color: #222; line-height: 22px; }
         .polaroid img { width: 100%; height: 75px; object-fit: cover; filter: grayscale(40%) contrast(1.2); }
+
+        /* Barra de prueba rápida (Borrar antes de enviárselo) */
+        #debug-bar {
+            position: fixed; bottom: 8px; left: 8px; z-index: 10001;
+            background: rgba(0, 0, 0, 0.88); padding: 6px 10px;
+            border-radius: 6px; border: 1px solid #444; font-size: 12px;
+        }
+        #debug-bar button { cursor: pointer; margin: 0 2px; }
     </style>
 </head>
 <body>
 
     <button class="btn-audio-toggle" id="btn-audio-toggle" onclick="toggleAudioGlobal()">🔊 Ambiente: ON</button>
     <div id="custom-cursor"></div>
+
+    <!-- BARRA DE PRUEBA PARA TI (Bórrala cuando todo esté listo) -->
+    <div id="debug-bar">
+        🔧 Saltar a: 
+        <button onclick="cambiarEscena(1)">2. RL</button>
+        <button onclick="cambiarEscena(2)">3. Phasmo</button>
+        <button onclick="cambiarEscena(3)">4. Cueva UV</button>
+        <button onclick="cambiarEscena(4)">5. Mapa Forest</button>
+        <button onclick="cambiarEscena(5)">6. GTA Golpe</button>
+        <button onclick="cambiarEscena(6)">7. Bóveda</button>
+    </div>
 
     <!-- ================= PASO 2: ROCKET LEAGUE ================= -->
     <div id="escena-1" class="escena activa">
@@ -537,7 +550,6 @@
     </div>
 
     <script>
-        // ================= SISTEMA DE AUDIO Y AMBIENTE POR NIVEL =================
         let audioCtx = null;
         let audioHabilitado = true;
         let ambientOsc1 = null;
@@ -578,19 +590,18 @@
             } catch (_) {}
         }
 
-        // Atmósfera suave según el nivel (1: RL, 2: Phasmo, 3: Cueva, 4: Mapa, 5: GTA, 6: Bóveda)
         function iniciarAmbienteEscena(num) {
             detenerAmbiente();
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
 
             const configs = {
-                1: { f1: 110, f2: 164.8, tipo: 'sine', vol: 0.016 },     // Tech / arena suave
-                2: { f1: 55,  f2: 58.2,  tipo: 'triangle', vol: 0.022 }, // Tensión paranormal baja
-                3: { f1: 65.4, f2: 98,   tipo: 'sine', vol: 0.02 },      // Cueva profunda
-                4: { f1: 73.4, f2: 110,  tipo: 'sine', vol: 0.018 },     // Bosque / exploración
-                5: { f1: 82.4, f2: 123.5, tipo: 'triangle', vol: 0.018 },// Golpe
-                6: { f1: 130.8, f2: 196, tipo: 'sine', vol: 0.02 }       // Victoria / bóveda
+                1: { f1: 110, f2: 164.8, tipo: 'sine', vol: 0.016 },
+                2: { f1: 55,  f2: 58.2,  tipo: 'triangle', vol: 0.022 },
+                3: { f1: 65.4, f2: 98,   tipo: 'sine', vol: 0.02 },
+                4: { f1: 73.4, f2: 110,  tipo: 'sine', vol: 0.018 },
+                5: { f1: 82.4, f2: 123.5, tipo: 'triangle', vol: 0.018 },
+                6: { f1: 130.8, f2: 196, tipo: 'sine', vol: 0.02 }
             };
 
             const cfg = configs[num] || configs[1];
@@ -614,7 +625,6 @@
             ambientOsc2.start(ahora);
         }
 
-        // Sonido corto al pasar de nivel
         function sonarTransicionNivel() {
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
@@ -633,7 +643,6 @@
             osc.stop(ahora + 0.23);
         }
 
-        // Sonido corto de ignición al encender la antorcha
         function sonarIgnicionAntorcha() {
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
@@ -659,7 +668,6 @@
             el.classList.add('shake');
         }
 
-        // ================= TRANSICIÓN ENTRE ESCENAS =================
         let transicionando = false;
         function cambiarEscena(num) {
             if (transicionando) return;
@@ -689,7 +697,6 @@
             }
         }
 
-        // Arranca ambiente en el primer clic del usuario
         window.addEventListener('pointerdown', () => {
             if (audioHabilitado && !ambientOsc1) {
                 const actual = document.querySelector('.escena.activa');
@@ -698,7 +705,7 @@
             }
         }, { once: true });
 
-        // ================= ROCKET LEAGUE =================
+        // ROCKET LEAGUE
         let bufferRL = [];
         const comboCorrecto = "DL";
         const hudDefault = `<div class="rl-hud-title">CATEGORÍAS QUICK CHAT:</div><div>▲ Información</div><div>◄ Cumplidos</div><div>► Disculpas</div><div>▼ Reacciones</div>`;
@@ -734,7 +741,7 @@
             }
         }
 
-        // ================= PHASMOPHOBIA =================
+        // PHASMOPHOBIA
         let spiritEncendida = false;
         let spiritBloqueada = false;
         let frecuencia = 87.1;
@@ -864,7 +871,7 @@
             else alert("Escribe la coordenada.");
         }
 
-        // ================= CUEVA / INVENTARIO =================
+        // CUEVA / INVENTARIO
         let recolectados = [];
         let crafteados = [];
         let inventarioAbierto = false;
@@ -1003,7 +1010,7 @@
             }, 1350);
         }
 
-        // ================= MAPA =================
+        // MAPA
         const targetMapaX = 50; 
         const targetMapaY = 50;
         const toleranciaMapa = 12;
@@ -1023,7 +1030,7 @@
             }
         }
 
-        // ================= GTA V HEIST =================
+        // GTA V HEIST
         let pctFelipe = 50;
         const botinTotal = 3000000;
 

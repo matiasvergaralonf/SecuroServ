@@ -500,10 +500,10 @@
                             <div class="narrator-avatar" id="narrator-avatar">🎙️</div>
                             <div>
                                 <div style="font-size:12px; color:#ffd54f; font-weight:700; letter-spacing:1px;" id="narrator-role-label">PRESENTADORA EN VIVO</div>
-                                <div id="narrator-subtitle" style="font-size:14px; color:#dce6f2;">Preparando entrada al set...</div>
+                                <div id="narrator-subtitle" style="font-size:14px; color:#dce6f2;">Escuchando pregunta...</div>
                             </div>
                         </div>
-                        <button class="btn-narrador" onclick="hablarPreguntaAhora()">🗣️ Repetir Voz</button>
+                        <button class="btn-narrador" onclick="narrarPreguntaActual()">🗣️ Repetir Voz</button>
                     </div>
                 </div>
 
@@ -555,17 +555,14 @@
             </div>
         </div>
 
-        <audio id="fondomillonario-mp3" src="fondomillonario.mp3" loop></audio>
-        <audio id="pregunta-mp3" src="pregunta.mp3"></audio>
-        <audio id="suspenso-mp3" src="suspenso.mp3"></audio>
-        <audio id="tambores-4s-mp3" src="tambores.mp3"></audio>
-
         <audio id="voz-p1" src="voz-p1.mp3"></audio>
         <audio id="voz-p2" src="voz-p2.mp3"></audio>
         <audio id="voz-p3" src="voz-p3.mp3"></audio>
+        <audio id="tambores-4s-mp3" src="tambores.mp3"></audio>
+        <audio id="ambiente-millonario-mp3" src="fondomillonario.mp3" loop></audio>
     </div>
 
-    <!-- ================= PASO 7: GTA V HEIST ================= -->
+    <!-- ================= PASO 7: GTA V HEIST (4 INTEGRANTES, 4.º SIN AFECTAR) ================= -->
     <div id="escena-6" class="escena">
         <div class="gta-backdrop"></div>
         <img src="chiliad.jpg" class="fondo-blur" alt="Monte Chiliad">
@@ -656,6 +653,7 @@
                         </div>
                     </div>
 
+                    <!-- 4.º Integrante: Nickpapaleta27 (No afecta al botín ni porcentajes) -->
                     <div class="gta-row">
                         <div class="row-num">4</div>
                         <div class="row-box" style="background: rgba(241, 245, 249, 0.72);">
@@ -708,7 +706,6 @@
         let ambientGain = null;
         let millonarioInterval = null;
         let relojInterval = null;
-        let timeoutEntradaVoz = null;
 
         function obtenerAudioCtx() {
             if (!audioCtx) {
@@ -726,9 +723,9 @@
             if (!audioHabilitado) return;
             const actual = document.querySelector('.escena.activa');
             if (actual && actual.id === 'escena-5') {
-                const mp3Amb = document.getElementById('fondomillonario-mp3');
+                const mp3Amb = document.getElementById('ambiente-millonario-mp3');
                 if (mp3Amb && mp3Amb.paused) {
-                    mp3Amb.volume = 0.28;
+                    mp3Amb.volume = 0.25;
                     mp3Amb.play().catch(() => {});
                 }
                 if (!millonarioInterval) iniciarTensionMillonario();
@@ -738,16 +735,14 @@
         function toggleAudioGlobal() {
             audioHabilitado = !audioHabilitado;
             const btn = document.getElementById('btn-audio-toggle');
-            const mp3Amb = document.getElementById('fondomillonario-mp3');
-            const mp3Ent = document.getElementById('pregunta-mp3');
-            const mp3Susp = document.getElementById('suspenso-mp3');
+            const mp3Amb = document.getElementById('ambiente-millonario-mp3');
             const mp3Tamb = document.getElementById('tambores-4s-mp3');
-
             if (!audioHabilitado) {
                 detenerAmbiente();
                 detenerTensionMillonario();
                 detenerRelojPensar();
-                [mp3Amb, mp3Ent, mp3Susp, mp3Tamb].forEach(a => { if (a) a.pause(); });
+                if (mp3Amb) mp3Amb.pause();
+                if (mp3Tamb) { mp3Tamb.pause(); mp3Tamb.currentTime = 0; }
                 if ('speechSynthesis' in window) window.speechSynthesis.cancel();
                 btn.innerText = '🔇 Ambiente: OFF';
             } else {
@@ -772,7 +767,7 @@
             detenerAmbiente();
             detenerTensionMillonario();
             detenerRelojPensar();
-            const mp3Amb = document.getElementById('fondomillonario-mp3');
+            const mp3Amb = document.getElementById('ambiente-millonario-mp3');
             if (mp3Amb && num !== 5) mp3Amb.pause();
 
             if (!audioHabilitado) return;
@@ -1012,13 +1007,7 @@
             if (num !== 3) document.getElementById('custom-cursor').style.display = 'none';
             if (num !== 5) {
                 detenerRelojPensar();
-                if (timeoutEntradaVoz) {
-                    clearTimeout(timeoutEntradaVoz);
-                    timeoutEntradaVoz = null;
-                }
-                const mp3Ent = document.getElementById('pregunta-mp3');
-                if (mp3Ent) mp3Ent.pause();
-                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                limpiarAudiosMillonario();
             }
 
             sonarTransicionNivel();
@@ -1255,571 +1244,3 @@
                         }
                     }
                 });
-            }
-        }
-
-        document.getElementById('inv-overlay').addEventListener('mousedown', () => {
-            if (!inventarioAbierto) return;
-            document.querySelectorAll('[data-distractor]').forEach(d => {
-                let r = d.getBoundingClientRect();
-                if (virtualX >= r.left && virtualX <= r.right && virtualY >= r.top && virtualY <= r.bottom) {
-                    const m = d.getAttribute('data-distractor') === '1' ? 'meme7.jpg' : 'meme8.jpg';
-                    mostrarMemeEspontaneo(m, false, 1800);
-                }
-            });
-            ['palo', 'tela', 'alcohol'].forEach(item => {
-                if (recolectados.includes(item) && !crafteados.includes(item)) {
-                    let el = document.getElementById('inv-' + item);
-                    let r = el.getBoundingClientRect();
-                    if (virtualX >= r.left && virtualX <= r.right && virtualY >= r.top && virtualY <= r.bottom) {
-                        agregarAlCrafteo(item, el);
-                    }
-                }
-            });
-        });
-
-        function agregarAlCrafteo(item, el) {
-            if (modoHuidaActivo) return;
-            crafteados.push(item);
-            el.style.left = (43 + crafteados.length * 2.5) + "%";
-            el.style.top = "44%";
-            document.getElementById('crafted-list').innerText = `⚙️ Pañuelo: ${crafteados.length} / 3`;
-
-            if (crafteados.length === 1) {
-                modoHuidaActivo = true;
-                let segs = 15;
-                document.getElementById('inv-msg').style.color = "#ff4444";
-                let timer = setInterval(() => {
-                    segs--;
-                    if (segs > 0) document.getElementById('inv-msg').innerText = `¡Los materiales tienen miedo y huyen! Espera ${segs}s...`;
-                    else {
-                        clearInterval(timer);
-                        modoHuidaActivo = false;
-                        modoInvertidoActivo = true;
-                        document.getElementById('inv-msg').style.color = "#00ffcc";
-                        document.getElementById('inv-msg').innerText = "¡Se cansaron de huir... pero tu mouse se INVIRTIÓ!";
-                    }
-                }, 1000);
-            } else if (crafteados.length === 3) {
-                modoInvertidoActivo = false;
-                document.getElementById('inv-msg').style.color = "#ffae00";
-                document.getElementById('inv-msg').innerText = "¡Materiales combinados en el pañuelo!";
-                document.getElementById('btn-craft-final').style.display = 'inline-block';
-            }
-        }
-
-        function completarAntorcha() {
-            const overlay = document.getElementById('inv-overlay');
-            const tarp = document.getElementById('tarp-mat');
-            const msg = document.getElementById('inv-msg');
-            const btn = document.getElementById('btn-craft-final');
-
-            btn.style.display = 'none';
-            document.getElementById('custom-cursor').style.display = 'none';
-            overlay.classList.add('antorcha-encendida');
-            tarp.classList.add('resplandor-fuego');
-            sacudirElemento(tarp);
-            sonarIgnicionAntorcha();
-
-            msg.style.color = "#ffcc55";
-            msg.innerText = "🔥 ¡Antorcha encendida! La luz atraviesa la cueva...";
-
-            setTimeout(() => {
-                overlay.classList.remove('antorcha-encendida');
-                tarp.classList.remove('resplandor-fuego');
-                overlay.style.display = 'none';
-                inventarioAbierto = false;
-                cambiarEscena(4);
-            }, 1350);
-        }
-
-        // ================= MAPA THE FOREST =================
-        const targetMapaX = 16.5; 
-        const targetMapaY = 46.5;
-        const toleranciaMapa = 9.5;
-
-        function verificarClickMapa(e, contenedor) {
-            const rect = contenedor.getBoundingClientRect();
-            const clickX = ((e.clientX - rect.left) / rect.width) * 100;
-            const clickY = ((e.clientY - rect.top) / rect.height) * 100;
-            const dist = Math.hypot(clickX - targetMapaX, clickY - targetMapaY);
-
-            if (dist <= toleranciaMapa) {
-                document.getElementById('map-feedback').style.color = "#55ff77";
-                document.getElementById('map-feedback').innerText = "🌲 ¡Ubicación del cataclismo confirmada! Iniciando salto estelar...";
-                ejecutarSaltoEstelar(5);
-            } else {
-                sacudirElemento(contenedor);
-                document.getElementById('map-feedback').style.color = "#ff5555";
-                document.getElementById('map-feedback').innerText = `Ahí no fue la tragedia de los 100.000 troncos (X:${clickX.toFixed(0)}%, Y:${clickY.toFixed(0)}%). Busca en las islas del oeste...`;
-            }
-        }
-
-        // ================= ¿QUIÉN QUIERE SER MILLONARIO? =================
-        const preguntasMillonario = [
-            {
-                pregunta: "1. Según los informes bíblicos de historiadores, ¿cuál es la fecha exacta y locación del momento en que conociste a Felipe Onroy y a Madhias Ergara?",
-                narracion: "Pregunta número uno, por quinientos mil pesos. Según los informes bíblicos de historiadores, ¿cuál es la fecha exacta y locación del momento en que conociste a Felipe Onroy y a Madhias Ergara?",
-                audioEl: "voz-p1",
-                fotoCentro: "meme3.jpg",
-                premioAcumulado: 500000,
-                opciones: [
-                    "Todo indica que un lunes",
-                    "Investigadores de la Universidad Bolivariana de Concepción apuntan a un 12 de enero del 2017",
-                    "No es canon",
-                    "400 mil pesos"
-                ],
-                correcta: 2,
-                pistaFelipe: "Hermano, esa historia está más censurada que los archivos de la CIA. Yo diría que eso ni siquiera es canon."
-            },
-            {
-                pregunta: "2. Ordene cronológicamente los eventos del Día Negro:",
-                narracion: "Pregunta número dos, por dos millones quinientos mil pesos. Ordene los eventos del Día Negro.",
-                audioEl: "voz-p2",
-                fotoCentro: "meme6.jpg",
-                premioAcumulado: 2500000,
-                opciones: [
-                    "Cagamos en la curva → Armar setups → Jugar 2 minutos → Ir a buscar un cargador",
-                    "Armar setups → Ir a buscar un cargador → Cagamos en la curva → Jugar 2 minutos",
-                    "Ir a buscar un cargador → Armar setups → Jugar 2 minutos → Cagamos en la curva",
-                    "Jugar 2 minutos → Ir a buscar un cargador → Armar setups → Cagamos en la curva"
-                ],
-                correcta: 2,
-                pistaFelipe: "Acuérdate que primero hubo que salir a buscar el maldito cargador antes de poder armar nada."
-            },
-            {
-                pregunta: "3. Recientemente Lil Uzi Vert dijo en una entrevista a LUN que su nuevo disco sería grabado con los máximos estándares de calidad de la industria sonora. ¿A qué se refería él?",
-                narracion: "Pregunta final, por nueve millones novecientos ochenta y cinco mil pesos. Recientemente Lil Uzi Vert dijo en una entrevista a LUN que su nuevo disco sería grabado con los máximos estándares de calidad de la industria sonora. ¿A qué se refería él?",
-                audioEl: "voz-p3",
-                fotoCentro: "meme7.jpg",
-                premioAcumulado: 9985000,
-                opciones: [
-                    "Grabar con todo lo que es Hollywood",
-                    "Grabar con JB The Voice",
-                    "Ocupar micrófonos PHILCO Studio de la importadora Faby Land",
-                    "Francia ganó el Mundial del 2018"
-                ],
-                correcta: 2,
-                pistaFelipe: "Calidad sonora de importadora Faby Land, papá. El micrófono Philco no falla."
-            }
-        ];
-
-        let indicePreguntaActual = 0;
-        let bloqueadoMillonario = false;
-
-        function iniciarTensionMillonario() {
-            detenerTensionMillonario();
-            if (!audioHabilitado) return;
-
-            const mp3Amb = document.getElementById('fondomillonario-mp3');
-            if (mp3Amb) {
-                mp3Amb.volume = 0.28;
-                mp3Amb.play().catch(() => {});
-            }
-
-            const ctx = obtenerAudioCtx();
-            if (!ctx) return;
-
-            millonarioInterval = setInterval(() => {
-                if (!audioHabilitado) return;
-                const c = obtenerAudioCtx();
-                if (!c) return;
-                const ahora = c.currentTime;
-                [0, 0.28].forEach((offset, i) => {
-                    const osc = c.createOscillator();
-                    const gain = c.createGain();
-                    osc.type = i === 0 ? 'sine' : 'triangle';
-                    osc.frequency.setValueAtTime(i === 0 ? 73.4 : 110.0, ahora + offset);
-                    gain.gain.setValueAtTime(0.001, ahora + offset);
-                    gain.gain.linearRampToValueAtTime(0.055, ahora + offset + 0.04);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + offset + 0.24);
-                    osc.connect(gain); gain.connect(c.destination);
-                    osc.start(ahora + offset); osc.stop(ahora + offset + 0.25);
-                });
-            }, 1350);
-        }
-
-        function detenerTensionMillonario() {
-            if (millonarioInterval) {
-                clearInterval(millonarioInterval);
-                millonarioInterval = null;
-            }
-            if (timeoutEntradaVoz) {
-                clearTimeout(timeoutEntradaVoz);
-                timeoutEntradaVoz = null;
-            }
-        }
-
-        function sonarTicTacReloj() {
-            if (!audioHabilitado) return;
-            const ctx = obtenerAudioCtx();
-            if (!ctx) return;
-            const ahora = ctx.currentTime;
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(1100, ahora);
-            osc.frequency.exponentialRampToValueAtTime(520, ahora + 0.05);
-            gain.gain.setValueAtTime(0.001, ahora);
-            gain.gain.linearRampToValueAtTime(0.065, ahora + 0.006);
-            gain.gain.exponentialRampToValueAtTime(0.0008, ahora + 0.055);
-            osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(ahora); osc.stop(ahora + 0.06);
-        }
-
-        function iniciarRelojPensar() {
-            detenerRelojPensar();
-            const avatar = document.getElementById('narrator-avatar');
-            const roleLabel = document.getElementById('narrator-role-label');
-            avatar.classList.remove('hablando');
-            avatar.classList.add('reloj-activo');
-            avatar.innerText = "⏱️";
-            roleLabel.innerText = "TIEMPO DE ANÁLISIS • ELIGE CON CALMA";
-
-            sonarTicTacReloj();
-            relojInterval = setInterval(() => {
-                if (!bloqueadoMillonario && audioHabilitado) {
-                    sonarTicTacReloj();
-                }
-            }, 950);
-        }
-
-        function detenerRelojPensar() {
-            if (relojInterval) {
-                clearInterval(relojInterval);
-                relojInterval = null;
-            }
-            const avatar = document.getElementById('narrator-avatar');
-            const roleLabel = document.getElementById('narrator-role-label');
-            if (avatar) {
-                avatar.classList.remove('reloj-activo');
-                avatar.innerText = "🎙️";
-            }
-            if (roleLabel) {
-                roleLabel.innerText = "PRESENTADORA EN VIVO";
-            }
-        }
-
-        function sonarRedobleTambores(duracion = 4.0) {
-            if (!audioHabilitado) return;
-
-            const mp3Susp = document.getElementById('suspenso-mp3');
-            if (mp3Susp) {
-                mp3Susp.currentTime = 0;
-                mp3Susp.volume = 0.45;
-                mp3Susp.play().catch(() => {});
-            }
-
-            const mp3Tamb = document.getElementById('tambores-4s-mp3');
-            if (mp3Tamb) {
-                mp3Tamb.currentTime = 0;
-                mp3Tamb.volume = 0.8;
-                mp3Tamb.play().catch(() => sonarRedobleSintetico(duracion));
-                return;
-            }
-            sonarRedobleSintetico(duracion);
-        }
-
-        function sonarRedobleSintetico(duracion = 4.0) {
-            const ctx = obtenerAudioCtx();
-            if (!ctx) return;
-            const ahora = ctx.currentTime;
-            const golpes = 52;
-            for (let i = 0; i < golpes; i++) {
-                const t = ahora + (i * (duracion / golpes));
-                const bufferSize = Math.floor(ctx.sampleRate * 0.07);
-                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-                const data = buffer.getChannelData(0);
-                for (let j = 0; j < bufferSize; j++) data[j] = Math.random() * 2 - 1;
-                const noise = ctx.createBufferSource();
-                noise.buffer = buffer;
-
-                const filter = ctx.createBiquadFilter();
-                filter.type = 'bandpass';
-                filter.frequency.value = 190 + (i * 7);
-
-                const gain = ctx.createGain();
-                const progreso = i / golpes;
-                gain.gain.setValueAtTime(0.05 + (progreso * 0.14), t);
-                gain.gain.exponentialRampToValueAtTime(0.002, t + 0.065);
-
-                noise.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
-                noise.start(t);
-            }
-        }
-
-        function sonarEfectoMillonario(tipo) {
-            if (!audioHabilitado) return;
-            const ctx = obtenerAudioCtx();
-            if (!ctx) return;
-            const ahora = ctx.currentTime;
-
-            if (tipo === 'win') {
-                const notas = [392.00, 493.88, 587.33, 783.99, 987.77];
-                notas.forEach((freq, idx) => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(freq, ahora + idx * 0.14);
-                    gain.gain.setValueAtTime(0.08, ahora + idx * 0.14);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + idx * 0.14 + 0.65);
-                    osc.connect(gain); gain.connect(ctx.destination);
-                    osc.start(ahora + idx * 0.14); osc.stop(ahora + idx * 0.14 + 0.68);
-                });
-            } else if (tipo === 'lose') {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(150, ahora);
-                osc.frequency.linearRampToValueAtTime(70, ahora + 0.7);
-                gain.gain.setValueAtTime(0.08, ahora);
-                gain.gain.exponentialRampToValueAtTime(0.001, ahora + 0.75);
-                osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(ahora); osc.stop(ahora + 0.76);
-            }
-        }
-
-        function hablarPreguntaAhora() {
-            if (timeoutEntradaVoz) {
-                clearTimeout(timeoutEntradaVoz);
-                timeoutEntradaVoz = null;
-            }
-            const p = preguntasMillonario[indicePreguntaActual];
-            if (!p) return;
-
-            detenerRelojPensar();
-            document.getElementById('narrator-role-label').innerText = "PRESENTADORA EN VIVO";
-            document.getElementById('narrator-subtitle').innerText = p.narracion;
-
-            if (!audioHabilitado) {
-                iniciarRelojPensar();
-                return;
-            }
-
-            const avatar = document.getElementById('narrator-avatar');
-            const mp3El = document.getElementById(p.audioEl);
-
-            if (mp3El) {
-                mp3El.currentTime = 0;
-                mp3El.play().then(() => {
-                    avatar.classList.add('hablando');
-                    mp3El.onended = () => {
-                        avatar.classList.remove('hablando');
-                        if (!bloqueadoMillonario) iniciarRelojPensar();
-                    };
-                }).catch(() => {
-                    narrarConVozSintetica(p.narracion, true);
-                });
-            } else {
-                narrarConVozSintetica(p.narracion, true);
-            }
-        }
-
-        function narrarConVozSintetica(texto, activarRelojAlTerminar = false) {
-            document.getElementById('narrator-subtitle').innerText = texto;
-            if (!audioHabilitado || !('speechSynthesis' in window)) {
-                if (activarRelojAlTerminar && !bloqueadoMillonario) iniciarRelojPensar();
-                return;
-            }
-            window.speechSynthesis.cancel();
-            const utter = new SpeechSynthesisUtterance(texto);
-            utter.lang = 'es-CL';
-            utter.rate = 0.92;
-            utter.pitch = 0.85;
-            const avatar = document.getElementById('narrator-avatar');
-            utter.onstart = () => avatar.classList.add('hablando');
-            utter.onend = () => {
-                avatar.classList.remove('hablando');
-                if (activarRelojAlTerminar && !bloqueadoMillonario) iniciarRelojPensar();
-            };
-            utter.onerror = () => {
-                avatar.classList.remove('hablando');
-                if (activarRelojAlTerminar && !bloqueadoMillonario) iniciarRelojPensar();
-            };
-            window.speechSynthesis.speak(utter);
-        }
-
-        function iniciarMillonario() {
-            indicePreguntaActual = 0;
-            document.getElementById('debt-tracker-pill').innerText = "💳 Deuda Maze Bank: -$10.000.000 USD | Acumulado: $0";
-            cargarPreguntaMillonario(0);
-        }
-
-        function cargarPreguntaMillonario(idx) {
-            bloqueadoMillonario = false;
-            detenerRelojPensar();
-            if (timeoutEntradaVoz) {
-                clearTimeout(timeoutEntradaVoz);
-                timeoutEntradaVoz = null;
-            }
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-
-            const p = preguntasMillonario[idx];
-            document.getElementById('wwtbam-q-text').innerText = p.pregunta;
-            document.getElementById('studio-center-img').src = p.fotoCentro;
-
-            for (let i = 0; i < 4; i++) {
-                const btn = document.getElementById('wwtbam-opt-' + i);
-                btn.style.visibility = 'visible';
-                btn.classList.remove('locked', 'correct', 'wrong');
-                btn.querySelector('.opt-text').innerText = p.opciones[i];
-            }
-
-            for (let s = 0; s < 3; s++) {
-                const step = document.getElementById('ladder-' + s);
-                step.classList.remove('active', 'done');
-                if (s < idx) step.classList.add('done');
-                else if (s === idx) step.classList.add('active');
-            }
-
-            document.getElementById('narrator-role-label').innerText = "ENTRADA DE PREGUNTA • INICIANDO EN 10s";
-            document.getElementById('narrator-subtitle').innerText = "Escuchando entrada del programa...";
-
-            const mp3Entrada = document.getElementById('pregunta-mp3');
-            if (audioHabilitado && mp3Entrada) {
-                mp3Entrada.currentTime = 0;
-                mp3Entrada.volume = 0.65;
-                mp3Entrada.play().catch(() => {});
-            }
-
-            timeoutEntradaVoz = setTimeout(() => {
-                if (!bloqueadoMillonario) {
-                    hablarPreguntaAhora();
-                }
-            }, 10000);
-        }
-
-        function seleccionarOpcionMillonario(opcionIdx, btn) {
-            if (bloqueadoMillonario) return;
-            bloqueadoMillonario = true;
-            detenerRelojPensar();
-            if (timeoutEntradaVoz) {
-                clearTimeout(timeoutEntradaVoz);
-                timeoutEntradaVoz = null;
-            }
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-
-            const p = preguntasMillonario[indicePreguntaActual];
-            btn.classList.add('locked');
-            document.getElementById('narrator-role-label').innerText = "RESPUESTA BLOQUEADA";
-            document.getElementById('narrator-subtitle').innerText = "🥁 Redoble de tambores... ¿Será verdadera o falsa?";
-            sonarRedobleTambores(4.0);
-
-            setTimeout(() => {
-                btn.classList.remove('locked');
-                if (opcionIdx === p.correcta) {
-                    btn.classList.add('correct');
-                    sonarEfectoMillonario('win');
-
-                    const restante = 10000000 - p.premioAcumulado;
-                    document.getElementById('debt-tracker-pill').innerText =
-                        `💳 Deuda Maze Bank: -$${restante.toLocaleString()} USD | Acumulado: $${p.premioAcumulado.toLocaleString()}`;
-
-                    document.getElementById('narrator-subtitle').innerText = "✅ ¡RESPUESTA VERDADERA!";
-
-                    setTimeout(() => {
-                        indicePreguntaActual++;
-                        if (indicePreguntaActual < preguntasMillonario.length) {
-                            cargarPreguntaMillonario(indicePreguntaActual);
-                        } else {
-                            detenerTensionMillonario();
-                            const mp3Amb = document.getElementById('fondomillonario-mp3');
-                            if (mp3Amb) mp3Amb.pause();
-                            document.getElementById('narrator-subtitle').innerText = "¡Ganaste $9.985.000! Solo faltan $15.000 en El Gran Golpe.";
-                            setTimeout(() => {
-                                mostrarMemeEspontaneo('meme9.jpg', true, 3600, () => cambiarEscena(6));
-                            }, 2200);
-                        }
-                    }, 2500);
-                } else {
-                    btn.classList.add('wrong');
-                    sonarEfectoMillonario('lose');
-                    sacudirElemento(document.getElementById('wwtbam-studio'));
-                    document.getElementById('narrator-subtitle').innerText = "❌ ¡RESPUESTA FALSA! Inténtalo de nuevo.";
-
-                    setTimeout(() => {
-                        btn.classList.remove('wrong');
-                        bloqueadoMillonario = false;
-                        iniciarRelojPensar();
-                    }, 1800);
-                }
-            }, 4000);
-        }
-
-        function usarComodin5050() {
-            if (bloqueadoMillonario) return;
-            document.getElementById('ll-5050').classList.add('usado');
-            const p = preguntasMillonario[indicePreguntaActual];
-            let ocultadas = 0;
-            for (let i = 0; i < 4; i++) {
-                if (i !== p.correcta && ocultadas < 2) {
-                    document.getElementById('wwtbam-opt-' + i).style.visibility = 'hidden';
-                    ocultadas++;
-                }
-            }
-        }
-
-        function usarComodinLlamada() {
-            if (bloqueadoMillonario) return;
-            document.getElementById('ll-call').classList.add('usado');
-            const p = preguntasMillonario[indicePreguntaActual];
-            alert("📞 Llamando a FelipeSoSo2022:\n\n\"" + p.pistaFelipe + "\"");
-        }
-
-        function usarComodinPublico() {
-            if (bloqueadoMillonario) return;
-            document.getElementById('ll-public').classList.add('usado');
-            const letras = ['A', 'B', 'C', 'D'];
-            const p = preguntasMillonario[indicePreguntaActual];
-            alert("👥 Resultado del Público:\n\nOpción " + letras[p.correcta] + ": 84%\nOtras opciones: 16%");
-        }
-
-        // ================= GTA V HEIST =================
-        let pctFelipe = 50;
-        const botinTotal = 3000000;
-
-        function ajustarCutGTA(cambio) {
-            if (pctFelipe + cambio >= 50 && pctFelipe + cambio <= 99) {
-                pctFelipe += cambio;
-                let restoIndividual = (100 - pctFelipe) / 2;
-
-                document.getElementById('pct-felipe').innerText = pctFelipe + "%";
-                document.getElementById('usd-felipe').innerText = "$" + ((botinTotal * pctFelipe) / 100).toLocaleString();
-
-                document.getElementById('pct-diego').innerText = restoIndividual + "%";
-                document.getElementById('usd-diego').innerText = "$" + ((botinTotal * restoIndividual) / 100).toLocaleString();
-
-                document.getElementById('pct-matias').innerText = restoIndividual + "%";
-                document.getElementById('usd-matias').innerText = "$" + ((botinTotal * restoIndividual) / 100).toLocaleString();
-
-                let corte1 = pctFelipe;
-                let corte2 = pctFelipe + restoIndividual;
-                document.getElementById('heist-donut').style.background = 
-                    `conic-gradient(#2b5c8f 0% ${corte1}%, #e67e22 ${corte1}% ${corte2}%, #27ae60 ${corte2}% 100%)`;
-
-                const sDiego = document.getElementById('status-diego');
-                const sMatias = document.getElementById('status-matias');
-                if (pctFelipe === 99) {
-                    sDiego.className = "status-ready"; sDiego.innerText = "☑ READY";
-                    sMatias.className = "status-ready"; sMatias.innerText = "☑ READY";
-                    document.getElementById('error-heist').style.color = "#27ae60";
-                    document.getElementById('error-heist').innerText = "¡$15,000 exactos alcanzados! Suficiente para saldar Maze Bank.";
-                } else {
-                    sDiego.className = "status-not-ready"; sDiego.innerText = "☒ NOT READY";
-                    sMatias.className = "status-not-ready"; sMatias.innerText = "☒ NOT READY";
-                }
-            }
-        }
-
-        function verificarGolpeGTA() {
-            if (pctFelipe === 99) {
-                cambiarEscena(7);
-            } else {
-                sacudirElemento(document.getElementById('escena-6').querySelector('.gta-whiteboard'));
-                document.getElementById('error-heist').style.color = "#c0392b";
-                document.getElementById('error-heist').innerText = "⚠️ Felipe exige su 99% reglamentario (y tú necesitas los $15,000 exactos).";
-            }
-        }
-    </script>
-</body>
-</html>

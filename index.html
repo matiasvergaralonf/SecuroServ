@@ -69,15 +69,11 @@
         .meme-card-pop {
             background: #111; border: 4px solid #ffcc00; border-radius: 14px;
             padding: 12px; box-shadow: 0 0 50px rgba(255, 204, 0, 0.75);
-            text-align: center; max-width: 420px;
+            text-align: center; max-width: 460px;
             animation: popMemeIn 0.32s cubic-bezier(0.18, 1.35, 0.4, 1);
         }
         .meme-card-pop img {
-            max-width: 340px; max-height: 55vh; border-radius: 8px; display: block; margin: 0 auto;
-        }
-        .meme-card-caption {
-            margin-top: 10px; font-family: 'Rajdhani', sans-serif;
-            font-size: 20px; font-weight: 700; color: #ffd54f; letter-spacing: 0.5px;
+            max-width: 380px; max-height: 68vh; border-radius: 8px; display: block; margin: 0 auto;
         }
 
         /* Estilo especial Doxeo para meme9 */
@@ -91,6 +87,10 @@
             font-weight: 900; font-size: 16px; padding: 6px 12px; border-radius: 6px;
             margin-bottom: 10px; letter-spacing: 1.5px;
             animation: blinkDox 0.35s infinite alternate;
+        }
+        .doxeo-text {
+            margin-top: 10px; font-family: 'Rajdhani', sans-serif;
+            font-size: 19px; font-weight: 700; color: #ffd54f;
         }
         .doxeo-coords {
             font-family: 'Courier New', monospace; font-size: 13px; color: #ff8fa3;
@@ -200,7 +200,9 @@
             box-shadow: 0 0 14px rgba(212, 175, 55, 0.6);
         }
         .narrator-avatar.hablando { animation: pulseVoz 0.45s infinite alternate; }
+        .narrator-avatar.reloj-activo { background: linear-gradient(135deg, #00d2ff, #0284c7); animation: pulseReloj 1s infinite; }
         @keyframes pulseVoz { from { transform: scale(0.95); box-shadow: 0 0 8px #ffd54f; } to { transform: scale(1.08); box-shadow: 0 0 22px #ffd54f; } }
+        @keyframes pulseReloj { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
         .btn-narrador {
             background: rgba(212, 175, 55, 0.16); border: 1px solid #d4af37;
@@ -209,7 +211,6 @@
         }
         .btn-narrador:hover { background: #d4af37; color: #050a18; }
 
-        /* Centro del estudio: Foto icónica + Contador de deuda Maze Bank */
         .wwtbam-center-stage {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             gap: 10px; margin: 6px 0;
@@ -252,7 +253,6 @@
         .wwtbam-opt.wrong { background: linear-gradient(90deg, #7f1d1d 0%, #ef4444 50%, #7f1d1d 100%) !important; border-color: #fecaca !important; color: #fff !important; }
         @keyframes blinkWin { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
 
-        /* Torre Lateral Derecha + Comodines Abajo a la Derecha */
         .wwtbam-ladder {
             background: rgba(3, 10, 32, 0.92);
             border: 2px solid #d4af37; border-radius: 14px;
@@ -339,12 +339,12 @@
     <button class="btn-audio-toggle" id="btn-audio-toggle" onclick="toggleAudioGlobal()">🔊 Ambiente: ON</button>
     <div id="custom-cursor"></div>
 
-    <!-- POPUP ESPONTÁNEO DE MEMES Y ALERTA DE DOXEO -->
+    <!-- POPUP ESPONTÁNEO DE MEMES (SIN TEXTO) Y ALERTA DE DOXEO (CON TEXTO) -->
     <div id="meme-popup-overlay">
         <div class="meme-card-pop" id="meme-card-box">
             <div id="doxeo-header" class="doxeo-banner" style="display:none;">⚠️ ALERTA DE SEGURIDAD: IP RASTREADA (DOXEO)</div>
             <img id="meme-popup-img" src="meme4.jpg" alt="Meme">
-            <div class="meme-card-caption" id="meme-popup-text">Archivo clasificado interceptado</div>
+            <div id="doxeo-text" class="doxeo-text" style="display:none;">¡D1eg0_23 ha sido doxeado por Maze Bank! Necesitas los $15.000 restantes en El Gran Golpe.</div>
             <div id="doxeo-footer" class="doxeo-coords" style="display:none;">LAT: -37.0914° S | LON: -73.1582° W • UBICACIÓN ENCONTRADA</div>
         </div>
     </div>
@@ -443,7 +443,7 @@
             <img src="palo.png" class="cave-item" id="cave-palo" style="top: 68%; left: 18%;" onclick="recolectarItem('palo', this)" alt="Palo">
             <img src="tela.png" class="cave-item" id="cave-tela" style="top: 25%; left: 78%;" onclick="recolectarItem('tela', this)" alt="Tela">
             <img src="alcohol.png" class="cave-item" id="cave-alcohol" style="top: 75%; left: 82%;" onclick="recolectarItem('alcohol', this)" alt="Alcohol">
-            <img src="meme1.jpg" class="cave-item" style="top: 20%; left: 22%; border-radius:10px;" onclick="mostrarMemeEspontaneo('meme6.jpg', '¡Recuerdo perturbador encontrado en la cueva!')" alt="Meme">
+            <img src="meme1.jpg" class="cave-item" style="top: 20%; left: 22%; border-radius:10px;" onclick="mostrarMemeEspontaneo('meme6.jpg', false, 1800)" alt="Meme">
             <div class="uv-mask" id="uv-mask"></div>
         </div>
 
@@ -485,7 +485,6 @@
     <div id="escena-5" class="escena">
         <div class="wwtbam-studio" id="wwtbam-studio">
             <div class="wwtbam-main">
-                <!-- Cabecera + Narrador -->
                 <div class="wwtbam-top">
                     <div class="wwtbam-logo">
                         QUIÉN<br>QUIERE SER<br><span>MILLONARIO</span>
@@ -495,15 +494,14 @@
                         <div class="narrator-info">
                             <div class="narrator-avatar" id="narrator-avatar">🎙️</div>
                             <div>
-                                <div style="font-size:12px; color:#ffd54f; font-weight:700; letter-spacing:1px;">NARRADOR EN VIVO</div>
-                                <div id="narrator-subtitle" style="font-size:14px; color:#dce6f2;">Bienvenido al set, D1eg0_23. Escucha con atención...</div>
+                                <div style="font-size:12px; color:#ffd54f; font-weight:700; letter-spacing:1px;" id="narrator-role-label">PRESENTADORA EN VIVO</div>
+                                <div id="narrator-subtitle" style="font-size:14px; color:#dce6f2;">Escuchando pregunta...</div>
                             </div>
                         </div>
                         <button class="btn-narrador" onclick="narrarPreguntaActual()">🗣️ Repetir Voz</button>
                     </div>
                 </div>
 
-                <!-- Centro del Estudio: Foto Central + Tracker de Deuda Maze Bank -->
                 <div class="wwtbam-center-stage">
                     <div class="studio-center-frame">
                         <img id="studio-center-img" src="meme3.jpg" alt="Oráculo del Set">
@@ -513,7 +511,6 @@
                     </div>
                 </div>
 
-                <!-- Pregunta y 4 Opciones -->
                 <div>
                     <div class="wwtbam-question" id="wwtbam-q-text">
                         Cargando pregunta...
@@ -536,7 +533,6 @@
                 </div>
             </div>
 
-            <!-- Torre Lateral Derecha + Comodines Abajo a la Derecha -->
             <div class="wwtbam-ladder">
                 <div>
                     <div class="ladder-title">ESCALA DE PREMIOS</div>
@@ -554,13 +550,12 @@
             </div>
         </div>
 
-        <!-- Audios opcionales de ElevenLabs -->
         <audio id="voz-p1" src="voz-p1.mp3"></audio>
         <audio id="voz-p2" src="voz-p2.mp3"></audio>
         <audio id="voz-p3" src="voz-p3.mp3"></audio>
     </div>
 
-    <!-- ================= PASO 7: GTA V HEIST (CARAS REALES + SALDO $15.000) ================= -->
+    <!-- ================= PASO 7: GTA V HEIST ================= -->
     <div id="escena-6" class="escena">
         <div class="gta-backdrop"></div>
         <img src="chiliad.jpg" class="fondo-blur" alt="Monte Chiliad">
@@ -674,7 +669,6 @@
         <p style="color:#dce6f2; font-size:18px;">Aquí pondremos la bóveda abriéndose y el video final.</p>
     </div>
 
-    <!-- Audio chistoso opcional del proyecto anterior -->
     <audio id="sonido-meme-mp3" src="sonido-meme.mp3"></audio>
 
     <script>
@@ -685,6 +679,7 @@
         let ambientOsc2 = null;
         let ambientGain = null;
         let millonarioInterval = null;
+        let relojInterval = null;
 
         function obtenerAudioCtx() {
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -698,6 +693,7 @@
             if (!audioHabilitado) {
                 detenerAmbiente();
                 detenerTensionMillonario();
+                detenerRelojPensar();
                 if ('speechSynthesis' in window) window.speechSynthesis.cancel();
                 btn.innerText = '🔇 Ambiente: OFF';
             } else {
@@ -721,6 +717,7 @@
         function iniciarAmbienteEscena(num) {
             detenerAmbiente();
             detenerTensionMillonario();
+            detenerRelojPensar();
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
 
@@ -795,7 +792,7 @@
             osc.stop(ahora + 0.36);
         }
 
-        // ================= MEMES ESPONTÁNEOS Y DOXEO (MEME 4, 5, 6, 7, 8, 9) =================
+        // ================= MEMES ESPONTÁNEOS (SIN TEXTO) Y DOXEO (CON TEXTO) =================
         function sonarMusicaChistosa(esDoxeo) {
             if (!audioHabilitado) return;
             const mp3 = document.getElementById('sonido-meme-mp3');
@@ -829,24 +826,25 @@
             });
         }
 
-        function mostrarMemeEspontaneo(archivoImg, texto, esDoxeo = false, duracion = 2200, callback = null) {
+        function mostrarMemeEspontaneo(archivoImg, esDoxeo = false, duracion = 2200, callback = null) {
             const overlay = document.getElementById('meme-popup-overlay');
             const box = document.getElementById('meme-card-box');
             const img = document.getElementById('meme-popup-img');
-            const txt = document.getElementById('meme-popup-text');
             const doxHead = document.getElementById('doxeo-header');
+            const doxTxt = document.getElementById('doxeo-text');
             const doxFoot = document.getElementById('doxeo-footer');
 
             img.src = archivoImg;
-            txt.innerText = texto;
 
             if (esDoxeo) {
                 box.classList.add('doxeo-alert');
                 doxHead.style.display = 'block';
+                doxTxt.style.display = 'block';
                 doxFoot.style.display = 'block';
             } else {
                 box.classList.remove('doxeo-alert');
                 doxHead.style.display = 'none';
+                doxTxt.style.display = 'none';
                 doxFoot.style.display = 'none';
             }
 
@@ -866,7 +864,7 @@
             el.classList.add('shake');
         }
 
-        // ================= SALTO ESTELAR (WARP DRIVE) =================
+        // ================= SALTO ESTELAR =================
         function ejecutarSaltoEstelar(destinoEscena) {
             const overlay = document.getElementById('warp-overlay');
             const canvas = document.getElementById('warp-canvas');
@@ -955,7 +953,10 @@
 
             transicionando = true;
             if (num !== 3) document.getElementById('custom-cursor').style.display = 'none';
-            if (num !== 5 && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+            if (num !== 5) {
+                detenerRelojPensar();
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            }
 
             sonarTransicionNivel();
 
@@ -1007,9 +1008,8 @@
                     let chat = document.getElementById('chat-faltante');
                     chat.style.color = "#55ff77";
                     chat.innerHTML = "<span class='chat-you'>D1eg0_23:</span> ¡Gracias!";
-                    // Aparece meme4 espontáneo al pasar RL
                     setTimeout(() => {
-                        mostrarMemeEspontaneo('meme4.jpg', '¡Conexión verificada!', false, 1800, () => cambiarEscena(2));
+                        mostrarMemeEspontaneo('meme4.jpg', false, 1800, () => cambiarEscena(2));
                     }, 900);
                 } else {
                     sacudirElemento(document.getElementById('escena-1').querySelector('.contenido-frente'));
@@ -1130,8 +1130,7 @@
         function validarPhasmo() {
             let val = document.getElementById('input-coord-phasmo').value.trim().toLowerCase();
             if (val !== "") {
-                // Meme 5 espontáneo antes de caer a la cueva
-                mostrarMemeEspontaneo('meme5.jpg', '¡Entidad identificada en los archivos!', false, 1800, () => cambiarEscena(3));
+                mostrarMemeEspontaneo('meme5.jpg', false, 1800, () => cambiarEscena(3));
             } else {
                 alert("Escribe la coordenada.");
             }
@@ -1205,7 +1204,7 @@
                 let r = d.getBoundingClientRect();
                 if (virtualX >= r.left && virtualX <= r.right && virtualY >= r.top && virtualY <= r.bottom) {
                     const m = d.getAttribute('data-distractor') === '1' ? 'meme7.jpg' : 'meme8.jpg';
-                    mostrarMemeEspontaneo(m, '😂 ¡Recuerdo clasificado! No sirve para armar una antorcha.', false, 1800);
+                    mostrarMemeEspontaneo(m, false, 1800);
                 }
             });
             ['palo', 'tela', 'alcohol'].forEach(item => {
@@ -1351,7 +1350,6 @@
         function iniciarTensionMillonario() {
             detenerTensionMillonario();
             if (!audioHabilitado) return;
-            // Latido grave + pulso armónico sutil de estudio de TV
             millonarioInterval = setInterval(() => {
                 if (!audioHabilitado) return;
                 const ctx = obtenerAudioCtx();
@@ -1362,12 +1360,10 @@
                     osc.type = i === 0 ? 'sine' : 'triangle';
                     osc.frequency.setValueAtTime(i === 0 ? 65.4 : 98.0, ahora + offset);
                     gain.gain.setValueAtTime(0.001, ahora + offset);
-                    gain.gain.linearRampToValueAtTime(0.05, ahora + offset + 0.03);
+                    gain.gain.linearRampToValueAtTime(0.045, ahora + offset + 0.03);
                     gain.gain.exponentialRampToValueAtTime(0.001, ahora + offset + 0.22);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start(ahora + offset);
-                    osc.stop(ahora + offset + 0.23);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(ahora + offset); osc.stop(ahora + offset + 0.23);
                 });
             }, 1100);
         }
@@ -1379,15 +1375,65 @@
             }
         }
 
-        // Redoble de tambores sintetizado al marcar "¿Última palabra?"
-        function sonarRedobleTambores(duracion = 1.3) {
+        // Sonido tic-tac de reloj al terminar de hablar la presentadora
+        function sonarTicTacReloj() {
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
             const ahora = ctx.currentTime;
-            const golpes = 18;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(1150, ahora);
+            osc.frequency.exponentialRampToValueAtTime(520, ahora + 0.045);
+            gain.gain.setValueAtTime(0.001, ahora);
+            gain.gain.linearRampToValueAtTime(0.055, ahora + 0.005);
+            gain.gain.exponentialRampToValueAtTime(0.0008, ahora + 0.05);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(ahora); osc.stop(ahora + 0.055);
+        }
+
+        function iniciarRelojPensar() {
+            detenerRelojPensar();
+            const avatar = document.getElementById('narrator-avatar');
+            const roleLabel = document.getElementById('narrator-role-label');
+            avatar.classList.remove('hablando');
+            avatar.classList.add('reloj-activo');
+            avatar.innerText = "⏱️";
+            roleLabel.innerText = "TIEMPO CORRIENDO • ELIGE TU OPCIÓN";
+
+            sonarTicTacReloj();
+            relojInterval = setInterval(() => {
+                if (!bloqueadoMillonario && audioHabilitado) {
+                    sonarTicTacReloj();
+                }
+            }, 750);
+        }
+
+        function detenerRelojPensar() {
+            if (relojInterval) {
+                clearInterval(relojInterval);
+                relojInterval = null;
+            }
+            const avatar = document.getElementById('narrator-avatar');
+            const roleLabel = document.getElementById('narrator-role-label');
+            if (avatar) {
+                avatar.classList.remove('reloj-activo');
+                avatar.innerText = "🎙️";
+            }
+            if (roleLabel) {
+                roleLabel.innerText = "PRESENTADORA EN VIVO";
+            }
+        }
+
+        // Redoble de tambores de 4 segundos exactos
+        function sonarRedobleTambores(duracion = 4.0) {
+            if (!audioHabilitado) return;
+            const ctx = obtenerAudioCtx();
+            const ahora = ctx.currentTime;
+            const golpes = 48;
             for (let i = 0; i < golpes; i++) {
                 const t = ahora + (i * (duracion / golpes));
-                const bufferSize = ctx.sampleRate * 0.06;
+                const bufferSize = Math.floor(ctx.sampleRate * 0.065);
                 const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
                 const data = buffer.getChannelData(0);
                 for (let j = 0; j < bufferSize; j++) data[j] = Math.random() * 2 - 1;
@@ -1396,11 +1442,12 @@
 
                 const filter = ctx.createBiquadFilter();
                 filter.type = 'bandpass';
-                filter.frequency.value = 260 + (i * 15);
+                filter.frequency.value = 220 + (i * 8);
 
                 const gain = ctx.createGain();
-                gain.gain.setValueAtTime(0.015 + (i * 0.002), t);
-                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.055);
+                const progreso = i / golpes;
+                gain.gain.setValueAtTime(0.015 + (progreso * 0.055), t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
 
                 noise.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
                 noise.start(t);
@@ -1413,7 +1460,6 @@
             const ahora = ctx.currentTime;
 
             if (tipo === 'win') {
-                // Fanfarria triunfal de TV
                 const notas = [392.00, 493.88, 587.33, 783.99, 987.77];
                 notas.forEach((freq, idx) => {
                     const osc = ctx.createOscillator();
@@ -1441,29 +1487,39 @@
         function narrarPreguntaActual() {
             const p = preguntasMillonario[indicePreguntaActual];
             if (!p) return;
+            detenerRelojPensar();
             document.getElementById('narrator-subtitle').innerText = p.narracion;
-            if (!audioHabilitado) return;
+
+            if (!audioHabilitado) {
+                iniciarRelojPensar();
+                return;
+            }
 
             const avatar = document.getElementById('narrator-avatar');
             const mp3El = document.getElementById(p.audioEl);
 
-            // Intenta primero reproducir el MP3 de ElevenLabs si lo subiste
             if (mp3El) {
                 mp3El.currentTime = 0;
                 mp3El.play().then(() => {
                     avatar.classList.add('hablando');
-                    mp3El.onended = () => avatar.classList.remove('hablando');
+                    mp3El.onended = () => {
+                        avatar.classList.remove('hablando');
+                        if (!bloqueadoMillonario) iniciarRelojPensar();
+                    };
                 }).catch(() => {
-                    narrarConVozSintetica(p.narracion);
+                    narrarConVozSintetica(p.narracion, true);
                 });
             } else {
-                narrarConVozSintetica(p.narracion);
+                narrarConVozSintetica(p.narracion, true);
             }
         }
 
-        function narrarConVozSintetica(texto) {
+        function narrarConVozSintetica(texto, activarRelojAlTerminar = false) {
             document.getElementById('narrator-subtitle').innerText = texto;
-            if (!audioHabilitado || !('speechSynthesis' in window)) return;
+            if (!audioHabilitado || !('speechSynthesis' in window)) {
+                if (activarRelojAlTerminar && !bloqueadoMillonario) iniciarRelojPensar();
+                return;
+            }
             window.speechSynthesis.cancel();
             const utter = new SpeechSynthesisUtterance(texto);
             utter.lang = 'es-CL';
@@ -1471,8 +1527,14 @@
             utter.pitch = 0.85;
             const avatar = document.getElementById('narrator-avatar');
             utter.onstart = () => avatar.classList.add('hablando');
-            utter.onend = () => avatar.classList.remove('hablando');
-            utter.onerror = () => avatar.classList.remove('hablando');
+            utter.onend = () => {
+                avatar.classList.remove('hablando');
+                if (activarRelojAlTerminar && !bloqueadoMillonario) iniciarRelojPensar();
+            };
+            utter.onerror = () => {
+                avatar.classList.remove('hablando');
+                if (activarRelojAlTerminar && !bloqueadoMillonario) iniciarRelojPensar();
+            };
             window.speechSynthesis.speak(utter);
         }
 
@@ -1508,11 +1570,13 @@
         function seleccionarOpcionMillonario(opcionIdx, btn) {
             if (bloqueadoMillonario) return;
             bloqueadoMillonario = true;
+            detenerRelojPensar();
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
             const p = preguntasMillonario[indicePreguntaActual];
             btn.classList.add('locked');
-            sonarRedobleTambores(1.35);
-            narrarConVozSintetica("¿Última palabra? Veamos...");
+            document.getElementById('narrator-subtitle').innerText = "🥁 Redoble de tambores... ¿Será verdadera o falsa?";
+            sonarRedobleTambores(4.0);
 
             setTimeout(() => {
                 btn.classList.remove('locked');
@@ -1524,7 +1588,7 @@
                     document.getElementById('debt-tracker-pill').innerText =
                         `💳 Deuda Maze Bank: -$${restante.toLocaleString()} USD | Acumulado: $${p.premioAcumulado.toLocaleString()}`;
 
-                    narrarConVozSintetica("¡Respuesta correcta!");
+                    document.getElementById('narrator-subtitle').innerText = "✅ ¡RESPUESTA VERDADERA!";
 
                     setTimeout(() => {
                         indicePreguntaActual++;
@@ -1532,31 +1596,25 @@
                             cargarPreguntaMillonario(indicePreguntaActual);
                         } else {
                             detenerTensionMillonario();
-                            narrarConVozSintetica("¡Ganaste nueve millones novecientos ochenta y cinco mil! Solo te faltan quince mil dólares para saldar Maze Bank.");
-                            // Alerta de DOXEO espontánea con meme9 antes de entrar al Golpe Final de GTA V
+                            document.getElementById('narrator-subtitle').innerText = "¡Ganaste $9.985.000! Solo faltan $15.000 en El Gran Golpe.";
                             setTimeout(() => {
-                                mostrarMemeEspontaneo(
-                                    'meme9.jpg',
-                                    '¡D1eg0_23 ha sido doxeado por Maze Bank! Necesitas los $15.000 restantes en El Gran Golpe.',
-                                    true,
-                                    3400,
-                                    () => cambiarEscena(6)
-                                );
-                            }, 1600);
+                                mostrarMemeEspontaneo('meme9.jpg', true, 3400, () => cambiarEscena(6));
+                            }, 1500);
                         }
                     }, 1700);
                 } else {
                     btn.classList.add('wrong');
                     sonarEfectoMillonario('lose');
                     sacudirElemento(document.getElementById('wwtbam-studio'));
-                    narrarConVozSintetica("¡Incorrecto! Eso no es canon. Inténtalo de nuevo.");
+                    document.getElementById('narrator-subtitle').innerText = "❌ ¡RESPUESTA FALSA! Inténtalo de nuevo.";
 
                     setTimeout(() => {
                         btn.classList.remove('wrong');
                         bloqueadoMillonario = false;
+                        iniciarRelojPensar();
                     }, 1300);
                 }
-            }, 1450);
+            }, 4000);
         }
 
         function usarComodin5050() {
@@ -1570,14 +1628,12 @@
                     ocultadas++;
                 }
             }
-            narrarConVozSintetica("Comodín cincuenta y cincuenta activado.");
         }
 
         function usarComodinLlamada() {
             if (bloqueadoMillonario) return;
             document.getElementById('ll-call').classList.add('usado');
             const p = preguntasMillonario[indicePreguntaActual];
-            narrarConVozSintetica("Llamando a Felipe... " + p.pistaFelipe);
             alert("📞 Llamando a FelipeSoSo2022:\n\n\"" + p.pistaFelipe + "\"");
         }
 
@@ -1586,7 +1642,6 @@
             document.getElementById('ll-public').classList.add('usado');
             const letras = ['A', 'B', 'C', 'D'];
             const p = preguntasMillonario[indicePreguntaActual];
-            narrarConVozSintetica("El público vota por la opción " + letras[p.correcta]);
             alert("👥 Resultado del Público:\n\nOpción " + letras[p.correcta] + ": 84%\nOtras opciones: 16%");
         }
 

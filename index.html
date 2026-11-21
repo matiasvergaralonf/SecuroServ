@@ -59,7 +59,47 @@
             display: flex; flex-direction: column; align-items: center; width: 100%;
         }
 
-        /* ================= OVERLAY SALTO ESTELAR (TRANSICIÓN WARP) ================= */
+        /* ================= POPUP MEMES ESPONTÁNEOS Y ALERTA DOXEO ================= */
+        #meme-popup-overlay {
+            display: none; position: fixed; inset: 0; z-index: 9995;
+            background: rgba(0, 0, 0, 0.72);
+            justify-content: center; align-items: center; flex-direction: column;
+            pointer-events: none;
+        }
+        .meme-card-pop {
+            background: #111; border: 4px solid #ffcc00; border-radius: 14px;
+            padding: 12px; box-shadow: 0 0 50px rgba(255, 204, 0, 0.75);
+            text-align: center; max-width: 420px;
+            animation: popMemeIn 0.32s cubic-bezier(0.18, 1.35, 0.4, 1);
+        }
+        .meme-card-pop img {
+            max-width: 340px; max-height: 55vh; border-radius: 8px; display: block; margin: 0 auto;
+        }
+        .meme-card-caption {
+            margin-top: 10px; font-family: 'Rajdhani', sans-serif;
+            font-size: 20px; font-weight: 700; color: #ffd54f; letter-spacing: 0.5px;
+        }
+
+        /* Estilo especial Doxeo para meme9 */
+        .meme-card-pop.doxeo-alert {
+            border-color: #ff2222; background: #1a0303;
+            box-shadow: 0 0 70px rgba(255, 0, 0, 0.9);
+            max-width: 520px;
+        }
+        .doxeo-banner {
+            background: #d90429; color: white; font-family: 'Courier New', monospace;
+            font-weight: 900; font-size: 16px; padding: 6px 12px; border-radius: 6px;
+            margin-bottom: 10px; letter-spacing: 1.5px;
+            animation: blinkDox 0.35s infinite alternate;
+        }
+        .doxeo-coords {
+            font-family: 'Courier New', monospace; font-size: 13px; color: #ff8fa3;
+            margin-top: 8px; background: rgba(0,0,0,0.6); padding: 6px 10px; border-radius: 4px;
+        }
+        @keyframes blinkDox { from { opacity: 1; } to { opacity: 0.55; } }
+        @keyframes popMemeIn { from { transform: scale(0.3) rotate(-8deg); opacity: 0; } to { transform: scale(1) rotate(0deg); opacity: 1; } }
+
+        /* ================= OVERLAY SALTO ESTELAR ================= */
         #warp-overlay {
             display: none; position: fixed; inset: 0; z-index: 9998;
             background: #000; overflow: hidden;
@@ -73,28 +113,20 @@
             text-shadow: 0 0 25px #00e5ff, 0 0 50px #7c4dff;
             animation: warpPulse 0.4s infinite alternate;
         }
-        .warp-flash {
-            position: absolute; inset: 0; background: white; opacity: 0;
-            pointer-events: none; z-index: 3; transition: opacity 0.35s ease;
-        }
+        .warp-flash { position: absolute; inset: 0; background: white; opacity: 0; pointer-events: none; z-index: 3; transition: opacity 0.35s ease; }
         @keyframes warpPulse { from { transform: scale(0.96); opacity: 0.85; } to { transform: scale(1.05); opacity: 1; } }
 
         /* ================= ESTILOS NIVEL 2: ROCKET LEAGUE ================= */
-        .rl-badge {
-            font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase;
-            color: #00d2ff; background: rgba(0, 210, 255, 0.12);
-            border: 1px solid rgba(0, 210, 255, 0.35);
-            padding: 4px 12px; border-radius: 999px; margin-bottom: 10px;
-        }
+        .rl-badge { font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; color: #00d2ff; background: rgba(0, 210, 255, 0.12); border: 1px solid rgba(0, 210, 255, 0.35); padding: 4px 12px; border-radius: 999px; margin-bottom: 10px; }
         .rl-layout { display: flex; width: 85%; max-width: 960px; justify-content: space-between; align-items: center; margin-top: 18px; gap: 32px; }
         .d-pad-wrapper { display: flex; flex-direction: column; align-items: center; gap: 16px; }
         .d-pad { display: grid; grid-template-columns: 76px 76px 76px; grid-template-rows: 76px 76px 76px; gap: 9px; padding: 12px; border-radius: 18px; background: rgba(5, 12, 24, 0.55); border: 1px solid rgba(0, 210, 255, 0.2); }
-        .btn-dpad { background: rgba(10, 22, 42, 0.85); border: 2px solid #00d2ff; color: white; font-size: 25px; border-radius: 12px; cursor: pointer; transition: 0.1s; box-shadow: 0 0 14px rgba(0, 210, 255, 0.25); }
+        .btn-dpad { background: rgba(10, 22, 42, 0.85); border: 2px solid #00d2ff; color: white; font-size: 25px; border-radius: 12px; cursor: pointer; transition: transform 0.1s, background 0.15s, box-shadow 0.15s; box-shadow: 0 0 14px rgba(0, 210, 255, 0.25); }
         .btn-dpad:hover { background: rgba(0, 210, 255, 0.2); box-shadow: 0 0 20px rgba(0, 210, 255, 0.5); }
         .btn-dpad:active { background: #00d2ff; color: #05080f; transform: scale(0.93); }
         .rl-hud-menu { background: rgba(6, 14, 28, 0.9); border: 1px solid rgba(0, 210, 255, 0.55); border-radius: 10px; padding: 12px 18px; min-width: 245px; min-height: 105px; font-size: 14px; color: #d8f2ff; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55); }
         .rl-hud-title { color: #ff9900; font-weight: 700; font-size: 12px; letter-spacing: 1px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); margin-bottom: 5px; padding-bottom: 3px; }
-        .chat-box { background: rgba(6, 9, 15, 0.84); border-left: 5px solid #ff9900; border: 1px solid rgba(255, 255, 255, 0.08); border-left-width: 5px; border-left-color: #ff9900; padding: 24px 26px; width: 440px; border-radius: 10px; font-size: 18px; line-height: 1.65; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); }
+        .chat-box { background: rgba(6, 9, 15, 0.84); border: 1px solid rgba(255, 255, 255, 0.08); border-left: 5px solid #ff9900; padding: 24px 26px; width: 440px; border-radius: 10px; font-size: 18px; line-height: 1.65; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); }
         .chat-you { color: #55ff77; font-weight: 700; }
         .chat-sys { color: #ffcc00; font-style: italic; font-size: 16px; }
 
@@ -128,56 +160,43 @@
         .map-wrapper { position: relative; height: 76vh; aspect-ratio: 1/1; border: 4px solid #c8963e; border-radius: 10px; overflow: hidden; cursor: crosshair; box-shadow: 0 0 45px rgba(0, 0, 0, 0.92); }
         .map-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* ================= ESTILOS NUEVA SECCIÓN: ¿QUIÉN QUIERE SER MILLONARIO? ================= */
+        /* ================= ESTILOS NIVEL 6: ¿QUIÉN QUIERE SER MILLONARIO? ================= */
         .wwtbam-studio {
             width: 100vw; height: 100vh;
-            background:
-                radial-gradient(circle at 50% 25%, rgba(0, 110, 255, 0.35) 0%, rgba(10, 25, 80, 0.65) 45%, #020512 90%);
-            display: grid;
-            grid-template-columns: 1fr 270px;
-            padding: 35px 40px 30px 45px;
-            gap: 28px;
-            position: relative;
+            background: radial-gradient(circle at 50% 35%, rgba(0, 110, 255, 0.35) 0%, rgba(10, 25, 80, 0.68) 48%, #020512 92%);
+            display: grid; grid-template-columns: 1fr 275px;
+            padding: 28px 36px 34px 40px; gap: 26px; position: relative;
         }
-        /* Haz de luz de estudio de TV */
         .wwtbam-studio::before {
             content: ''; position: absolute; inset: 0; pointer-events: none;
-            background: conic-gradient(from 210deg at 50% 0%, transparent 0deg, rgba(0, 180, 255, 0.08) 20deg, transparent 40deg, rgba(120, 80, 255, 0.08) 65deg, transparent 90deg);
+            background: conic-gradient(from 210deg at 50% 0%, transparent 0deg, rgba(0, 180, 255, 0.09) 20deg, transparent 40deg, rgba(120, 80, 255, 0.09) 65deg, transparent 90deg);
         }
 
-        .wwtbam-main {
-            display: flex; flex-direction: column; justify-content: space-between;
-            z-index: 2; height: 100%;
-        }
-
-        /* Cabecera con Logo Circular Dorado y Narrador */
-        .wwtbam-top {
-            display: flex; align-items: center; justify-content: space-between; gap: 20px;
-        }
+        .wwtbam-main { display: flex; flex-direction: column; justify-content: space-between; z-index: 2; height: 100%; }
+        .wwtbam-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
         .wwtbam-logo {
-            width: 115px; height: 115px; border-radius: 50%;
+            width: 105px; height: 105px; border-radius: 50%;
             background: radial-gradient(circle, #0b2466 0%, #030b26 75%);
             border: 4px solid #d4af37;
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.55), inset 0 0 20px rgba(0, 170, 255, 0.6);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center; font-family: 'Rajdhani', sans-serif; font-weight: 700;
-            color: #fff; font-size: 11px; letter-spacing: 1px; line-height: 1.15;
-            flex-shrink: 0;
+            color: #fff; font-size: 10px; letter-spacing: 1px; line-height: 1.15; flex-shrink: 0;
         }
-        .wwtbam-logo span { color: #ffd54f; font-size: 14px; }
+        .wwtbam-logo span { color: #ffd54f; font-size: 13px; }
 
         .narrator-bar {
             flex: 1; background: rgba(4, 14, 42, 0.85);
             border: 2px solid #2b6cb0; border-radius: 14px;
-            padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 15px;
+            padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; gap: 15px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
         }
         .narrator-info { display: flex; align-items: center; gap: 14px; }
         .narrator-avatar {
-            width: 48px; height: 48px; border-radius: 50%;
+            width: 46px; height: 46px; border-radius: 50%;
             background: linear-gradient(135deg, #d4af37, #8c6d1f);
             display: flex; align-items: center; justify-content: center;
-            font-size: 24px; color: #050a18; flex-shrink: 0;
+            font-size: 22px; color: #050a18; flex-shrink: 0;
             box-shadow: 0 0 14px rgba(212, 175, 55, 0.6);
         }
         .narrator-avatar.hablando { animation: pulseVoz 0.45s infinite alternate; }
@@ -190,100 +209,75 @@
         }
         .btn-narrador:hover { background: #d4af37; color: #050a18; }
 
-        /* Comodines superiores */
-        .wwtbam-lifelines { display: flex; gap: 12px; justify-content: center; margin: 10px 0; }
+        /* Centro del estudio: Foto icónica + Contador de deuda Maze Bank */
+        .wwtbam-center-stage {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 10px; margin: 6px 0;
+        }
+        .studio-center-frame {
+            position: relative; width: 230px; height: 175px; border-radius: 16px;
+            border: 3px solid #d4af37; overflow: hidden;
+            box-shadow: 0 0 35px rgba(0, 140, 255, 0.55), 0 0 20px rgba(212, 175, 55, 0.4);
+            background: #030b26;
+        }
+        .studio-center-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .debt-tracker-pill {
+            background: rgba(5, 12, 34, 0.9); border: 1px solid #d4af37;
+            padding: 5px 16px; border-radius: 999px; font-size: 13px;
+            color: #ffd54f; font-weight: 700; letter-spacing: 0.5px;
+        }
+
+        .wwtbam-question {
+            background: linear-gradient(90deg, #030b24 0%, #0d2e7a 50%, #030b24 100%);
+            border: 3px solid #d4af37; border-radius: 40px;
+            padding: 16px 30px; text-align: center;
+            font-size: 19px; font-weight: 700; line-height: 1.35; color: #ffffff;
+            box-shadow: 0 0 30px rgba(0, 120, 255, 0.45), inset 0 0 18px rgba(212, 175, 55, 0.25);
+            margin-bottom: 12px;
+        }
+
+        .wwtbam-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .wwtbam-opt {
+            background: linear-gradient(90deg, #041030 0%, #0c2769 50%, #041030 100%);
+            border: 2px solid #b8962e; border-radius: 32px;
+            padding: 13px 20px; color: #fff; font-size: 15px; font-weight: 600;
+            text-align: left; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            transition: 0.18s; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+        }
+        .wwtbam-opt:hover { background: linear-gradient(90deg, #8a5a00 0%, #d48c00 50%, #8a5a00 100%); border-color: #fff; color: #050811; }
+        .wwtbam-opt .opt-letter { color: #ffaa00; font-weight: 800; font-size: 17px; }
+        .wwtbam-opt:hover .opt-letter { color: #fff; }
+        .wwtbam-opt.locked { background: linear-gradient(90deg, #996300 0%, #f59e0b 50%, #996300 100%) !important; border-color: #fff !important; color: #000 !important; }
+        .wwtbam-opt.correct { background: linear-gradient(90deg, #0e6b23 0%, #22c55e 50%, #0e6b23 100%) !important; border-color: #bbf7d0 !important; color: #fff !important; animation: blinkWin 0.28s 4; }
+        .wwtbam-opt.wrong { background: linear-gradient(90deg, #7f1d1d 0%, #ef4444 50%, #7f1d1d 100%) !important; border-color: #fecaca !important; color: #fff !important; }
+        @keyframes blinkWin { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+
+        /* Torre Lateral Derecha + Comodines Abajo a la Derecha */
+        .wwtbam-ladder {
+            background: rgba(3, 10, 32, 0.92);
+            border: 2px solid #d4af37; border-radius: 14px;
+            padding: 18px 16px; display: flex; flex-direction: column;
+            justify-content: space-between; z-index: 2;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75);
+        }
+        .ladder-title { text-align: center; font-family: 'Rajdhani', sans-serif; font-size: 16px; letter-spacing: 1.5px; color: #ffd54f; border-bottom: 1px solid rgba(212, 175, 55, 0.35); padding-bottom: 8px; margin-bottom: 10px; }
+        .ladder-step { padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; font-weight: 700; font-size: 14px; color: #7da2d6; background: rgba(255, 255, 255, 0.03); }
+        .ladder-step.active { background: linear-gradient(90deg, #d97706, #f59e0b); color: #050811; box-shadow: 0 0 16px rgba(245, 158, 11, 0.65); }
+        .ladder-step.done { color: #4ade80; background: rgba(74, 222, 128, 0.1); }
+
+        .wwtbam-lifelines-bottom-right {
+            display: flex; flex-direction: column; gap: 9px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 12px;
+        }
         .lifeline-pill {
             background: radial-gradient(circle, #103585, #051136);
             border: 2px solid #d4af37; color: #fff;
-            border-radius: 999px; padding: 8px 18px;
-            font-weight: 700; font-size: 14px; cursor: pointer;
-            box-shadow: 0 0 14px rgba(212, 175, 55, 0.35); transition: 0.2s;
+            border-radius: 999px; padding: 9px 14px;
+            font-weight: 700; font-size: 13px; cursor: pointer; text-align: center;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.3); transition: 0.2s;
         }
-        .lifeline-pill:hover { transform: translateY(-2px); box-shadow: 0 0 22px rgba(212, 175, 55, 0.75); }
+        .lifeline-pill:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(212, 175, 55, 0.75); }
         .lifeline-pill.usado { opacity: 0.32; pointer-events: none; text-decoration: line-through; border-color: #ff4444; }
-
-        /* Caja de Pregunta estilo TV */
-        .wwtbam-question {
-            background: linear-gradient(90deg, #030b24 0%, #0d2e7a 50%, #030b24 100%);
-            border: 3px solid #d4af37;
-            border-radius: 40px;
-            padding: 20px 34px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            line-height: 1.4;
-            color: #ffffff;
-            box-shadow: 0 0 30px rgba(0, 120, 255, 0.45), inset 0 0 18px rgba(212, 175, 55, 0.25);
-            margin-bottom: 16px;
-        }
-
-        /* Grilla de 4 Opciones Hexagonales / Cápsula */
-        .wwtbam-options {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
-        }
-        .wwtbam-opt {
-            background: linear-gradient(90deg, #041030 0%, #0c2769 50%, #041030 100%);
-            border: 2px solid #b8962e;
-            border-radius: 32px;
-            padding: 15px 22px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: left;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.18s;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
-        }
-        .wwtbam-opt:hover {
-            background: linear-gradient(90deg, #8a5a00 0%, #d48c00 50%, #8a5a00 100%);
-            border-color: #fff;
-            color: #050811;
-        }
-        .wwtbam-opt .opt-letter { color: #ffaa00; font-weight: 800; font-size: 18px; }
-        .wwtbam-opt:hover .opt-letter { color: #fff; }
-        .wwtbam-opt.locked {
-            background: linear-gradient(90deg, #996300 0%, #f59e0b 50%, #996300 100%) !important;
-            border-color: #fff !important; color: #000 !important;
-        }
-        .wwtbam-opt.correct {
-            background: linear-gradient(90deg, #0e6b23 0%, #22c55e 50%, #0e6b23 100%) !important;
-            border-color: #bbf7d0 !important; color: #fff !important;
-            animation: blinkWin 0.28s 4;
-        }
-        .wwtbam-opt.wrong {
-            background: linear-gradient(90deg, #7f1d1d 0%, #ef4444 50%, #7f1d1d 100%) !important;
-            border-color: #fecaca !important; color: #fff !important;
-        }
-        @keyframes blinkWin { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
-
-        /* Torre Lateral de Premios */
-        .wwtbam-ladder {
-            background: rgba(3, 10, 32, 0.9);
-            border: 2px solid #d4af37;
-            border-radius: 14px;
-            padding: 18px 16px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            z-index: 2; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75);
-        }
-        .ladder-title {
-            text-align: center; font-family: 'Rajdhani', sans-serif;
-            font-size: 16px; letter-spacing: 1.5px; color: #ffd54f;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.35);
-            padding-bottom: 8px; margin-bottom: 10px;
-        }
-        .ladder-step {
-            padding: 10px 14px; border-radius: 8px; margin-bottom: 8px;
-            display: flex; justify-content: space-between; font-weight: 700;
-            font-size: 15px; color: #7da2d6; background: rgba(255, 255, 255, 0.03);
-        }
-        .ladder-step.active {
-            background: linear-gradient(90deg, #d97706, #f59e0b);
-            color: #050811; box-shadow: 0 0 16px rgba(245, 158, 11, 0.65);
-        }
-        .ladder-step.done { color: #4ade80; background: rgba(74, 222, 128, 0.1); }
 
         /* ================= ESTILOS NIVEL 7: GTA V HEIST ================= */
         .gta-backdrop {
@@ -332,7 +326,6 @@
         .tape { position: absolute; top: -10px; left: 35px; width: 80px; height: 22px; background: rgba(160, 175, 170, 0.75); font-family: 'Permanent Marker', cursive; font-size: 13px; color: #222; line-height: 22px; }
         .polaroid img { width: 100%; height: 75px; object-fit: cover; filter: grayscale(40%) contrast(1.2); }
 
-        /* Barra de prueba rápida (Borrar antes de enviárselo) */
         #debug-bar {
             position: fixed; bottom: 8px; left: 8px; z-index: 10001;
             background: rgba(0, 0, 0, 0.88); padding: 6px 10px;
@@ -346,14 +339,24 @@
     <button class="btn-audio-toggle" id="btn-audio-toggle" onclick="toggleAudioGlobal()">🔊 Ambiente: ON</button>
     <div id="custom-cursor"></div>
 
-    <!-- CAPA DE SALTO ESTELAR (TRANSICIÓN WARP) -->
+    <!-- POPUP ESPONTÁNEO DE MEMES Y ALERTA DE DOXEO -->
+    <div id="meme-popup-overlay">
+        <div class="meme-card-pop" id="meme-card-box">
+            <div id="doxeo-header" class="doxeo-banner" style="display:none;">⚠️ ALERTA DE SEGURIDAD: IP RASTREADA (DOXEO)</div>
+            <img id="meme-popup-img" src="meme4.jpg" alt="Meme">
+            <div class="meme-card-caption" id="meme-popup-text">Archivo clasificado interceptado</div>
+            <div id="doxeo-footer" class="doxeo-coords" style="display:none;">LAT: -37.0914° S | LON: -73.1582° W • UBICACIÓN ENCONTRADA</div>
+        </div>
+    </div>
+
+    <!-- CAPA DE SALTO ESTELAR -->
     <div id="warp-overlay">
         <canvas id="warp-canvas"></canvas>
-        <div class="warp-text" id="warp-label">SALTO ESTELAR EN CURSO...</div>
+        <div class="warp-text">SALTO ESTELAR EN CURSO...</div>
         <div class="warp-flash" id="warp-flash"></div>
     </div>
 
-    <!-- BARRA DE PRUEBA PARA TI (Bórrala cuando todo esté listo) -->
+    <!-- BARRA DE PRUEBA (Bórrala antes de enviárselo) -->
     <div id="debug-bar">
         🔧 Saltar a: 
         <button onclick="cambiarEscena(1)">2. RL</button>
@@ -440,7 +443,7 @@
             <img src="palo.png" class="cave-item" id="cave-palo" style="top: 68%; left: 18%;" onclick="recolectarItem('palo', this)" alt="Palo">
             <img src="tela.png" class="cave-item" id="cave-tela" style="top: 25%; left: 78%;" onclick="recolectarItem('tela', this)" alt="Tela">
             <img src="alcohol.png" class="cave-item" id="cave-alcohol" style="top: 75%; left: 82%;" onclick="recolectarItem('alcohol', this)" alt="Alcohol">
-            <img src="meme1.jpg" class="cave-item" style="top: 20%; left: 22%; border-radius:10px;" onclick="alert('¡Recuerdo perturbador en la cueva!')" alt="Meme">
+            <img src="meme1.jpg" class="cave-item" style="top: 20%; left: 22%; border-radius:10px;" onclick="mostrarMemeEspontaneo('meme6.jpg', '¡Recuerdo perturbador encontrado en la cueva!')" alt="Meme">
             <div class="uv-mask" id="uv-mask"></div>
         </div>
 
@@ -468,7 +471,7 @@
         </div>
     </div>
 
-    <!-- ================= PASO 5: MAPA THE FOREST (ISLA DEL OESTE) ================= -->
+    <!-- ================= PASO 5: MAPA THE FOREST ================= -->
     <div id="escena-4" class="escena">
         <h2 style="color:#88ff88; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">"¡Lograste escapar del encierro, Mapaman!"</h2>
         <h3 style="margin: 8px 0 14px 0; color:#f5d7a1;">Indique el lugar del cataclismo (<span style="color:#ff5555;">La Tragedia de los 100.000 Troncos</span>)</h3>
@@ -500,11 +503,14 @@
                     </div>
                 </div>
 
-                <!-- Comodines -->
-                <div class="wwtbam-lifelines">
-                    <button class="lifeline-pill" id="ll-5050" onclick="usarComodin5050()">50 : 50</button>
-                    <button class="lifeline-pill" id="ll-call" onclick="usarComodinLlamada()">📞 Llamar a Felipe</button>
-                    <button class="lifeline-pill" id="ll-public" onclick="usarComodinPublico()">👥 Público</button>
+                <!-- Centro del Estudio: Foto Central + Tracker de Deuda Maze Bank -->
+                <div class="wwtbam-center-stage">
+                    <div class="studio-center-frame">
+                        <img id="studio-center-img" src="meme3.jpg" alt="Oráculo del Set">
+                    </div>
+                    <div class="debt-tracker-pill" id="debt-tracker-pill">
+                        💳 Deuda Maze Bank: -$10.000.000 USD | Acumulado: $0
+                    </div>
                 </div>
 
                 <!-- Pregunta y 4 Opciones -->
@@ -530,22 +536,31 @@
                 </div>
             </div>
 
-            <!-- Torre de Premios -->
+            <!-- Torre Lateral Derecha + Comodines Abajo a la Derecha -->
             <div class="wwtbam-ladder">
                 <div>
                     <div class="ladder-title">ESCALA DE PREMIOS</div>
-                    <div class="ladder-step" id="ladder-2"><span>3</span><span>$10.000.000 ★</span></div>
-                    <div class="ladder-step" id="ladder-1"><span>2</span><span>$1.000.000</span></div>
-                    <div class="ladder-step active" id="ladder-0"><span>1</span><span>$100.000</span></div>
+                    <div class="ladder-step" id="ladder-2"><span>3</span><span>$9.985.000 ★</span></div>
+                    <div class="ladder-step" id="ladder-1"><span>2</span><span>$2.500.000</span></div>
+                    <div class="ladder-step active" id="ladder-0"><span>1</span><span>$500.000</span></div>
                 </div>
-                <div style="font-size:12px; color:#8faadc; text-align:center; line-height:1.4;">
-                    Supera las 3 preguntas canónicas para desbloquear el Golpe Final.
+
+                <div class="wwtbam-lifelines-bottom-right">
+                    <div style="font-size:11px; color:#8faadc; text-align:center; letter-spacing:1px;">COMODINES</div>
+                    <button class="lifeline-pill" id="ll-5050" onclick="usarComodin5050()">50 : 50</button>
+                    <button class="lifeline-pill" id="ll-call" onclick="usarComodinLlamada()">📞 Llamar a Felipe</button>
+                    <button class="lifeline-pill" id="ll-public" onclick="usarComodinPublico()">👥 Público</button>
                 </div>
             </div>
         </div>
+
+        <!-- Audios opcionales de ElevenLabs -->
+        <audio id="voz-p1" src="voz-p1.mp3"></audio>
+        <audio id="voz-p2" src="voz-p2.mp3"></audio>
+        <audio id="voz-p3" src="voz-p3.mp3"></audio>
     </div>
 
-    <!-- ================= PASO 7: GTA V HEIST ================= -->
+    <!-- ================= PASO 7: GTA V HEIST (CARAS REALES + SALDO $15.000) ================= -->
     <div id="escena-6" class="escena">
         <div class="gta-backdrop"></div>
         <img src="chiliad.jpg" class="fondo-blur" alt="Monte Chiliad">
@@ -554,7 +569,7 @@
             <div class="wb-header">
                 <h1>El Gran Golpe (Al Bolsillo)</h1>
                 <h2>HEIST</h2>
-                <span>Costo de Preparación: $54,000</span>
+                <span>Saldo Restante Maze Bank: -$15,000</span>
             </div>
 
             <div class="wb-body">
@@ -567,7 +582,7 @@
                         </div>
                     </div>
                     <p style="font-family:'Permanent Marker', cursive; font-size:15px; margin-top:15px; color:#2b5c8f;">
-                        PLAN: Rellene el % correcto del Robo del Siglo
+                        PLAN: Consigue los $15,000 exactos para saldar la deuda
                     </p>
                 </div>
 
@@ -582,7 +597,7 @@
                         <div class="row-num">1</div>
                         <div class="row-box">
                             <div class="player-info">
-                                <img src="meme1.jpg" class="player-avatar" alt="Felipe">
+                                <img src="personajefelipe.jpg" class="player-avatar" alt="Felipe">
                                 <div>
                                     <div class="player-role">Líder Supremo</div>
                                     <div class="player-gamertag">FelipeSoSo2022 👑</div>
@@ -604,7 +619,7 @@
                         <div class="row-num">2</div>
                         <div class="row-box">
                             <div class="player-info">
-                                <img src="meme2.jpg" class="player-avatar" alt="Diego">
+                                <img src="personajediego.jpg" class="player-avatar" alt="Diego">
                                 <div>
                                     <div class="player-role">Conductor / Carnada</div>
                                     <div class="player-gamertag">D1eg0_23</div>
@@ -622,7 +637,7 @@
                         <div class="row-num">3</div>
                         <div class="row-box">
                             <div class="player-info">
-                                <img src="chiliad.jpg" class="player-avatar" alt="Matías">
+                                <img src="personajelonford.jpg" class="player-avatar" alt="Lonford">
                                 <div>
                                     <div class="player-role">Equipo de Tierra</div>
                                     <div class="player-gamertag">Lonford123</div>
@@ -641,7 +656,7 @@
             <div class="wb-footer">
                 <div class="taped-photos">
                     <div class="polaroid"><div class="tape">VEHICLE</div><img src="chiliad.jpg" alt="Heli"></div>
-                    <div class="polaroid"><div class="tape">TARGET</div><img src="meme1.jpg" alt="Target"></div>
+                    <div class="polaroid"><div class="tape">TARGET</div><img src="meme8.jpg" alt="Target"></div>
                 </div>
                 <div style="text-align: right;">
                     <p id="error-heist" style="color:#c0392b; font-weight:bold; margin:0 0 8px 0; height:20px;"></p>
@@ -655,9 +670,12 @@
 
     <!-- ================= PASO 8: BÓVEDA FINAL ================= -->
     <div id="escena-7" class="escena">
-        <h1 style="color: gold; font-size: 50px; text-shadow: 0 0 25px rgba(255, 215, 0, 0.45);">¡GOLPE SUPERADO!</h1>
+        <h1 style="color: gold; font-size: 50px; text-shadow: 0 0 25px rgba(255, 215, 0, 0.45);">¡DEUDA SALDADA ($10.000.000 / $10.000.000)!</h1>
         <p style="color:#dce6f2; font-size:18px;">Aquí pondremos la bóveda abriéndose y el video final.</p>
     </div>
+
+    <!-- Audio chistoso opcional del proyecto anterior -->
+    <audio id="sonido-meme-mp3" src="sonido-meme.mp3"></audio>
 
     <script>
         // ================= SISTEMA DE AUDIO Y AMBIENTE =================
@@ -777,6 +795,70 @@
             osc.stop(ahora + 0.36);
         }
 
+        // ================= MEMES ESPONTÁNEOS Y DOXEO (MEME 4, 5, 6, 7, 8, 9) =================
+        function sonarMusicaChistosa(esDoxeo) {
+            if (!audioHabilitado) return;
+            const mp3 = document.getElementById('sonido-meme-mp3');
+            if (!esDoxeo && mp3) {
+                mp3.currentTime = 0;
+                mp3.volume = 0.45;
+                mp3.play().catch(() => sonarSintetizadorChistoso(false));
+                return;
+            }
+            sonarSintetizadorChistoso(esDoxeo);
+        }
+
+        function sonarSintetizadorChistoso(esDoxeo) {
+            const ctx = obtenerAudioCtx();
+            const ahora = ctx.currentTime;
+            const notas = esDoxeo
+                ? [523.25, 392.00, 523.25, 392.00, 659.25, 311.13]
+                : [392.00, 440.00, 392.00, 329.63, 523.25, 493.88];
+
+            notas.forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = esDoxeo ? 'sawtooth' : 'square';
+                osc.frequency.setValueAtTime(freq, ahora + i * 0.13);
+                gain.gain.setValueAtTime(0.04, ahora + i * 0.13);
+                gain.gain.exponentialRampToValueAtTime(0.001, ahora + i * 0.13 + 0.12);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(ahora + i * 0.13);
+                osc.stop(ahora + i * 0.13 + 0.125);
+            });
+        }
+
+        function mostrarMemeEspontaneo(archivoImg, texto, esDoxeo = false, duracion = 2200, callback = null) {
+            const overlay = document.getElementById('meme-popup-overlay');
+            const box = document.getElementById('meme-card-box');
+            const img = document.getElementById('meme-popup-img');
+            const txt = document.getElementById('meme-popup-text');
+            const doxHead = document.getElementById('doxeo-header');
+            const doxFoot = document.getElementById('doxeo-footer');
+
+            img.src = archivoImg;
+            txt.innerText = texto;
+
+            if (esDoxeo) {
+                box.classList.add('doxeo-alert');
+                doxHead.style.display = 'block';
+                doxFoot.style.display = 'block';
+            } else {
+                box.classList.remove('doxeo-alert');
+                doxHead.style.display = 'none';
+                doxFoot.style.display = 'none';
+            }
+
+            overlay.style.display = 'flex';
+            sonarMusicaChistosa(esDoxeo);
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                if (callback) callback();
+            }, duracion);
+        }
+
         function sacudirElemento(el) {
             if (!el) return;
             el.classList.remove('shake');
@@ -785,7 +867,7 @@
         }
 
         // ================= SALTO ESTELAR (WARP DRIVE) =================
-        function ejecutarSaltoEstelar(destinoEscena, callbackAlLlegar) {
+        function ejecutarSaltoEstelar(destinoEscena) {
             const overlay = document.getElementById('warp-overlay');
             const canvas = document.getElementById('warp-canvas');
             const flash = document.getElementById('warp-flash');
@@ -796,40 +878,28 @@
             overlay.style.display = 'flex';
             flash.style.opacity = '0';
 
-            // Música / sonido potente de salto hiperespacial
             if (audioHabilitado) {
                 const ctx = obtenerAudioCtx();
                 const ahora = ctx.currentTime;
                 const dur = 2.5;
-
                 const sub = ctx.createOscillator();
                 const lead = ctx.createOscillator();
                 const gain = ctx.createGain();
-
                 sub.type = 'sawtooth';
                 sub.frequency.setValueAtTime(55, ahora);
                 sub.frequency.exponentialRampToValueAtTime(220, ahora + dur);
-
                 lead.type = 'triangle';
                 lead.frequency.setValueAtTime(180, ahora);
                 lead.frequency.exponentialRampToValueAtTime(1150, ahora + dur);
-
                 gain.gain.setValueAtTime(0.002, ahora);
                 gain.gain.linearRampToValueAtTime(0.11, ahora + 0.6);
                 gain.gain.linearRampToValueAtTime(0.14, ahora + 2.1);
                 gain.gain.exponentialRampToValueAtTime(0.001, ahora + dur);
-
-                sub.connect(gain);
-                lead.connect(gain);
-                gain.connect(ctx.destination);
-
-                sub.start(ahora);
-                lead.start(ahora);
-                sub.stop(ahora + dur);
-                lead.stop(ahora + dur);
+                sub.connect(gain); lead.connect(gain); gain.connect(ctx.destination);
+                sub.start(ahora); lead.start(ahora);
+                sub.stop(ahora + dur); lead.stop(ahora + dur);
             }
 
-            // Animación de estrellas viajando hacia la cámara
             const estrellas = Array.from({ length: 240 }, () => ({
                 x: (Math.random() - 0.5) * canvas.width,
                 y: (Math.random() - 0.5) * canvas.height,
@@ -845,7 +915,6 @@
                 const cx = canvas.width / 2;
                 const cy = canvas.height / 2;
                 velocidad += 1.4;
-
                 estrellas.forEach(s => {
                     const prevZ = s.z;
                     s.z -= velocidad;
@@ -859,15 +928,10 @@
                     const sy = cy + (s.y / s.z) * cy;
                     const px = cx + (s.x / prevZ) * cx;
                     const py = cy + (s.y / prevZ) * cy;
-
                     ctx2d.strokeStyle = s.color;
                     ctx2d.lineWidth = Math.max(1.2, (1 - s.z / canvas.width) * 4.5);
-                    ctx2d.beginPath();
-                    ctx2d.moveTo(px, py);
-                    ctx2d.lineTo(sx, sy);
-                    ctx2d.stroke();
+                    ctx2d.beginPath(); ctx2d.moveTo(px, py); ctx2d.lineTo(sx, sy); ctx2d.stroke();
                 });
-
                 animId = requestAnimationFrame(dibujarEstrellas);
             }
             dibujarEstrellas();
@@ -878,7 +942,6 @@
                 overlay.style.display = 'none';
                 flash.style.opacity = '0';
                 cambiarEscena(destinoEscena);
-                if (callbackAlLlegar) setTimeout(callbackAlLlegar, 450);
             }, 2500);
         }
 
@@ -944,7 +1007,10 @@
                     let chat = document.getElementById('chat-faltante');
                     chat.style.color = "#55ff77";
                     chat.innerHTML = "<span class='chat-you'>D1eg0_23:</span> ¡Gracias!";
-                    setTimeout(() => cambiarEscena(2), 1300);
+                    // Aparece meme4 espontáneo al pasar RL
+                    setTimeout(() => {
+                        mostrarMemeEspontaneo('meme4.jpg', '¡Conexión verificada!', false, 1800, () => cambiarEscena(2));
+                    }, 900);
                 } else {
                     sacudirElemento(document.getElementById('escena-1').querySelector('.contenido-frente'));
                     document.getElementById('chat-faltante').innerText = "¡Qué salvada! (Prueba Abajo -> Izquierda)";
@@ -981,33 +1047,23 @@
             const ctx = obtenerAudioCtx();
             const ahora = ctx.currentTime;
             const duracion = 0.35;
-
             const osc = ctx.createOscillator();
             const lfo = ctx.createOscillator();
             const lfoGain = ctx.createGain();
             const gain = ctx.createGain();
-
             osc.type = 'triangle';
             osc.frequency.setValueAtTime(390, ahora);
             osc.frequency.exponentialRampToValueAtTime(145, ahora + duracion);
-
             lfo.type = 'sine';
             lfo.frequency.setValueAtTime(18, ahora);
             lfoGain.gain.setValueAtTime(22, ahora);
-
             gain.gain.setValueAtTime(0.001, ahora);
             gain.gain.linearRampToValueAtTime(0.04, ahora + 0.03);
             gain.gain.exponentialRampToValueAtTime(0.0008, ahora + duracion);
-
-            lfo.connect(lfoGain);
-            lfoGain.connect(osc.frequency);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-
-            lfo.start(ahora);
-            osc.start(ahora);
-            lfo.stop(ahora + duracion);
-            osc.stop(ahora + duracion);
+            lfo.connect(lfoGain); lfoGain.connect(osc.frequency);
+            osc.connect(gain); gain.connect(ctx.destination);
+            lfo.start(ahora); osc.start(ahora);
+            lfo.stop(ahora + duracion); osc.stop(ahora + duracion);
         }
 
         function mostrarOjosEnVentana() {
@@ -1073,8 +1129,12 @@
 
         function validarPhasmo() {
             let val = document.getElementById('input-coord-phasmo').value.trim().toLowerCase();
-            if (val !== "") cambiarEscena(3);
-            else alert("Escribe la coordenada.");
+            if (val !== "") {
+                // Meme 5 espontáneo antes de caer a la cueva
+                mostrarMemeEspontaneo('meme5.jpg', '¡Entidad identificada en los archivos!', false, 1800, () => cambiarEscena(3));
+            } else {
+                alert("Escribe la coordenada.");
+            }
         }
 
         // ================= CUEVA / INVENTARIO =================
@@ -1144,7 +1204,8 @@
             document.querySelectorAll('[data-distractor]').forEach(d => {
                 let r = d.getBoundingClientRect();
                 if (virtualX >= r.left && virtualX <= r.right && virtualY >= r.top && virtualY <= r.bottom) {
-                    alert("😂 ¡Recuerdo clasificado! No sirve para la antorcha.");
+                    const m = d.getAttribute('data-distractor') === '1' ? 'meme7.jpg' : 'meme8.jpg';
+                    mostrarMemeEspontaneo(m, '😂 ¡Recuerdo clasificado! No sirve para armar una antorcha.', false, 1800);
                 }
             });
             ['palo', 'tela', 'alcohol'].forEach(item => {
@@ -1213,8 +1274,7 @@
             }, 1350);
         }
 
-        // ================= MAPA THE FOREST (ISLAS DEL OESTE) =================
-        // Coordenadas exactas de las islas marcadas en rojo (X: 16.5%, Y: 46.5%)
+        // ================= MAPA THE FOREST =================
         const targetMapaX = 16.5; 
         const targetMapaY = 46.5;
         const toleranciaMapa = 9.5;
@@ -1240,7 +1300,10 @@
         const preguntasMillonario = [
             {
                 pregunta: "1. Según los informes bíblicos de historiadores, ¿cuál es la fecha exacta y locación del momento en que conociste a Felipe Onroy y a Madhias Ergara?",
-                narracion: "Pregunta número uno. Según los informes bíblicos de historiadores, ¿cuál es la fecha exacta y locación del momento en que conociste a Felipe Onroy y a Madhias Ergara?",
+                narracion: "Pregunta número uno, por quinientos mil pesos. Según los informes bíblicos de historiadores, ¿cuál es la fecha exacta y locación del momento en que conociste a Felipe Onroy y a Madhias Ergara?",
+                audioEl: "voz-p1",
+                fotoCentro: "meme3.jpg",
+                premioAcumulado: 500000,
                 opciones: [
                     "Todo indica que un lunes",
                     "Investigadores de la Universidad Bolivariana de Concepción apuntan a un 12 de enero del 2017",
@@ -1252,7 +1315,10 @@
             },
             {
                 pregunta: "2. Ordene cronológicamente los eventos del Día Negro:",
-                narracion: "Pregunta número dos por un millón de pesos. Ordene los eventos del Día Negro.",
+                narracion: "Pregunta número dos, por dos millones quinientos mil pesos. Ordene los eventos del Día Negro.",
+                audioEl: "voz-p2",
+                fotoCentro: "meme6.jpg",
+                premioAcumulado: 2500000,
                 opciones: [
                     "Cagamos en la curva → Armar setups → Jugar 2 minutos → Ir a buscar un cargador",
                     "Armar setups → Ir a buscar un cargador → Cagamos en la curva → Jugar 2 minutos",
@@ -1264,7 +1330,10 @@
             },
             {
                 pregunta: "3. Recientemente Lil Uzi Vert dijo en una entrevista a LUN que su nuevo disco sería grabado con los máximos estándares de calidad de la industria sonora. ¿A qué se refería él?",
-                narracion: "Pregunta final por diez millones de pesos. Recientemente Lil Uzi Vert dijo en una entrevista a LUN que su nuevo disco sería grabado con los máximos estándares de calidad de la industria sonora. ¿A qué se refería él?",
+                narracion: "Pregunta final, por nueve millones novecientos ochenta y cinco mil pesos. Recientemente Lil Uzi Vert dijo en una entrevista a LUN que su nuevo disco sería grabado con los máximos estándares de calidad de la industria sonora. ¿A qué se refería él?",
+                audioEl: "voz-p3",
+                fotoCentro: "meme7.jpg",
+                premioAcumulado: 9985000,
                 opciones: [
                     "Grabar con todo lo que es Hollywood",
                     "Grabar con JB The Voice",
@@ -1282,25 +1351,25 @@
         function iniciarTensionMillonario() {
             detenerTensionMillonario();
             if (!audioHabilitado) return;
-            // Latido grave de suspenso cada 1.1s
+            // Latido grave + pulso armónico sutil de estudio de TV
             millonarioInterval = setInterval(() => {
                 if (!audioHabilitado) return;
                 const ctx = obtenerAudioCtx();
                 const ahora = ctx.currentTime;
-                [0, 0.22].forEach((offset, i) => {
+                [0, 0.24].forEach((offset, i) => {
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(i === 0 ? 68 : 54, ahora + offset);
+                    osc.type = i === 0 ? 'sine' : 'triangle';
+                    osc.frequency.setValueAtTime(i === 0 ? 65.4 : 98.0, ahora + offset);
                     gain.gain.setValueAtTime(0.001, ahora + offset);
-                    gain.gain.linearRampToValueAtTime(0.055, ahora + offset + 0.03);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + offset + 0.18);
+                    gain.gain.linearRampToValueAtTime(0.05, ahora + offset + 0.03);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + offset + 0.22);
                     osc.connect(gain);
                     gain.connect(ctx.destination);
                     osc.start(ahora + offset);
-                    osc.stop(ahora + offset + 0.19);
+                    osc.stop(ahora + offset + 0.23);
                 });
-            }, 1150);
+            }, 1100);
         }
 
         function detenerTensionMillonario() {
@@ -1310,70 +1379,106 @@
             }
         }
 
+        // Redoble de tambores sintetizado al marcar "¿Última palabra?"
+        function sonarRedobleTambores(duracion = 1.3) {
+            if (!audioHabilitado) return;
+            const ctx = obtenerAudioCtx();
+            const ahora = ctx.currentTime;
+            const golpes = 18;
+            for (let i = 0; i < golpes; i++) {
+                const t = ahora + (i * (duracion / golpes));
+                const bufferSize = ctx.sampleRate * 0.06;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let j = 0; j < bufferSize; j++) data[j] = Math.random() * 2 - 1;
+                const noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = 260 + (i * 15);
+
+                const gain = ctx.createGain();
+                gain.gain.setValueAtTime(0.015 + (i * 0.002), t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.055);
+
+                noise.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
+                noise.start(t);
+            }
+        }
+
         function sonarEfectoMillonario(tipo) {
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
             const ahora = ctx.currentTime;
 
-            if (tipo === 'lock') {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(220, ahora);
-                osc.frequency.exponentialRampToValueAtTime(330, ahora + 0.45);
-                gain.gain.setValueAtTime(0.05, ahora);
-                gain.gain.exponentialRampToValueAtTime(0.001, ahora + 0.5);
-                osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(ahora); osc.stop(ahora + 0.52);
-            } else if (tipo === 'win') {
-                [330, 440, 554.37, 659.25].forEach((freq, idx) => {
+            if (tipo === 'win') {
+                // Fanfarria triunfal de TV
+                const notas = [392.00, 493.88, 587.33, 783.99, 987.77];
+                notas.forEach((freq, idx) => {
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
                     osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(freq, ahora + idx * 0.11);
-                    gain.gain.setValueAtTime(0.06, ahora + idx * 0.11);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + idx * 0.11 + 0.45);
+                    osc.frequency.setValueAtTime(freq, ahora + idx * 0.1);
+                    gain.gain.setValueAtTime(0.065, ahora + idx * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + idx * 0.1 + 0.55);
                     osc.connect(gain); gain.connect(ctx.destination);
-                    osc.start(ahora + idx * 0.11); osc.stop(ahora + idx * 0.11 + 0.48);
+                    osc.start(ahora + idx * 0.1); osc.stop(ahora + idx * 0.1 + 0.58);
                 });
             } else if (tipo === 'lose') {
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(150, ahora);
-                osc.frequency.linearRampToValueAtTime(75, ahora + 0.55);
+                osc.frequency.linearRampToValueAtTime(70, ahora + 0.6);
                 gain.gain.setValueAtTime(0.06, ahora);
-                gain.gain.exponentialRampToValueAtTime(0.001, ahora + 0.6);
+                gain.gain.exponentialRampToValueAtTime(0.001, ahora + 0.65);
                 osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(ahora); osc.stop(ahora + 0.62);
+                osc.start(ahora); osc.stop(ahora + 0.66);
             }
         }
 
-        function narrarTexto(texto) {
+        function narrarPreguntaActual() {
+            const p = preguntasMillonario[indicePreguntaActual];
+            if (!p) return;
+            document.getElementById('narrator-subtitle').innerText = p.narracion;
+            if (!audioHabilitado) return;
+
+            const avatar = document.getElementById('narrator-avatar');
+            const mp3El = document.getElementById(p.audioEl);
+
+            // Intenta primero reproducir el MP3 de ElevenLabs si lo subiste
+            if (mp3El) {
+                mp3El.currentTime = 0;
+                mp3El.play().then(() => {
+                    avatar.classList.add('hablando');
+                    mp3El.onended = () => avatar.classList.remove('hablando');
+                }).catch(() => {
+                    narrarConVozSintetica(p.narracion);
+                });
+            } else {
+                narrarConVozSintetica(p.narracion);
+            }
+        }
+
+        function narrarConVozSintetica(texto) {
             document.getElementById('narrator-subtitle').innerText = texto;
             if (!audioHabilitado || !('speechSynthesis' in window)) return;
-
             window.speechSynthesis.cancel();
             const utter = new SpeechSynthesisUtterance(texto);
             utter.lang = 'es-CL';
             utter.rate = 0.96;
             utter.pitch = 0.85;
-
             const avatar = document.getElementById('narrator-avatar');
             utter.onstart = () => avatar.classList.add('hablando');
             utter.onend = () => avatar.classList.remove('hablando');
             utter.onerror = () => avatar.classList.remove('hablando');
-
             window.speechSynthesis.speak(utter);
-        }
-
-        function narrarPreguntaActual() {
-            const p = preguntasMillonario[indicePreguntaActual];
-            if (p) narrarTexto(p.narracion);
         }
 
         function iniciarMillonario() {
             indicePreguntaActual = 0;
+            document.getElementById('debt-tracker-pill').innerText = "💳 Deuda Maze Bank: -$10.000.000 USD | Acumulado: $0";
             cargarPreguntaMillonario(0);
         }
 
@@ -1381,6 +1486,7 @@
             bloqueadoMillonario = false;
             const p = preguntasMillonario[idx];
             document.getElementById('wwtbam-q-text').innerText = p.pregunta;
+            document.getElementById('studio-center-img').src = p.fotoCentro;
 
             for (let i = 0; i < 4; i++) {
                 const btn = document.getElementById('wwtbam-opt-' + i);
@@ -1389,7 +1495,6 @@
                 btn.querySelector('.opt-text').innerText = p.opciones[i];
             }
 
-            // Actualizar torre de premios
             for (let s = 0; s < 3; s++) {
                 const step = document.getElementById('ladder-' + s);
                 step.classList.remove('active', 'done');
@@ -1397,7 +1502,7 @@
                 else if (s === idx) step.classList.add('active');
             }
 
-            narrarTexto(p.narracion);
+            narrarPreguntaActual();
         }
 
         function seleccionarOpcionMillonario(opcionIdx, btn) {
@@ -1406,15 +1511,20 @@
 
             const p = preguntasMillonario[indicePreguntaActual];
             btn.classList.add('locked');
-            sonarEfectoMillonario('lock');
-            narrarTexto("¿Última palabra? Veamos si es correcto...");
+            sonarRedobleTambores(1.35);
+            narrarConVozSintetica("¿Última palabra? Veamos...");
 
             setTimeout(() => {
                 btn.classList.remove('locked');
                 if (opcionIdx === p.correcta) {
                     btn.classList.add('correct');
                     sonarEfectoMillonario('win');
-                    narrarTexto("¡Respuesta correcta!");
+
+                    const restante = 10000000 - p.premioAcumulado;
+                    document.getElementById('debt-tracker-pill').innerText =
+                        `💳 Deuda Maze Bank: -$${restante.toLocaleString()} USD | Acumulado: $${p.premioAcumulado.toLocaleString()}`;
+
+                    narrarConVozSintetica("¡Respuesta correcta!");
 
                     setTimeout(() => {
                         indicePreguntaActual++;
@@ -1422,28 +1532,36 @@
                             cargarPreguntaMillonario(indicePreguntaActual);
                         } else {
                             detenerTensionMillonario();
-                            narrarTexto("¡Felicidades! Has ganado los diez millones y desbloqueado El Gran Golpe.");
-                            setTimeout(() => cambiarEscena(6), 1800);
+                            narrarConVozSintetica("¡Ganaste nueve millones novecientos ochenta y cinco mil! Solo te faltan quince mil dólares para saldar Maze Bank.");
+                            // Alerta de DOXEO espontánea con meme9 antes de entrar al Golpe Final de GTA V
+                            setTimeout(() => {
+                                mostrarMemeEspontaneo(
+                                    'meme9.jpg',
+                                    '¡D1eg0_23 ha sido doxeado por Maze Bank! Necesitas los $15.000 restantes en El Gran Golpe.',
+                                    true,
+                                    3400,
+                                    () => cambiarEscena(6)
+                                );
+                            }, 1600);
                         }
                     }, 1700);
                 } else {
                     btn.classList.add('wrong');
                     sonarEfectoMillonario('lose');
                     sacudirElemento(document.getElementById('wwtbam-studio'));
-                    narrarTexto("¡Incorrecto! Eso no es canon. Inténtalo de nuevo.");
+                    narrarConVozSintetica("¡Incorrecto! Eso no es canon. Inténtalo de nuevo.");
 
                     setTimeout(() => {
                         btn.classList.remove('wrong');
                         bloqueadoMillonario = false;
                     }, 1300);
                 }
-            }, 1300);
+            }, 1450);
         }
 
         function usarComodin5050() {
             if (bloqueadoMillonario) return;
-            const btn = document.getElementById('ll-5050');
-            btn.classList.add('usado');
+            document.getElementById('ll-5050').classList.add('usado');
             const p = preguntasMillonario[indicePreguntaActual];
             let ocultadas = 0;
             for (let i = 0; i < 4; i++) {
@@ -1452,14 +1570,14 @@
                     ocultadas++;
                 }
             }
-            narrarTexto("Comodín cincuenta y cincuenta activado. Dos respuestas incorrectas eliminadas.");
+            narrarConVozSintetica("Comodín cincuenta y cincuenta activado.");
         }
 
         function usarComodinLlamada() {
             if (bloqueadoMillonario) return;
             document.getElementById('ll-call').classList.add('usado');
             const p = preguntasMillonario[indicePreguntaActual];
-            narrarTexto("Llamando a Felipe... " + p.pistaFelipe);
+            narrarConVozSintetica("Llamando a Felipe... " + p.pistaFelipe);
             alert("📞 Llamando a FelipeSoSo2022:\n\n\"" + p.pistaFelipe + "\"");
         }
 
@@ -1468,7 +1586,7 @@
             document.getElementById('ll-public').classList.add('usado');
             const letras = ['A', 'B', 'C', 'D'];
             const p = preguntasMillonario[indicePreguntaActual];
-            narrarTexto("El público ha votado mayoritariamente por la opción " + letras[p.correcta]);
+            narrarConVozSintetica("El público vota por la opción " + letras[p.correcta]);
             alert("👥 Resultado del Público:\n\nOpción " + letras[p.correcta] + ": 84%\nOtras opciones: 16%");
         }
 
@@ -1501,7 +1619,7 @@
                     sDiego.className = "status-ready"; sDiego.innerText = "☑ READY";
                     sMatias.className = "status-ready"; sMatias.innerText = "☑ READY";
                     document.getElementById('error-heist').style.color = "#27ae60";
-                    document.getElementById('error-heist').innerText = "¡Porcentaje justo alcanzado! ($15,000 para cada uno)";
+                    document.getElementById('error-heist').innerText = "¡$15,000 exactos alcanzados! Suficiente para saldar Maze Bank.";
                 } else {
                     sDiego.className = "status-not-ready"; sDiego.innerText = "☒ NOT READY";
                     sMatias.className = "status-not-ready"; sMatias.innerText = "☒ NOT READY";
@@ -1515,7 +1633,7 @@
             } else {
                 sacudirElemento(document.getElementById('escena-6').querySelector('.gta-whiteboard'));
                 document.getElementById('error-heist').style.color = "#c0392b";
-                document.getElementById('error-heist').innerText = "⚠️ Felipe exige su 99% reglamentario.";
+                document.getElementById('error-heist').innerText = "⚠️ Felipe exige su 99% reglamentario (y tú necesitas los $15,000 exactos).";
             }
         }
     </script>

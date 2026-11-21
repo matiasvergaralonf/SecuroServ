@@ -75,8 +75,6 @@
         .meme-card-pop img {
             max-width: 380px; max-height: 68vh; border-radius: 8px; display: block; margin: 0 auto;
         }
-
-        /* Estilo especial Doxeo para meme9 */
         .meme-card-pop.doxeo-alert {
             border-color: #ff2222; background: #1a0303;
             box-shadow: 0 0 70px rgba(255, 0, 0, 0.9);
@@ -256,23 +254,23 @@
         .wwtbam-ladder {
             background: rgba(3, 10, 32, 0.92);
             border: 2px solid #d4af37; border-radius: 14px;
-            padding: 18px 16px; display: flex; flex-direction: column;
+            padding: 16px 15px; display: flex; flex-direction: column;
             justify-content: space-between; z-index: 2;
             box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75);
         }
-        .ladder-title { text-align: center; font-family: 'Rajdhani', sans-serif; font-size: 16px; letter-spacing: 1.5px; color: #ffd54f; border-bottom: 1px solid rgba(212, 175, 55, 0.35); padding-bottom: 8px; margin-bottom: 10px; }
-        .ladder-step { padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; font-weight: 700; font-size: 14px; color: #7da2d6; background: rgba(255, 255, 255, 0.03); }
+        .ladder-title { text-align: center; font-family: 'Rajdhani', sans-serif; font-size: 15px; letter-spacing: 1.5px; color: #ffd54f; border-bottom: 1px solid rgba(212, 175, 55, 0.35); padding-bottom: 7px; margin-bottom: 8px; }
+        .ladder-step { padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; display: flex; justify-content: space-between; font-weight: 700; font-size: 14px; color: #7da2d6; background: rgba(255, 255, 255, 0.03); }
         .ladder-step.active { background: linear-gradient(90deg, #d97706, #f59e0b); color: #050811; box-shadow: 0 0 16px rgba(245, 158, 11, 0.65); }
         .ladder-step.done { color: #4ade80; background: rgba(74, 222, 128, 0.1); }
 
         .wwtbam-lifelines-bottom-right {
-            display: flex; flex-direction: column; gap: 9px;
-            border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 12px;
+            display: flex; flex-direction: column; gap: 8px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3); padding-top: 10px;
         }
         .lifeline-pill {
             background: radial-gradient(circle, #103585, #051136);
             border: 2px solid #d4af37; color: #fff;
-            border-radius: 999px; padding: 9px 14px;
+            border-radius: 999px; padding: 8px 14px;
             font-weight: 700; font-size: 13px; cursor: pointer; text-align: center;
             box-shadow: 0 0 12px rgba(212, 175, 55, 0.3); transition: 0.2s;
         }
@@ -287,44 +285,51 @@
                 radial-gradient(circle at 78% 72%, rgba(76, 175, 80, 0.16) 0%, transparent 48%),
                 linear-gradient(160deg, #0b111a 0%, #141e2b 52%, #090d14 100%);
         }
-        .gta-whiteboard { width: 90vw; max-width: 1050px; background: linear-gradient(135deg, #f2f4f7 0%, #dcdfe6 100%); border: 14px solid #adb5bd; border-radius: 6px; box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.25), 0 24px 65px rgba(0, 0, 0, 0.92); color: #1c3d5a; font-family: 'Rajdhani', sans-serif; padding: 20px 30px; position: relative; z-index: 2; }
+        .gta-whiteboard { width: 90vw; max-width: 1050px; background: linear-gradient(135deg, #f2f4f7 0%, #dcdfe6 100%); border: 14px solid #adb5bd; border-radius: 6px; box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.25), 0 24px 65px rgba(0, 0, 0, 0.92); color: #1c3d5a; font-family: 'Rajdhani', sans-serif; padding: 16px 28px; position: relative; z-index: 2; }
         .gta-whiteboard::before, .gta-whiteboard::after { content: ''; position: absolute; width: 20px; height: 20px; background: #222; z-index: 2; }
         .gta-whiteboard::before { top: -14px; left: -14px; }
         .gta-whiteboard::after { top: -14px; right: -14px; }
-        .wb-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid #2b5c8f; padding-bottom: 6px; margin-bottom: 18px; font-family: 'Permanent Marker', cursive; color: #2b5c8f; }
-        .wb-header h1 { margin: 0; font-size: 26px; }
-        .wb-header h2 { margin: 0; font-size: 32px; color: #1a3a5c; }
-        .wb-header span { font-size: 20px; }
-        .wb-body { display: grid; grid-template-columns: 280px 1fr; gap: 30px; align-items: start; }
+        .wb-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid #2b5c8f; padding-bottom: 5px; margin-bottom: 14px; font-family: 'Permanent Marker', cursive; color: #2b5c8f; }
+        .wb-header h1 { margin: 0; font-size: 24px; }
+        .wb-header h2 { margin: 0; font-size: 30px; color: #1a3a5c; }
+        .wb-header span { font-size: 18px; }
+        .wb-body { display: grid; grid-template-columns: 265px 1fr; gap: 26px; align-items: start; }
         .take-section { text-align: center; }
-        .wb-subtitle { font-family: 'Permanent Marker', cursive; font-size: 22px; color: #2b5c8f; border-bottom: 2px solid #2b5c8f; display: inline-block; padding: 0 15px; margin-bottom: 15px; }
-        .donut-chart { width: 220px; height: 220px; margin: 0 auto; border-radius: 50%; background: conic-gradient(#2b5c8f 0% 50%, #e67e22 50% 75%, #27ae60 75% 100%); display: flex; align-items: center; justify-content: center; border: 3px solid #1c3d5a; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
-        .donut-hole { width: 135px; height: 135px; background: #e6e9ef; border-radius: 50%; border: 3px solid #1c3d5a; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Permanent Marker', cursive; color: #2b5c8f; }
-        .donut-hole small { font-size: 14px; }
-        .donut-hole strong { font-size: 24px; color: #1a3a5c; }
-        .crew-headers { display: grid; grid-template-columns: 30px 2.2fr 1.3fr 1.2fr; font-family: 'Permanent Marker', cursive; color: #2b5c8f; font-size: 18px; padding-bottom: 5px; }
-        .gta-row { display: grid; grid-template-columns: 30px 2.2fr 1.3fr 1.2fr; align-items: center; margin-bottom: 10px; }
-        .row-num { font-family: 'Permanent Marker', cursive; font-size: 24px; color: #2b5c8f; }
-        .row-box { grid-column: 2 / 5; display: grid; grid-template-columns: 2.2fr 1.3fr 1.2fr; align-items: center; background: rgba(255, 255, 255, 0.65); border: 2px solid #2b5c8f; height: 64px; }
+        .wb-subtitle { font-family: 'Permanent Marker', cursive; font-size: 20px; color: #2b5c8f; border-bottom: 2px solid #2b5c8f; display: inline-block; padding: 0 15px; margin-bottom: 12px; }
+        .donut-chart { width: 205px; height: 205px; margin: 0 auto; border-radius: 50%; background: conic-gradient(#2b5c8f 0% 50%, #e67e22 50% 75%, #27ae60 75% 100%); display: flex; align-items: center; justify-content: center; border: 3px solid #1c3d5a; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+        .donut-hole { width: 126px; height: 126px; background: #e6e9ef; border-radius: 50%; border: 3px solid #1c3d5a; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Permanent Marker', cursive; color: #2b5c8f; }
+        .donut-hole small { font-size: 13px; }
+        .donut-hole strong { font-size: 22px; color: #1a3a5c; }
+        .crew-headers { display: grid; grid-template-columns: 28px 2.2fr 1.3fr 1.2fr; font-family: 'Permanent Marker', cursive; color: #2b5c8f; font-size: 17px; padding-bottom: 4px; }
+        .gta-row { display: grid; grid-template-columns: 28px 2.2fr 1.3fr 1.2fr; align-items: center; margin-bottom: 7px; }
+        .row-num { font-family: 'Permanent Marker', cursive; font-size: 21px; color: #2b5c8f; }
+        .row-box { grid-column: 2 / 5; display: grid; grid-template-columns: 2.2fr 1.3fr 1.2fr; align-items: center; background: rgba(255, 255, 255, 0.65); border: 2px solid #2b5c8f; height: 54px; }
         .player-info { display: flex; align-items: center; height: 100%; border-right: 2px solid #2b5c8f; padding-right: 10px; }
-        .player-avatar { width: 60px; height: 60px; object-fit: cover; background: #222; margin-right: 12px; }
-        .player-role { font-size: 18px; font-weight: 700; color: #111; line-height: 1.1; }
-        .player-gamertag { font-size: 15px; color: #2b5c8f; font-weight: 700; }
-        .cut-cell { border-right: 2px solid #2b5c8f; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.1; }
-        .cut-controls { display: flex; align-items: center; gap: 8px; }
-        .btn-arrow { background: #1c3d5a; color: white; border: none; width: 24px; height: 24px; font-weight: bold; cursor: pointer; border-radius: 3px; }
+        .player-avatar { width: 50px; height: 50px; object-fit: cover; background: #222; margin-right: 11px; flex-shrink: 0; }
+        .player-avatar-unknown {
+            width: 50px; height: 50px; background: #1e293b; color: #ffd54f;
+            font-family: 'Permanent Marker', cursive; font-size: 26px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 11px; flex-shrink: 0; border-right: 1px solid #2b5c8f;
+        }
+        .player-role { font-size: 16px; font-weight: 700; color: #111; line-height: 1.05; }
+        .player-gamertag { font-size: 14px; color: #2b5c8f; font-weight: 700; }
+        .cut-cell { border-right: 2px solid #2b5c8f; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.05; }
+        .cut-controls { display: flex; align-items: center; gap: 7px; }
+        .btn-arrow { background: #1c3d5a; color: white; border: none; width: 22px; height: 22px; font-weight: bold; cursor: pointer; border-radius: 3px; }
         .btn-arrow:hover { background: #ff9900; color: black; }
-        .cut-pct { font-size: 20px; font-weight: 700; color: #111; }
-        .cut-money { font-size: 15px; color: #2b5c8f; font-weight: 700; }
-        .status-cell { display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 17px; }
-        .status-ready { color: #27ae60; border: 2px solid #27ae60; padding: 2px 10px; background: rgba(39, 174, 96, 0.1); }
-        .status-not-ready { color: #c0392b; border: 2px solid #c0392b; padding: 2px 10px; background: rgba(192, 57, 43, 0.1); }
-        .wb-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 10px; border-top: 2px dashed rgba(43, 92, 143, 0.4); }
-        .taped-photos { display: flex; gap: 25px; }
-        .polaroid { background: #fff; padding: 6px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); transform: rotate(-2deg); position: relative; width: 150px; text-align: center; }
+        .cut-pct { font-size: 18px; font-weight: 700; color: #111; }
+        .cut-money { font-size: 14px; color: #2b5c8f; font-weight: 700; }
+        .status-cell { display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 15px; }
+        .status-ready { color: #27ae60; border: 2px solid #27ae60; padding: 2px 8px; background: rgba(39, 174, 96, 0.1); }
+        .status-not-ready { color: #c0392b; border: 2px solid #c0392b; padding: 2px 8px; background: rgba(192, 57, 43, 0.1); }
+        .status-spectator { color: #475569; border: 2px dashed #64748b; padding: 2px 8px; background: rgba(100, 116, 139, 0.1); font-size: 13px; }
+        .wb-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 8px; border-top: 2px dashed rgba(43, 92, 143, 0.4); }
+        .taped-photos { display: flex; gap: 22px; }
+        .polaroid { background: #fff; padding: 5px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); transform: rotate(-2deg); position: relative; width: 140px; text-align: center; }
         .polaroid:nth-child(2) { transform: rotate(2deg); }
-        .tape { position: absolute; top: -10px; left: 35px; width: 80px; height: 22px; background: rgba(160, 175, 170, 0.75); font-family: 'Permanent Marker', cursive; font-size: 13px; color: #222; line-height: 22px; }
-        .polaroid img { width: 100%; height: 75px; object-fit: cover; filter: grayscale(40%) contrast(1.2); }
+        .tape { position: absolute; top: -10px; left: 30px; width: 80px; height: 20px; background: rgba(160, 175, 170, 0.75); font-family: 'Permanent Marker', cursive; font-size: 12px; color: #222; line-height: 20px; }
+        .polaroid img { width: 100%; height: 68px; object-fit: cover; filter: grayscale(40%) contrast(1.2); }
 
         #debug-bar {
             position: fixed; bottom: 8px; left: 8px; z-index: 10001;
@@ -482,7 +487,7 @@
     </div>
 
     <!-- ================= PASO 6: ¿QUIÉN QUIERE SER MILLONARIO? ================= -->
-    <div id="escena-5" class="escena">
+    <div id="escena-5" class="escena" onclick="activarAudioAlInteractuar()">
         <div class="wwtbam-studio" id="wwtbam-studio">
             <div class="wwtbam-main">
                 <div class="wwtbam-top">
@@ -495,10 +500,10 @@
                             <div class="narrator-avatar" id="narrator-avatar">🎙️</div>
                             <div>
                                 <div style="font-size:12px; color:#ffd54f; font-weight:700; letter-spacing:1px;" id="narrator-role-label">PRESENTADORA EN VIVO</div>
-                                <div id="narrator-subtitle" style="font-size:14px; color:#dce6f2;">Escuchando pregunta...</div>
+                                <div id="narrator-subtitle" style="font-size:14px; color:#dce6f2;">Preparando entrada al set...</div>
                             </div>
                         </div>
-                        <button class="btn-narrador" onclick="narrarPreguntaActual()">🗣️ Repetir Voz</button>
+                        <button class="btn-narrador" onclick="hablarPreguntaAhora()">🗣️ Repetir Voz</button>
                     </div>
                 </div>
 
@@ -550,6 +555,11 @@
             </div>
         </div>
 
+        <audio id="fondomillonario-mp3" src="fondomillonario.mp3" loop></audio>
+        <audio id="pregunta-mp3" src="pregunta.mp3"></audio>
+        <audio id="suspenso-mp3" src="suspenso.mp3"></audio>
+        <audio id="tambores-4s-mp3" src="tambores.mp3"></audio>
+
         <audio id="voz-p1" src="voz-p1.mp3"></audio>
         <audio id="voz-p2" src="voz-p2.mp3"></audio>
         <audio id="voz-p3" src="voz-p3.mp3"></audio>
@@ -576,7 +586,7 @@
                             <strong>$3,000,000</strong>
                         </div>
                     </div>
-                    <p style="font-family:'Permanent Marker', cursive; font-size:15px; margin-top:15px; color:#2b5c8f;">
+                    <p style="font-family:'Permanent Marker', cursive; font-size:14px; margin-top:12px; color:#2b5c8f;">
                         PLAN: Consigue los $15,000 exactos para saldar la deuda
                     </p>
                 </div>
@@ -645,6 +655,24 @@
                             <div class="status-cell"><span id="status-matias" class="status-not-ready">☒ NOT READY</span></div>
                         </div>
                     </div>
+
+                    <div class="gta-row">
+                        <div class="row-num">4</div>
+                        <div class="row-box" style="background: rgba(241, 245, 249, 0.72);">
+                            <div class="player-info">
+                                <div class="player-avatar-unknown">?</div>
+                                <div>
+                                    <div class="player-role">No es canon • Juega Fortnite</div>
+                                    <div class="player-gamertag">Nickpapaleta27</div>
+                                </div>
+                            </div>
+                            <div class="cut-cell">
+                                <span class="cut-pct" style="color:#64748b;">—</span>
+                                <span class="cut-money" style="color:#64748b;">Sin corte</span>
+                            </div>
+                            <div class="status-cell"><span class="status-spectator">🎮 LOBBY FORTNITE</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -654,8 +682,8 @@
                     <div class="polaroid"><div class="tape">TARGET</div><img src="meme8.jpg" alt="Target"></div>
                 </div>
                 <div style="text-align: right;">
-                    <p id="error-heist" style="color:#c0392b; font-weight:bold; margin:0 0 8px 0; height:20px;"></p>
-                    <button onclick="verificarGolpeGTA()" style="padding: 12px 32px; font-size:20px; font-family:'Rajdhani', sans-serif; background:#1c3d5a; color:white; border:3px solid #2b5c8f; font-weight:bold; cursor:pointer; text-transform:uppercase;">
+                    <p id="error-heist" style="color:#c0392b; font-weight:bold; margin:0 0 6px 0; height:20px;"></p>
+                    <button onclick="verificarGolpeGTA()" style="padding: 10px 28px; font-size:19px; font-family:'Rajdhani', sans-serif; background:#1c3d5a; color:white; border:3px solid #2b5c8f; font-weight:bold; cursor:pointer; text-transform:uppercase;">
                         ▶ Iniciar Golpe
                     </button>
                 </div>
@@ -680,20 +708,46 @@
         let ambientGain = null;
         let millonarioInterval = null;
         let relojInterval = null;
+        let timeoutEntradaVoz = null;
 
         function obtenerAudioCtx() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+            if (!audioCtx) {
+                const Ctx = window.AudioContext || window.webkitAudioContext;
+                if (Ctx) audioCtx = new Ctx();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume().catch(() => {});
+            }
             return audioCtx;
+        }
+
+        function activarAudioAlInteractuar() {
+            obtenerAudioCtx();
+            if (!audioHabilitado) return;
+            const actual = document.querySelector('.escena.activa');
+            if (actual && actual.id === 'escena-5') {
+                const mp3Amb = document.getElementById('fondomillonario-mp3');
+                if (mp3Amb && mp3Amb.paused) {
+                    mp3Amb.volume = 0.28;
+                    mp3Amb.play().catch(() => {});
+                }
+                if (!millonarioInterval) iniciarTensionMillonario();
+            }
         }
 
         function toggleAudioGlobal() {
             audioHabilitado = !audioHabilitado;
             const btn = document.getElementById('btn-audio-toggle');
+            const mp3Amb = document.getElementById('fondomillonario-mp3');
+            const mp3Ent = document.getElementById('pregunta-mp3');
+            const mp3Susp = document.getElementById('suspenso-mp3');
+            const mp3Tamb = document.getElementById('tambores-4s-mp3');
+
             if (!audioHabilitado) {
                 detenerAmbiente();
                 detenerTensionMillonario();
                 detenerRelojPensar();
+                [mp3Amb, mp3Ent, mp3Susp, mp3Tamb].forEach(a => { if (a) a.pause(); });
                 if ('speechSynthesis' in window) window.speechSynthesis.cancel();
                 btn.innerText = '🔇 Ambiente: OFF';
             } else {
@@ -718,6 +772,9 @@
             detenerAmbiente();
             detenerTensionMillonario();
             detenerRelojPensar();
+            const mp3Amb = document.getElementById('fondomillonario-mp3');
+            if (mp3Amb && num !== 5) mp3Amb.pause();
+
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
 
@@ -726,6 +783,7 @@
                 return;
             }
 
+            if (!ctx) return;
             const configs = {
                 1: { f1: 110, f2: 164.8, tipo: 'sine', vol: 0.016 },
                 2: { f1: 55,  f2: 58.2,  tipo: 'triangle', vol: 0.022 },
@@ -759,6 +817,7 @@
         function sonarTransicionNivel() {
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
+            if (!ctx) return;
             const ahora = ctx.currentTime;
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
@@ -768,15 +827,14 @@
             gain.gain.setValueAtTime(0.001, ahora);
             gain.gain.linearRampToValueAtTime(0.045, ahora + 0.03);
             gain.gain.exponentialRampToValueAtTime(0.0008, ahora + 0.22);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(ahora);
-            osc.stop(ahora + 0.23);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(ahora); osc.stop(ahora + 0.23);
         }
 
         function sonarIgnicionAntorcha() {
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
+            if (!ctx) return;
             const ahora = ctx.currentTime;
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
@@ -786,10 +844,8 @@
             gain.gain.setValueAtTime(0.001, ahora);
             gain.gain.linearRampToValueAtTime(0.04, ahora + 0.04);
             gain.gain.exponentialRampToValueAtTime(0.0008, ahora + 0.35);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start(ahora);
-            osc.stop(ahora + 0.36);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(ahora); osc.stop(ahora + 0.36);
         }
 
         // ================= MEMES ESPONTÁNEOS (SIN TEXTO) Y DOXEO (CON TEXTO) =================
@@ -807,6 +863,7 @@
 
         function sonarSintetizadorChistoso(esDoxeo) {
             const ctx = obtenerAudioCtx();
+            if (!ctx) return;
             const ahora = ctx.currentTime;
             const notas = esDoxeo
                 ? [523.25, 392.00, 523.25, 392.00, 659.25, 311.13]
@@ -819,10 +876,8 @@
                 osc.frequency.setValueAtTime(freq, ahora + i * 0.13);
                 gain.gain.setValueAtTime(0.04, ahora + i * 0.13);
                 gain.gain.exponentialRampToValueAtTime(0.001, ahora + i * 0.13 + 0.12);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start(ahora + i * 0.13);
-                osc.stop(ahora + i * 0.13 + 0.125);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(ahora + i * 0.13); osc.stop(ahora + i * 0.13 + 0.125);
             });
         }
 
@@ -878,24 +933,26 @@
 
             if (audioHabilitado) {
                 const ctx = obtenerAudioCtx();
-                const ahora = ctx.currentTime;
-                const dur = 2.5;
-                const sub = ctx.createOscillator();
-                const lead = ctx.createOscillator();
-                const gain = ctx.createGain();
-                sub.type = 'sawtooth';
-                sub.frequency.setValueAtTime(55, ahora);
-                sub.frequency.exponentialRampToValueAtTime(220, ahora + dur);
-                lead.type = 'triangle';
-                lead.frequency.setValueAtTime(180, ahora);
-                lead.frequency.exponentialRampToValueAtTime(1150, ahora + dur);
-                gain.gain.setValueAtTime(0.002, ahora);
-                gain.gain.linearRampToValueAtTime(0.11, ahora + 0.6);
-                gain.gain.linearRampToValueAtTime(0.14, ahora + 2.1);
-                gain.gain.exponentialRampToValueAtTime(0.001, ahora + dur);
-                sub.connect(gain); lead.connect(gain); gain.connect(ctx.destination);
-                sub.start(ahora); lead.start(ahora);
-                sub.stop(ahora + dur); lead.stop(ahora + dur);
+                if (ctx) {
+                    const ahora = ctx.currentTime;
+                    const dur = 2.5;
+                    const sub = ctx.createOscillator();
+                    const lead = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    sub.type = 'sawtooth';
+                    sub.frequency.setValueAtTime(55, ahora);
+                    sub.frequency.exponentialRampToValueAtTime(220, ahora + dur);
+                    lead.type = 'triangle';
+                    lead.frequency.setValueAtTime(180, ahora);
+                    lead.frequency.exponentialRampToValueAtTime(1150, ahora + dur);
+                    gain.gain.setValueAtTime(0.002, ahora);
+                    gain.gain.linearRampToValueAtTime(0.11, ahora + 0.6);
+                    gain.gain.linearRampToValueAtTime(0.14, ahora + 2.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + dur);
+                    sub.connect(gain); lead.connect(gain); gain.connect(ctx.destination);
+                    sub.start(ahora); lead.start(ahora);
+                    sub.stop(ahora + dur); lead.stop(ahora + dur);
+                }
             }
 
             const estrellas = Array.from({ length: 240 }, () => ({
@@ -955,6 +1012,12 @@
             if (num !== 3) document.getElementById('custom-cursor').style.display = 'none';
             if (num !== 5) {
                 detenerRelojPensar();
+                if (timeoutEntradaVoz) {
+                    clearTimeout(timeoutEntradaVoz);
+                    timeoutEntradaVoz = null;
+                }
+                const mp3Ent = document.getElementById('pregunta-mp3');
+                if (mp3Ent) mp3Ent.pause();
                 if ('speechSynthesis' in window) window.speechSynthesis.cancel();
             }
 
@@ -978,12 +1041,8 @@
         }
 
         window.addEventListener('pointerdown', () => {
-            if (audioHabilitado && !ambientOsc1 && !millonarioInterval) {
-                const actual = document.querySelector('.escena.activa');
-                const idx = actual ? parseInt(actual.id.replace('escena-', ''), 10) : 1;
-                iniciarAmbienteEscena(idx);
-            }
-        }, { once: true });
+            activarAudioAlInteractuar();
+        });
 
         // ================= ROCKET LEAGUE =================
         let bufferRL = [];
@@ -1029,6 +1088,7 @@
         function sonarEstaticaCorto() {
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
+            if (!ctx) return;
             const bufferSize = ctx.sampleRate * 0.16;
             const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
             const data = buffer.getChannelData(0);
@@ -1037,14 +1097,14 @@
             noise.buffer = buffer;
             const gain = ctx.createGain();
             gain.gain.value = 0.045;
-            noise.connect(gain);
-            gain.connect(ctx.destination);
+            noise.connect(gain); gain.connect(ctx.destination);
             noise.start();
         }
 
         function sonarStingRaroSuave() {
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
+            if (!ctx) return;
             const ahora = ctx.currentTime;
             const duracion = 0.35;
             const osc = ctx.createOscillator();
@@ -1350,22 +1410,33 @@
         function iniciarTensionMillonario() {
             detenerTensionMillonario();
             if (!audioHabilitado) return;
+
+            const mp3Amb = document.getElementById('fondomillonario-mp3');
+            if (mp3Amb) {
+                mp3Amb.volume = 0.28;
+                mp3Amb.play().catch(() => {});
+            }
+
+            const ctx = obtenerAudioCtx();
+            if (!ctx) return;
+
             millonarioInterval = setInterval(() => {
                 if (!audioHabilitado) return;
-                const ctx = obtenerAudioCtx();
-                const ahora = ctx.currentTime;
-                [0, 0.24].forEach((offset, i) => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
+                const c = obtenerAudioCtx();
+                if (!c) return;
+                const ahora = c.currentTime;
+                [0, 0.28].forEach((offset, i) => {
+                    const osc = c.createOscillator();
+                    const gain = c.createGain();
                     osc.type = i === 0 ? 'sine' : 'triangle';
-                    osc.frequency.setValueAtTime(i === 0 ? 65.4 : 98.0, ahora + offset);
+                    osc.frequency.setValueAtTime(i === 0 ? 73.4 : 110.0, ahora + offset);
                     gain.gain.setValueAtTime(0.001, ahora + offset);
-                    gain.gain.linearRampToValueAtTime(0.045, ahora + offset + 0.03);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + offset + 0.22);
-                    osc.connect(gain); gain.connect(ctx.destination);
-                    osc.start(ahora + offset); osc.stop(ahora + offset + 0.23);
+                    gain.gain.linearRampToValueAtTime(0.055, ahora + offset + 0.04);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + offset + 0.24);
+                    osc.connect(gain); gain.connect(c.destination);
+                    osc.start(ahora + offset); osc.stop(ahora + offset + 0.25);
                 });
-            }, 1100);
+            }, 1350);
         }
 
         function detenerTensionMillonario() {
@@ -1373,23 +1444,27 @@
                 clearInterval(millonarioInterval);
                 millonarioInterval = null;
             }
+            if (timeoutEntradaVoz) {
+                clearTimeout(timeoutEntradaVoz);
+                timeoutEntradaVoz = null;
+            }
         }
 
-        // Sonido tic-tac de reloj al terminar de hablar la presentadora
         function sonarTicTacReloj() {
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
+            if (!ctx) return;
             const ahora = ctx.currentTime;
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(1150, ahora);
-            osc.frequency.exponentialRampToValueAtTime(520, ahora + 0.045);
+            osc.frequency.setValueAtTime(1100, ahora);
+            osc.frequency.exponentialRampToValueAtTime(520, ahora + 0.05);
             gain.gain.setValueAtTime(0.001, ahora);
-            gain.gain.linearRampToValueAtTime(0.055, ahora + 0.005);
-            gain.gain.exponentialRampToValueAtTime(0.0008, ahora + 0.05);
+            gain.gain.linearRampToValueAtTime(0.065, ahora + 0.006);
+            gain.gain.exponentialRampToValueAtTime(0.0008, ahora + 0.055);
             osc.connect(gain); gain.connect(ctx.destination);
-            osc.start(ahora); osc.stop(ahora + 0.055);
+            osc.start(ahora); osc.stop(ahora + 0.06);
         }
 
         function iniciarRelojPensar() {
@@ -1399,14 +1474,14 @@
             avatar.classList.remove('hablando');
             avatar.classList.add('reloj-activo');
             avatar.innerText = "⏱️";
-            roleLabel.innerText = "TIEMPO CORRIENDO • ELIGE TU OPCIÓN";
+            roleLabel.innerText = "TIEMPO DE ANÁLISIS • ELIGE CON CALMA";
 
             sonarTicTacReloj();
             relojInterval = setInterval(() => {
                 if (!bloqueadoMillonario && audioHabilitado) {
                     sonarTicTacReloj();
                 }
-            }, 750);
+            }, 950);
         }
 
         function detenerRelojPensar() {
@@ -1425,15 +1500,34 @@
             }
         }
 
-        // Redoble de tambores de 4 segundos exactos
         function sonarRedobleTambores(duracion = 4.0) {
             if (!audioHabilitado) return;
+
+            const mp3Susp = document.getElementById('suspenso-mp3');
+            if (mp3Susp) {
+                mp3Susp.currentTime = 0;
+                mp3Susp.volume = 0.45;
+                mp3Susp.play().catch(() => {});
+            }
+
+            const mp3Tamb = document.getElementById('tambores-4s-mp3');
+            if (mp3Tamb) {
+                mp3Tamb.currentTime = 0;
+                mp3Tamb.volume = 0.8;
+                mp3Tamb.play().catch(() => sonarRedobleSintetico(duracion));
+                return;
+            }
+            sonarRedobleSintetico(duracion);
+        }
+
+        function sonarRedobleSintetico(duracion = 4.0) {
             const ctx = obtenerAudioCtx();
+            if (!ctx) return;
             const ahora = ctx.currentTime;
-            const golpes = 48;
+            const golpes = 52;
             for (let i = 0; i < golpes; i++) {
                 const t = ahora + (i * (duracion / golpes));
-                const bufferSize = Math.floor(ctx.sampleRate * 0.065);
+                const bufferSize = Math.floor(ctx.sampleRate * 0.07);
                 const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
                 const data = buffer.getChannelData(0);
                 for (let j = 0; j < bufferSize; j++) data[j] = Math.random() * 2 - 1;
@@ -1442,12 +1536,12 @@
 
                 const filter = ctx.createBiquadFilter();
                 filter.type = 'bandpass';
-                filter.frequency.value = 220 + (i * 8);
+                filter.frequency.value = 190 + (i * 7);
 
                 const gain = ctx.createGain();
                 const progreso = i / golpes;
-                gain.gain.setValueAtTime(0.015 + (progreso * 0.055), t);
-                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
+                gain.gain.setValueAtTime(0.05 + (progreso * 0.14), t);
+                gain.gain.exponentialRampToValueAtTime(0.002, t + 0.065);
 
                 noise.connect(filter); filter.connect(gain); gain.connect(ctx.destination);
                 noise.start(t);
@@ -1457,6 +1551,7 @@
         function sonarEfectoMillonario(tipo) {
             if (!audioHabilitado) return;
             const ctx = obtenerAudioCtx();
+            if (!ctx) return;
             const ahora = ctx.currentTime;
 
             if (tipo === 'win') {
@@ -1465,29 +1560,35 @@
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
                     osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(freq, ahora + idx * 0.1);
-                    gain.gain.setValueAtTime(0.065, ahora + idx * 0.1);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + idx * 0.1 + 0.55);
+                    osc.frequency.setValueAtTime(freq, ahora + idx * 0.14);
+                    gain.gain.setValueAtTime(0.08, ahora + idx * 0.14);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ahora + idx * 0.14 + 0.65);
                     osc.connect(gain); gain.connect(ctx.destination);
-                    osc.start(ahora + idx * 0.1); osc.stop(ahora + idx * 0.1 + 0.58);
+                    osc.start(ahora + idx * 0.14); osc.stop(ahora + idx * 0.14 + 0.68);
                 });
             } else if (tipo === 'lose') {
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'sawtooth';
                 osc.frequency.setValueAtTime(150, ahora);
-                osc.frequency.linearRampToValueAtTime(70, ahora + 0.6);
-                gain.gain.setValueAtTime(0.06, ahora);
-                gain.gain.exponentialRampToValueAtTime(0.001, ahora + 0.65);
+                osc.frequency.linearRampToValueAtTime(70, ahora + 0.7);
+                gain.gain.setValueAtTime(0.08, ahora);
+                gain.gain.exponentialRampToValueAtTime(0.001, ahora + 0.75);
                 osc.connect(gain); gain.connect(ctx.destination);
-                osc.start(ahora); osc.stop(ahora + 0.66);
+                osc.start(ahora); osc.stop(ahora + 0.76);
             }
         }
 
-        function narrarPreguntaActual() {
+        function hablarPreguntaAhora() {
+            if (timeoutEntradaVoz) {
+                clearTimeout(timeoutEntradaVoz);
+                timeoutEntradaVoz = null;
+            }
             const p = preguntasMillonario[indicePreguntaActual];
             if (!p) return;
+
             detenerRelojPensar();
+            document.getElementById('narrator-role-label').innerText = "PRESENTADORA EN VIVO";
             document.getElementById('narrator-subtitle').innerText = p.narracion;
 
             if (!audioHabilitado) {
@@ -1523,7 +1624,7 @@
             window.speechSynthesis.cancel();
             const utter = new SpeechSynthesisUtterance(texto);
             utter.lang = 'es-CL';
-            utter.rate = 0.96;
+            utter.rate = 0.92;
             utter.pitch = 0.85;
             const avatar = document.getElementById('narrator-avatar');
             utter.onstart = () => avatar.classList.add('hablando');
@@ -1546,6 +1647,13 @@
 
         function cargarPreguntaMillonario(idx) {
             bloqueadoMillonario = false;
+            detenerRelojPensar();
+            if (timeoutEntradaVoz) {
+                clearTimeout(timeoutEntradaVoz);
+                timeoutEntradaVoz = null;
+            }
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+
             const p = preguntasMillonario[idx];
             document.getElementById('wwtbam-q-text').innerText = p.pregunta;
             document.getElementById('studio-center-img').src = p.fotoCentro;
@@ -1564,17 +1672,36 @@
                 else if (s === idx) step.classList.add('active');
             }
 
-            narrarPreguntaActual();
+            document.getElementById('narrator-role-label').innerText = "ENTRADA DE PREGUNTA • INICIANDO EN 10s";
+            document.getElementById('narrator-subtitle').innerText = "Escuchando entrada del programa...";
+
+            const mp3Entrada = document.getElementById('pregunta-mp3');
+            if (audioHabilitado && mp3Entrada) {
+                mp3Entrada.currentTime = 0;
+                mp3Entrada.volume = 0.65;
+                mp3Entrada.play().catch(() => {});
+            }
+
+            timeoutEntradaVoz = setTimeout(() => {
+                if (!bloqueadoMillonario) {
+                    hablarPreguntaAhora();
+                }
+            }, 10000);
         }
 
         function seleccionarOpcionMillonario(opcionIdx, btn) {
             if (bloqueadoMillonario) return;
             bloqueadoMillonario = true;
             detenerRelojPensar();
+            if (timeoutEntradaVoz) {
+                clearTimeout(timeoutEntradaVoz);
+                timeoutEntradaVoz = null;
+            }
             if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
             const p = preguntasMillonario[indicePreguntaActual];
             btn.classList.add('locked');
+            document.getElementById('narrator-role-label').innerText = "RESPUESTA BLOQUEADA";
             document.getElementById('narrator-subtitle').innerText = "🥁 Redoble de tambores... ¿Será verdadera o falsa?";
             sonarRedobleTambores(4.0);
 
@@ -1596,12 +1723,14 @@
                             cargarPreguntaMillonario(indicePreguntaActual);
                         } else {
                             detenerTensionMillonario();
+                            const mp3Amb = document.getElementById('fondomillonario-mp3');
+                            if (mp3Amb) mp3Amb.pause();
                             document.getElementById('narrator-subtitle').innerText = "¡Ganaste $9.985.000! Solo faltan $15.000 en El Gran Golpe.";
                             setTimeout(() => {
-                                mostrarMemeEspontaneo('meme9.jpg', true, 3400, () => cambiarEscena(6));
-                            }, 1500);
+                                mostrarMemeEspontaneo('meme9.jpg', true, 3600, () => cambiarEscena(6));
+                            }, 2200);
                         }
-                    }, 1700);
+                    }, 2500);
                 } else {
                     btn.classList.add('wrong');
                     sonarEfectoMillonario('lose');
@@ -1612,7 +1741,7 @@
                         btn.classList.remove('wrong');
                         bloqueadoMillonario = false;
                         iniciarRelojPensar();
-                    }, 1300);
+                    }, 1800);
                 }
             }, 4000);
         }

@@ -429,6 +429,147 @@
         .tape { position: absolute; top: -10px; left: 30px; width: 80px; height: 20px; background: rgba(160, 175, 170, 0.75); font-family: 'Permanent Marker', cursive; font-size: 12px; color: #222; line-height: 20px; }
         .polaroid img { width: 100%; height: 68px; object-fit: cover; filter: grayscale(40%) contrast(1.2); }
 
+
+        /* ================= ESTILOS PASO 8: BÓVEDA FINAL REALISTA ================= */
+        #escena-7 {
+            background: #06070a;
+            overflow: hidden;
+        }
+        .vault-gold-glow {
+            position: absolute; inset: 0; z-index: 1; pointer-events: none;
+            background: radial-gradient(circle at center, rgba(255, 200, 40, 0.55) 0%, rgba(255, 145, 0, 0.16) 38%, rgba(6, 7, 10, 0) 70%);
+            opacity: 0;
+            transition: opacity 1.4s ease;
+        }
+        .vault-gold-glow.brillar { opacity: 1; }
+        .vault-gold-glow.suave { opacity: 0.28; transition: opacity 2.2s ease; }
+
+        .vault-reveal-content {
+            position: relative; z-index: 2; text-align: center; padding: 0 24px;
+            opacity: 0; transform: scale(0.92);
+            transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .vault-reveal-content.visible {
+            opacity: 1; transform: scale(1);
+        }
+
+        /* Compuertas de acero */
+        .vault-doors-layer {
+            position: absolute; inset: 0; z-index: 10;
+            display: flex; pointer-events: none;
+        }
+        .vault-door {
+            position: relative; width: 50%; height: 100%;
+            background:
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0px, rgba(255,255,255,0.018) 1px, transparent 1px, transparent 4px),
+                linear-gradient(135deg, #1a1f28 0%, #2c3442 45%, #161b24 100%);
+            transition: transform 2.1s cubic-bezier(0.45, 0.05, 0.2, 1);
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.85);
+        }
+        .vault-door-left {
+            z-index: 5;
+            border-right: 4px solid #0b0e14;
+            box-shadow: inset -12px 0 30px rgba(0,0,0,0.75), 6px 0 25px rgba(0,0,0,0.9);
+            overflow: visible;
+        }
+        .vault-door-right {
+            z-index: 4;
+            border-left: 2px solid #3a4556;
+            box-shadow: inset 12px 0 30px rgba(0,0,0,0.75);
+        }
+        .vault-door-left.abierta { transform: translateX(-108%); }
+        .vault-door-right.abierta { transform: translateX(108%); }
+
+        /* Remaches decorativos de acero */
+        .vault-rivets {
+            position: absolute; top: 30px; bottom: 30px; width: 18px;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .vault-door-left .vault-rivets { right: 26px; }
+        .vault-door-right .vault-rivets { left: 26px; }
+        .vault-rivets span {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #6b778d, #1c222d 70%);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Pasadores metálicos pesados */
+        .vault-bolts {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 75px; z-index: 2;
+        }
+        .vault-door-left .vault-bolts { right: -26px; }
+        .vault-door-right .vault-bolts { left: -26px; }
+        .vault-bolt {
+            width: 68px; height: 26px; border-radius: 6px;
+            background: linear-gradient(180deg, #94a3b8 0%, #475569 50%, #1e293b 100%);
+            border: 2px solid #0f172a;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.85);
+            transition: transform 0.35s cubic-bezier(0.5, 0, 0.2, 1);
+        }
+        .vault-door-left.destrabada .vault-bolt { transform: translateX(-52px); }
+        .vault-door-right.destrabada .vault-bolt { transform: translateX(52px); }
+
+        /* Timón / Rueda central pesada (va pegada a la puerta izquierda) */
+        .vault-wheel-assembly {
+            position: absolute; right: -115px; top: 50%;
+            transform: translateY(-50%);
+            width: 230px; height: 230px; border-radius: 50%;
+            background: radial-gradient(circle, #181e29 35%, #0c1017 100%);
+            border: 8px solid #334155;
+            box-shadow: 0 0 45px rgba(0,0,0,0.95), inset 0 0 25px rgba(0,0,0,0.9);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 8;
+        }
+        .vault-wheel {
+            position: relative; width: 185px; height: 185px; border-radius: 50%;
+            border: 14px solid #64748b;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.85), 0 0 18px rgba(0,0,0,0.8);
+            transition: transform 1.45s cubic-bezier(0.35, 0.05, 0.2, 1);
+        }
+        .vault-wheel.girando { transform: rotate(540deg); }
+        .vault-spoke {
+            position: absolute; top: 50%; left: 50%;
+            width: 158px; height: 12px;
+            background: linear-gradient(180deg, #cbd5e1, #475569, #1e293b);
+            transform-origin: center;
+            border-radius: 4px;
+        }
+        .vault-spoke.s1 { transform: translate(-50%, -50%) rotate(0deg); }
+        .vault-spoke.s2 { transform: translate(-50%, -50%) rotate(60deg); }
+        .vault-spoke.s3 { transform: translate(-50%, -50%) rotate(120deg); }
+        .vault-hub {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 52px; height: 52px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #94a3b8, #1e293b);
+            border: 4px solid #0f172a;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.9);
+        }
+
+        /* Panel LED encima del timón */
+        .vault-led-panel {
+            position: absolute; top: -54px; left: 50%; transform: translateX(-50%);
+            background: #0a0d12; border: 2px solid #334155; border-radius: 6px;
+            padding: 6px 14px; display: flex; align-items: center; gap: 8px;
+            font-family: 'Courier New', monospace; font-size: 12px; font-weight: 700;
+            color: #94a3b8; letter-spacing: 1px; white-space: nowrap;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.9);
+        }
+        .vault-led-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: #ef4444; box-shadow: 0 0 10px #ef4444;
+            transition: background 0.25s, box-shadow 0.25s;
+        }
+        .vault-led-dot.verde {
+            background: #22c55e; box-shadow: 0 0 14px #22c55e;
+        }
+
+
+
+
+        
+
     </style>
 </head>
 <body>
@@ -783,11 +924,62 @@
         </div>
     </div>
 
+    
     <!-- ================= PASO 8: BÓVEDA FINAL ================= -->
     <div id="escena-7" class="escena">
-        <h1 style="color: gold; font-size: 50px; text-shadow: 0 0 25px rgba(255, 215, 0, 0.45);">¡DEUDA SALDADA ($10.000.000 / $10.000.000)!</h1>
-        <p style="color:#dce6f2; font-size:18px;">Aquí pondremos la bóveda abriéndose y el video final.</p>
+        <div class="vault-gold-glow" id="vault-glow"></div>
+
+        <!-- Contenido revelado al abrir la bóveda -->
+        <div class="vault-reveal-content" id="vault-reveal-content">
+            <h1 style="color: gold; font-size: 50px; text-shadow: 0 0 25px rgba(255, 215, 0, 0.45); margin: 0 0 18px 0;">
+                ¡DEUDA SALDADA ($10.000.000 / $10.000.000)!
+            </h1>
+            <p style="color:#dce6f2; font-size:22px; margin: 0; letter-spacing: 0.4px; text-shadow: 0 2px 12px rgba(0,0,0,0.9);">
+                Feliz cumpleaños bro, gracias por los años de amistad, todo dicho ostias
+            </p>
+        </div>
+
+        <!-- Compuertas de acero de la bóveda -->
+        <div class="vault-doors-layer" id="vault-doors-layer">
+            <div class="vault-door vault-door-left" id="vault-door-left">
+                <div class="vault-rivets">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div class="vault-bolts">
+                    <div class="vault-bolt"></div>
+                    <div class="vault-bolt"></div>
+                    <div class="vault-bolt"></div>
+                </div>
+
+                <!-- Timón central + LED -->
+                <div class="vault-wheel-assembly">
+                    <div class="vault-led-panel">
+                        <span class="vault-led-dot" id="vault-led-dot"></span>
+                        <span id="vault-led-text">BLOQUEADA</span>
+                    </div>
+                    <div class="vault-wheel" id="vault-wheel">
+                        <div class="vault-spoke s1"></div>
+                        <div class="vault-spoke s2"></div>
+                        <div class="vault-spoke s3"></div>
+                        <div class="vault-hub"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vault-door vault-door-right" id="vault-door-right">
+                <div class="vault-rivets">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div class="vault-bolts">
+                    <div class="vault-bolt"></div>
+                    <div class="vault-bolt"></div>
+                    <div class="vault-bolt"></div>
+                </div>
+            </div>
+        </div>
     </div>
+    
+
 
     <audio id="sonido-meme-mp3" src="sonido-meme.mp3"></audio>
 
@@ -1111,12 +1303,14 @@
                     siguiente.classList.add('activa');
                     iniciarAmbienteEscena(num);
                     if (num === 5) iniciarMillonario();
+                    if (num === 7) iniciarAnimacionBoveda();
                     transicionando = false;
                 }, 320);
             } else {
                 siguiente.classList.add('activa');
                 iniciarAmbienteEscena(num);
                 if (num === 5) iniciarMillonario();
+                if (num === 7) iniciarAnimacionBoveda();
                 transicionando = false;
             }
         }
@@ -1860,6 +2054,219 @@
                 document.getElementById('error-heist').innerText = "⚠️ Felipe exige su 99% reglamentario (y tú necesitas los $15,000 exactos).";
             }
         }
+
+        // ================= ANIMACIÓN Y SONIDOS REALISTAS DE BÓVEDA FINAL =================
+        let vaultTimeouts = [];
+
+        function limpiarTimersBoveda() {
+            vaultTimeouts.forEach(t => clearTimeout(t));
+            vaultTimeouts = [];
+        }
+
+        function sonarBeepBoveda() {
+            if (!audioHabilitado) return;
+            const ctx = obtenerAudioCtx();
+            if (!ctx) return;
+            const ahora = ctx.currentTime;
+            [880, 1320].forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, ahora + i * 0.14);
+                gain.gain.setValueAtTime(0.001, ahora + i * 0.14);
+                gain.gain.linearRampToValueAtTime(0.07, ahora + i * 0.14 + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.001, ahora + i * 0.14 + 0.16);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(ahora + i * 0.14); osc.stop(ahora + i * 0.14 + 0.18);
+            });
+        }
+
+        function sonarGiroTimonBoveda() {
+            if (!audioHabilitado) return;
+            const ctx = obtenerAudioCtx();
+            if (!ctx) return;
+            const ahora = ctx.currentTime;
+            const clics = 14;
+            for (let i = 0; i < clics; i++) {
+                // Ritmo más rápido al medio y desacelerando al final
+                const t = ahora + (i * 0.085) + (i * i * 0.0015);
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(520 + (i % 2) * 90, t);
+                osc.frequency.exponentialRampToValueAtTime(160, t + 0.045);
+                gain.gain.setValueAtTime(0.06, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(t); osc.stop(t + 0.055);
+            }
+        }
+
+        function sonarPasadoresBoveda() {
+            if (!audioHabilitado) return;
+            const ctx = obtenerAudioCtx();
+            if (!ctx) return;
+            const ahora = ctx.currentTime;
+            // 3 golpes metálicos pesados de pasadores retrayéndose
+            [0, 0.24, 0.48].forEach(offset => {
+                const t = ahora + offset;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(140, t);
+                osc.frequency.exponentialRampToValueAtTime(38, t + 0.16);
+                gain.gain.setValueAtTime(0.14, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.19);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(t); osc.stop(t + 0.2);
+
+                const metal = ctx.createOscillator();
+                const mGain = ctx.createGain();
+                metal.type = 'square';
+                metal.frequency.setValueAtTime(640, t);
+                mGain.gain.setValueAtTime(0.03, t);
+                mGain.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+                metal.connect(mGain); mGain.connect(ctx.destination);
+                metal.start(t); metal.stop(t + 0.08);
+            });
+        }
+
+        function sonarAperturaPuertasBoveda() {
+            if (!audioHabilitado) return;
+            const ctx = obtenerAudioCtx();
+            if (!ctx) return;
+            const ahora = ctx.currentTime;
+            const dur = 2.1;
+
+            // 1. Silbido hidráulico (aire a presión)
+            const hissSize = Math.floor(ctx.sampleRate * 0.9);
+            const hissBuf = ctx.createBuffer(1, hissSize, ctx.sampleRate);
+            const hissData = hissBuf.getChannelData(0);
+            for (let i = 0; i < hissSize; i++) hissData[i] = Math.random() * 2 - 1;
+            const hiss = ctx.createBufferSource();
+            hiss.buffer = hissBuf;
+            const hissFilter = ctx.createBiquadFilter();
+            hissFilter.type = 'bandpass';
+            hissFilter.frequency.setValueAtTime(2800, ahora);
+            hissFilter.frequency.exponentialRampToValueAtTime(750, ahora + 0.85);
+            const hissGain = ctx.createGain();
+            hissGain.gain.setValueAtTime(0.001, ahora);
+            hissGain.gain.linearRampToValueAtTime(0.08, ahora + 0.08);
+            hissGain.gain.exponentialRampToValueAtTime(0.001, ahora + 0.88);
+            hiss.connect(hissFilter); hissFilter.connect(hissGain); hissGain.connect(ctx.destination);
+            hiss.start(ahora);
+
+            // 2. Retumbe pesado de acero deslizándose
+            const rumSize = Math.floor(ctx.sampleRate * dur);
+            const rumBuf = ctx.createBuffer(1, rumSize, ctx.sampleRate);
+            const rumData = rumBuf.getChannelData(0);
+            for (let i = 0; i < rumSize; i++) rumData[i] = Math.random() * 2 - 1;
+            const rum = ctx.createBufferSource();
+            rum.buffer = rumBuf;
+            const rumFilter = ctx.createBiquadFilter();
+            rumFilter.type = 'lowpass';
+            rumFilter.frequency.setValueAtTime(115, ahora);
+            const rumGain = ctx.createGain();
+            rumGain.gain.setValueAtTime(0.002, ahora);
+            rumGain.gain.linearRampToValueAtTime(0.18, ahora + 0.35);
+            rumGain.gain.linearRampToValueAtTime(0.14, ahora + dur - 0.3);
+            rumGain.gain.exponentialRampToValueAtTime(0.001, ahora + dur);
+            rum.connect(rumFilter); rumFilter.connect(rumGain); rumGain.connect(ctx.destination);
+            rum.start(ahora);
+
+            // 3. Golpe final al llegar al tope + acorde cálido de victoria
+            const thudTime = ahora + dur - 0.15;
+            const thud = ctx.createOscillator();
+            const thudGain = ctx.createGain();
+            thud.type = 'sine';
+            thud.frequency.setValueAtTime(85, thudTime);
+            thud.frequency.exponentialRampToValueAtTime(28, thudTime + 0.25);
+            thudGain.gain.setValueAtTime(0.16, thudTime);
+            thudGain.gain.exponentialRampToValueAtTime(0.001, thudTime + 0.28);
+            thud.connect(thudGain); thudGain.connect(ctx.destination);
+            thud.start(thudTime); thud.stop(thudTime + 0.3);
+
+            // Acorde dorado suave al abrirse
+            [261.63, 329.63, 392.00, 523.25].forEach(freq => {
+                const pad = ctx.createOscillator();
+                const pGain = ctx.createGain();
+                pad.type = 'triangle';
+                pad.frequency.setValueAtTime(freq, ahora + 0.7);
+                pGain.gain.setValueAtTime(0.0005, ahora + 0.7);
+                pGain.gain.linearRampToValueAtTime(0.025, ahora + 1.6);
+                pGain.gain.exponentialRampToValueAtTime(0.0005, ahora + 4.4);
+                pad.connect(pGain); pGain.connect(ctx.destination);
+                pad.start(ahora + 0.7); pad.stop(ahora + 4.5);
+            });
+        }
+
+        function iniciarAnimacionBoveda() {
+            limpiarTimersBoveda();
+
+            const leftDoor = document.getElementById('vault-door-left');
+            const rightDoor = document.getElementById('vault-door-right');
+            const wheel = document.getElementById('vault-wheel');
+            const ledDot = document.getElementById('vault-led-dot');
+            const ledText = document.getElementById('vault-led-text');
+            const glow = document.getElementById('vault-glow');
+            const content = document.getElementById('vault-reveal-content');
+            const escena7 = document.getElementById('escena-7');
+
+            // Reinicia todo cerrado por si pruebas varias veces
+            leftDoor.classList.remove('destrabada', 'abierta');
+            rightDoor.classList.remove('destrabada', 'abierta');
+            wheel.classList.remove('girando');
+            ledDot.classList.remove('verde');
+            ledText.innerText = 'BLOQUEADA';
+            ledText.style.color = '#94a3b8';
+            glow.classList.remove('brillar', 'suave');
+            content.classList.remove('visible');
+
+            // 1. Luz verde y desbloqueo (0.45s)
+            vaultTimeouts.push(setTimeout(() => {
+                ledDot.classList.add('verde');
+                ledText.innerText = 'ACCESO CONCEDIDO';
+                ledText.style.color = '#4ade80';
+                sonarBeepBoveda();
+            }, 450));
+
+            // 2. Giro pesado del timón (0.9s)
+            vaultTimeouts.push(setTimeout(() => {
+                wheel.classList.add('girando');
+                sonarGiroTimonBoveda();
+            }, 900));
+
+            // 3. Pasadores de acero retrayéndose con temblor (2.35s)
+            vaultTimeouts.push(setTimeout(() => {
+                leftDoor.classList.add('destrabada');
+                rightDoor.classList.add('destrabada');
+                sonarPasadoresBoveda();
+                sacudirElemento(escena7);
+            }, 2350));
+
+            // 4. Apertura de puertas + silbido hidráulico + destello dorado (3.05s)
+            vaultTimeouts.push(setTimeout(() => {
+                leftDoor.classList.add('abierta');
+                rightDoor.classList.add('abierta');
+                glow.classList.add('brillar');
+                sonarAperturaPuertasBoveda();
+            }, 3050));
+
+            // 5. Revelación del texto amarillo y mensaje de cumpleaños (3.85s)
+            vaultTimeouts.push(setTimeout(() => {
+                content.classList.add('visible');
+            }, 3850));
+
+            // 6. El brillo dorado se calma suavemente en el fondo (5.2s)
+            vaultTimeouts.push(setTimeout(() => {
+                glow.classList.remove('brillar');
+                glow.classList.add('suave');
+            }, 5200));
+        }
+
+
+        
     </script>
+    
 </body>
 </html>

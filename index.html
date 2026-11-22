@@ -128,16 +128,114 @@
         .chat-you { color: #55ff77; font-weight: 700; }
         .chat-sys { color: #ffcc00; font-style: italic; font-size: 16px; }
 
-        /* ================= ESTILOS NIVEL 3: PHASMOPHOBIA ================= */
-        .phasmo-stage { position: relative; width: 85vw; max-width: 1000px; aspect-ratio: 16/10; border: 2px solid rgba(255, 255, 255, 0.12); border-radius: 10px; box-shadow: 0 0 70px rgba(0, 0, 0, 0.96), inset 0 0 50px rgba(0, 0, 0, 0.65); overflow: hidden; background: #07080b; }
-        .phasmo-bg { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.12); }
-        .hitbox-rueda { position: absolute; left: 51.5%; top: 72%; width: 5.5%; height: 13%; border-radius: 10px; cursor: ns-resize; border: 2px dashed rgba(0, 255, 255, 0.45); background: rgba(0, 255, 255, 0.07); transition: 0.2s; z-index: 4; }
-        .hitbox-rueda:hover { background: rgba(0, 255, 255, 0.24); box-shadow: 0 0 16px cyan; }
-        .hitbox-palanca { position: absolute; left: 60.5%; top: 75%; width: 5%; height: 8%; border-radius: 50%; cursor: pointer; border: 2px dashed rgba(255, 165, 0, 0.55); background: rgba(255, 165, 0, 0.1); transition: 0.2s; z-index: 4; }
-        .hitbox-palanca:hover { background: rgba(255, 165, 0, 0.28); box-shadow: 0 0 16px orange; }
-        .spirit-led { position: absolute; left: 58%; top: 62%; background: rgba(12, 2, 2, 0.88); border: 1px solid #ff3300; color: #ff3b14; font-family: 'Courier New', monospace; font-size: 21px; font-weight: bold; padding: 4px 12px; border-radius: 5px; text-shadow: 0 0 10px rgba(255, 51, 0, 0.8); pointer-events: none; z-index: 4; }
-        .ventana-ojos { position: absolute; top: 36%; left: 17.5%; width: 34px; height: 14px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; z-index: 2; }
-        .ventana-ojos .ojo-punto { width: 7px; height: 7px; background: rgba(235, 242, 255, 0.92); border-radius: 50%; box-shadow: 0 0 8px rgba(190, 215, 255, 0.88); }
+/* ================= ESTILOS NIVEL 3: IDENTIFICACIÓN D1EG0_23 ================= */
+        .id-backdrop {
+            position: absolute; inset: 0; z-index: 0; pointer-events: none;
+            background-color: #080a0f;
+            background-image:
+                radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 55%),
+                linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+            background-size: 100% 100%, 36px 36px, 36px 36px;
+        }
+        .id-card {
+            position: relative; z-index: 2;
+            width: 92vw; max-width: 660px;
+            background: #0e121a;
+            border: 1px solid #263042;
+            border-radius: 12px;
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.85);
+            overflow: hidden;
+        }
+        .id-progress-track {
+            width: 100%; height: 4px; background: #19202e;
+        }
+        .id-progress-fill {
+            width: 33.3%; height: 100%;
+            background: #f59e0b;
+            transition: width 0.4s ease, background 0.3s ease;
+        }
+        .id-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 26px;
+            border-bottom: 1px solid #1e2636;
+            background: rgba(255, 255, 255, 0.015);
+        }
+        .id-brand {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px; font-weight: 700; letter-spacing: 2px;
+            color: #94a3b8; text-transform: uppercase;
+        }
+        .id-brand strong { color: #f8fafc; }
+        .id-subject-tag {
+            font-family: 'Courier New', monospace;
+            font-size: 12px; font-weight: 700;
+            color: #f59e0b; background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 4px 10px; border-radius: 4px;
+        }
+        .id-body { padding: 30px 28px 26px 28px; }
+        .id-step-label {
+            font-family: 'Courier New', monospace;
+            font-size: 12px; color: #64748b; letter-spacing: 1.5px;
+            text-transform: uppercase; margin-bottom: 12px;
+        }
+        .id-question-box {
+            font-size: 20px; font-weight: 600; line-height: 1.45;
+            color: #f1f5f9;
+            padding-left: 16px;
+            border-left: 3px solid #f59e0b;
+            margin-bottom: 24px;
+            min-height: 62px;
+        }
+        .id-input-group {
+            display: flex; gap: 10px;
+        }
+        .id-input {
+            flex: 1;
+            background: #07090e;
+            border: 1px solid #2d384d;
+            border-radius: 8px;
+            padding: 13px 16px;
+            color: #ffffff;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .id-input:focus {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+        }
+        .id-btn {
+            background: #f59e0b; color: #090c12;
+            border: none; border-radius: 8px;
+            padding: 0 24px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px; font-weight: 700; letter-spacing: 1px;
+            text-transform: uppercase; cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+        }
+        .id-btn:hover { background: #fbbf24; }
+        .id-btn:active { transform: scale(0.97); }
+        .id-feedback {
+            margin-top: 14px; min-height: 22px;
+            font-size: 14px; font-weight: 600;
+        }
+        .id-hint-box {
+            display: none;
+            margin-top: 12px; padding: 10px 14px;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 6px;
+            color: #fcd34d; font-size: 14px;
+            font-family: 'Courier New', monospace;
+        }
+        .id-footer {
+            padding: 12px 26px;
+            border-top: 1px solid #1e2636;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Courier New', monospace; font-size: 11px; color: #475569;
+        }
 
         /* ================= ESTILOS NIVEL 4: CUEVA UV + INVENTARIO ================= */
         .cave-container { position: relative; width: 100vw; height: 100vh; background-image: url('cueva-forest.jpg'); background-size: cover; background-position: center; overflow: hidden; cursor: none; }
@@ -365,7 +463,7 @@
     <div id="debug-bar">
         🔧 Saltar a: 
         <button onclick="cambiarEscena(1)">2. RL</button>
-        <button onclick="cambiarEscena(2)">3. Phasmo</button>
+        <button onclick="cambiarEscena(2)">3. ID Diego</button>
         <button onclick="cambiarEscena(3)">4. Cueva</button>
         <button onclick="cambiarEscena(4)">5. Mapa</button>
         <button onclick="cambiarEscena(5)">6. Millonario</button>
@@ -414,31 +512,43 @@
         </div>
     </div>
 
-    <!-- ================= PASO 3: PHASMOPHOBIA ================= -->
+
+
+    <!-- ================= PASO 3: IDENTIFICACIÓN D1EG0_23 ================= -->
     <div id="escena-2" class="escena">
-        <div style="margin-bottom: 10px; text-align: center;">
-            <h2 style="margin:0; letter-spacing: 0.8px;">SINTONIZACIÓN PARANORMAL (SPIRIT BOX)</h2>
-            <p id="phasmo-status" style="margin:4px 0; color:#b8c0cc;">Haz clic en la palanca inferior para encender y luego gira la rueda izquierda...</p>
-        </div>
-        <div class="phasmo-stage" id="phasmo-stage">
-            <img src="fondo-phasmo.jpg" class="phasmo-bg" alt="Phasmophobia">
-            
-            <div id="ventana-ojos" class="ventana-ojos" style="top: 36%; left: 17.5%;">
-                <span class="ojo-punto"></span>
-                <span class="ojo-punto"></span>
+        <div class="id-backdrop"></div>
+
+        <div class="id-card" id="id-card">
+            <div class="id-progress-track">
+                <div class="id-progress-fill" id="id-progress-fill"></div>
             </div>
 
-            <div id="spirit-freq" class="spirit-led">OFF</div>
-            <div class="hitbox-rueda" onclick="girarRuedaSpirit()" title="Girar sintonizador"></div>
-            <div class="hitbox-palanca" onclick="togglePowerSpirit()" title="Interruptor Power"></div>
+            <div class="id-header">
+                <div class="id-brand"><strong>SECUROSERV</strong> // VERIFICACIÓN DE IDENTIDAD</div>
+                <div class="id-subject-tag" id="id-subject-tag">SUJETO: D1eg0_23</div>
+            </div>
+
+            <div class="id-body">
+                <div class="id-step-label" id="id-step-label">PREGUNTA DE SEGURIDAD 01 / 03</div>
+
+                <div class="id-question-box" id="id-question-text">
+                    Que bloque le hicimos romper a Monroy en el reality hecho en el primer mundo de MC pley 4 edition
+                </div>
+
+                <div class="id-input-group">
+                    <input type="text" id="id-answer-input" class="id-input" placeholder="Escribe tu respuesta y presiona Enter..." autocomplete="off" onkeydown="if(event.key === 'Enter') verificarRespuestaID()">
+                    <button class="id-btn" onclick="verificarRespuestaID()">Verificar</button>
+                </div>
+
+                <div class="id-feedback" id="id-feedback"></div>
+                <div class="id-hint-box" id="id-hint-box">💡 Pista: agrícola</div>
+            </div>
+
+            <div class="id-footer">
+                <span>PROTOCOLO ANTI-SUPLANTACIÓN v2.3</span>
+                <span id="id-status-code">ESTADO: PENDIENTE</span>
+            </div>
         </div>
-        <div id="phasmo-code-panel" style="display:none; margin-top: 15px; gap: 10px; align-items: center;">
-            <input type="text" id="input-coord-phasmo" placeholder="Ingresa la clave o coordenada del audio..." style="padding: 10px 14px; width: 290px; font-size: 16px; border-radius: 6px; border: 1px solid #ff3300; background: #111; color: white;">
-            <button onclick="validarPhasmo()" style="padding: 10px 22px; background: #ff3300; color: white; border: none; font-weight: bold; cursor: pointer; border-radius: 6px;">Ingresar</button>
-        </div>
-        <audio id="audio-troll1" src="audio-troll1.mp3"></audio>
-        <audio id="audio-troll2" src="audio-troll2.mp3"></audio>
-        <audio id="audio-clave" src="audio-clave.mp3"></audio>
     </div>
 
     <!-- ================= PASO 4: CUEVA THE FOREST + INVENTARIO ================= -->
@@ -844,18 +954,16 @@
         }
 
         // ================= MEMES ESPONTÁNEOS (SIN TEXTO) Y DOXEO (CON TEXTO) =================
+
+        const VINE_BOOM_URL = "https://www.myinstants.com/media/sounds/vine-boom.mp3";
+
         function sonarMusicaChistosa(esDoxeo) {
             if (!audioHabilitado) return;
-            const mp3 = document.getElementById('sonido-meme-mp3');
-            if (!esDoxeo && mp3) {
-                mp3.currentTime = 0;
-                mp3.volume = 0.45;
-                mp3.play().catch(() => sonarSintetizadorChistoso(false));
-                return;
-            }
-            sonarSintetizadorChistoso(esDoxeo);
+            const boom = new Audio(VINE_BOOM_URL);
+            boom.volume = 0.9;
+            boom.play().catch(() => sonarSintetizadorChistoso(esDoxeo));
         }
-
+        
         function sonarSintetizadorChistoso(esDoxeo) {
             const ctx = obtenerAudioCtx();
             if (!ctx) return;
@@ -1067,124 +1175,103 @@
         }
 
         // ================= PHASMOPHOBIA =================
-        let spiritEncendida = false;
-        let spiritBloqueada = false;
-        let frecuencia = 87.1;
-        let etapaAudio = 0;
-        let girosTotales = 0;
-        let aparicionesOjos = 0;
 
-        function sonarEstaticaCorto() {
-            if (!audioHabilitado) return;
-            const ctx = obtenerAudioCtx();
-            if (!ctx) return;
-            const bufferSize = ctx.sampleRate * 0.16;
-            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-            const data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-            const noise = ctx.createBufferSource();
-            noise.buffer = buffer;
-            const gain = ctx.createGain();
-            gain.gain.value = 0.045;
-            noise.connect(gain); gain.connect(ctx.destination);
-            noise.start();
-        }
-
-        function sonarStingRaroSuave() {
-            if (!audioHabilitado) return;
-            const ctx = obtenerAudioCtx();
-            if (!ctx) return;
-            const ahora = ctx.currentTime;
-            const duracion = 0.35;
-            const osc = ctx.createOscillator();
-            const lfo = ctx.createOscillator();
-            const lfoGain = ctx.createGain();
-            const gain = ctx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(390, ahora);
-            osc.frequency.exponentialRampToValueAtTime(145, ahora + duracion);
-            lfo.type = 'sine';
-            lfo.frequency.setValueAtTime(18, ahora);
-            lfoGain.gain.setValueAtTime(22, ahora);
-            gain.gain.setValueAtTime(0.001, ahora);
-            gain.gain.linearRampToValueAtTime(0.04, ahora + 0.03);
-            gain.gain.exponentialRampToValueAtTime(0.0008, ahora + duracion);
-            lfo.connect(lfoGain); lfoGain.connect(osc.frequency);
-            osc.connect(gain); gain.connect(ctx.destination);
-            lfo.start(ahora); osc.start(ahora);
-            lfo.stop(ahora + duracion); osc.stop(ahora + duracion);
-        }
-
-        function mostrarOjosEnVentana() {
-            if (aparicionesOjos >= 2) return;
-            const ojos = document.getElementById('ventana-ojos');
-            ojos.style.top = aparicionesOjos === 0 ? '35%' : '40%';
-            ojos.style.left = aparicionesOjos === 0 ? '17%' : '18.5%';
-            ojos.style.opacity = 1;
-            sonarStingRaroSuave();
-            aparicionesOjos++;
-            setTimeout(() => { ojos.style.opacity = 0; }, 650);
-        }
-
-        function togglePowerSpirit() {
-            if (spiritBloqueada) return;
-            spiritEncendida = !spiritEncendida;
-            document.getElementById('spirit-freq').innerText = spiritEncendida ? frecuencia.toFixed(1) + " MHz" : "OFF";
-            document.getElementById('phasmo-status').innerText = spiritEncendida ? "Gira la rueda izquierda..." : "Apagada.";
-        }
-
-        function girarRuedaSpirit() {
-            if (!spiritEncendida || spiritBloqueada) return;
-            sonarEstaticaCorto();
-            girosTotales++;
-            frecuencia += 0.4;
-            if (frecuencia > 108.0) frecuencia = 87.1;
-            document.getElementById('spirit-freq').innerText = frecuencia.toFixed(1) + " MHz";
-
-            if (girosTotales === 5 || girosTotales === 14) mostrarOjosEnVentana();
-
-            if (etapaAudio === 0 && frecuencia >= 91.0) {
-                dispararEstacionSpirit('audio-troll1', "⚠️ INTERFERENCIA...", false);
-                etapaAudio = 1;
-            } else if (etapaAudio === 1 && frecuencia >= 96.5) {
-                dispararEstacionSpirit('audio-troll2', "⚠️ SEGUNDA ENTIDAD...", false);
-                etapaAudio = 2;
-            } else if (etapaAudio === 2 && frecuencia >= 102.0) {
-                dispararEstacionSpirit('audio-clave', "💀 TRANSMISIÓN CAPTURADA...", true);
-                etapaAudio = 3;
+        // ================= IDENTIFICACIÓN D1EG0_23 =================
+        const preguntasIdentidad = [
+            {
+                texto: 'Que bloque le hicimos romper a Monroy en el reality hecho en el primer mundo de MC pley 4 edition',
+                validar: (r) => r.includes('obsidiana'),
+                tienePista: false
+            },
+            {
+                texto: 'Que "penuria" pasaba el citadino diego al vivir lejos de los otros 2 wnes en el mundo de MC ps4 edition?',
+                validar: (r) => r.includes('cultivo'),
+                tienePista: true
+            },
+            {
+                texto: 'De que color era el auto en el que en thecrew 2 quedaste estampado contra un arbol frenandote en seco?',
+                validar: (r) => r.includes('rojo') || r.includes('roja'),
+                tienePista: false
             }
+        ];
+
+        let pasoIDActual = 0;
+        let intentosFallidosID = 0;
+        let idCompletado = false;
+
+        function normalizarRespuesta(texto) {
+            return texto
+                .toLowerCase()
+                .trim()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '');
         }
 
-        function dispararEstacionSpirit(idAudio, textoEstado, esFinal) {
-            spiritBloqueada = true;
-            sacudirElemento(document.getElementById('phasmo-stage'));
-            document.getElementById('phasmo-status').style.color = "#ff4444";
-            document.getElementById('phasmo-status').innerText = textoEstado;
-            let audioEl = document.getElementById(idAudio);
-            audioEl.play().catch(() => setTimeout(() => desbloquearSpirit(esFinal), 3000));
-            audioEl.onended = () => desbloquearSpirit(esFinal);
-        }
+        function verificarRespuestaID() {
+            if (idCompletado) return;
 
-        function desbloquearSpirit(esFinal) {
-            spiritBloqueada = false;
-            document.getElementById('phasmo-status').style.color = "#88ff88";
-            if (esFinal) {
-                document.getElementById('phasmo-status').innerText = "Ingresa la clave:";
-                document.getElementById('phasmo-code-panel').style.display = 'flex';
+            const input = document.getElementById('id-answer-input');
+            const feedback = document.getElementById('id-feedback');
+            const hintBox = document.getElementById('id-hint-box');
+            const card = document.getElementById('id-card');
+
+            const respuestaLimpia = normalizarRespuesta(input.value);
+            if (!respuestaLimpia) {
+                feedback.style.color = '#94a3b8';
+                feedback.innerText = 'Escribe una respuesta primero.';
+                return;
+            }
+
+            const preguntaActual = preguntasIdentidad[pasoIDActual];
+
+            if (preguntaActual.validar(respuestaLimpia)) {
+                intentosFallidosID = 0;
+                hintBox.style.display = 'none';
+                pasoIDActual++;
+
+                if (pasoIDActual < preguntasIdentidad.length) {
+                    feedback.style.color = '#10b981';
+                    feedback.innerText = '✓ Correcto. Cargando siguiente pregunta...';
+                    input.value = '';
+
+                    setTimeout(() => {
+                        document.getElementById('id-step-label').innerText = `PREGUNTA DE SEGURIDAD 0${pasoIDActual + 1} / 03`;
+                        document.getElementById('id-question-text').innerText = preguntasIdentidad[pasoIDActual].texto;
+                        document.getElementById('id-progress-fill').style.width = `${((pasoIDActual + 1) / 3) * 100}%`;
+                        feedback.innerText = '';
+                        input.focus();
+                    }, 650);
+                } else {
+                    idCompletado = true;
+                    document.getElementById('id-progress-fill').style.width = '100%';
+                    document.getElementById('id-progress-fill').style.background = '#10b981';
+                    document.getElementById('id-status-code').innerText = 'ESTADO: IDENTIDAD CONFIRMADA';
+                    document.getElementById('id-status-code').style.color = '#10b981';
+                    document.getElementById('id-subject-tag').style.color = '#10b981';
+                    document.getElementById('id-subject-tag').style.borderColor = 'rgba(16, 185, 129, 0.4)';
+                    feedback.style.color = '#10b981';
+                    feedback.innerText = '✓ Identidad confirmada. Bienvenido, D1eg0_23.';
+                    input.disabled = true;
+
+                    setTimeout(() => {
+                        mostrarMemeEspontaneo('meme5.jpg', false, 1800, () => cambiarEscena(3));
+                    }, 900);
+                }
             } else {
-                document.getElementById('phasmo-status').innerText = "Desbloqueado. Sigue girando...";
+                intentosFallidosID++;
+                sacudirElemento(card);
+                feedback.style.color = '#ef4444';
+                feedback.innerText = '✕ Respuesta incorrecta. Inténtalo de nuevo.';
+
+                // Si falla 2 o más veces en la pregunta 2, muestra la pista "agrícola"
+                if (preguntaActual.tienePista && intentosFallidosID >= 2) {
+                    hintBox.style.display = 'block';
+                }
             }
         }
 
-        function validarPhasmo() {
-            let val = document.getElementById('input-coord-phasmo').value.trim().toLowerCase();
-            if (val !== "") {
-                mostrarMemeEspontaneo('meme5.jpg', false, 1800, () => cambiarEscena(3));
-            } else {
-                alert("Escribe la coordenada.");
-            }
-        }
 
+        
         // ================= CUEVA / INVENTARIO =================
         let recolectados = [];
         let crafteados = [];

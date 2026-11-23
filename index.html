@@ -785,6 +785,7 @@
                     <div style="font-size:11px; color:#8faadc; text-align:center; letter-spacing:1px;">COMODINES</div>
                     <button class="lifeline-pill" id="ll-5050" onclick="usarComodin5050()">50 : 50</button>
                     <button class="lifeline-pill" id="ll-call" onclick="usarComodinLlamada()">📞 Llamar a Felipe</button>
+                    <button class="lifeline-pill" id="ll-matias" onclick="usarComodinMatias()">📞 Llamar a Matías</button>
                     <button class="lifeline-pill" id="ll-public" onclick="usarComodinPublico()">👥 Público</button>
                 </div>
             </div>
@@ -795,6 +796,7 @@
         <audio id="voz-p3" src="voz-p3.mp3"></audio>
         <audio id="tambores-4s-mp3" src="tambores.mp3"></audio>
         <audio id="ambiente-millonario-mp3" src="fondomillonario.mp3" loop></audio>
+        <audio id="audio-llamar-matias" src="llamar-matias.mp3"></audio>
     </div>
 
     <!-- ================= PASO 7: GTA V HEIST (4 INTEGRANTES, 4.º SIN AFECTAR) ================= -->
@@ -1672,7 +1674,7 @@
                 mp3Tamb.pause();
                 mp3Tamb.currentTime = 0;
             }
-            ['voz-p1', 'voz-p2', 'voz-p3'].forEach(id => {
+            ['voz-p1', 'voz-p2', 'voz-p3', 'audio-llamar-matias'].forEach(id => {
                 const v = document.getElementById(id);
                 if (v) { v.pause(); v.currentTime = 0; }
             });
@@ -1998,6 +2000,35 @@
             document.getElementById('ll-call').classList.add('usado');
             const p = preguntasMillonario[indicePreguntaActual];
             alert("📞 Llamando a FelipeSoSo2022:\n\n\"" + p.pistaFelipe + "\"");
+        }
+        function usarComodinMatias() {
+            if (bloqueadoMillonario) return;
+            document.getElementById('ll-matias').classList.add('usado');
+
+            detenerRelojPensar();
+            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            ['voz-p1', 'voz-p2', 'voz-p3'].forEach(id => {
+                const v = document.getElementById(id);
+                if (v) { v.pause(); v.currentTime = 0; }
+            });
+
+            const sub = document.getElementById('narrator-subtitle');
+            const amb = document.getElementById('ambiente-millonario-mp3');
+            const audioMatias = document.getElementById('audio-llamar-matias');
+
+            sub.innerText = "📞 Llamando a Matías (Lonford123)...";
+            if (amb) amb.volume = 0.06;
+
+            if (audioMatias) {
+                audioMatias.currentTime = 0;
+                audioMatias.volume = 1.0;
+                audioMatias.play().catch(() => {});
+                audioMatias.onended = () => {
+                    if (amb) amb.volume = 0.25;
+                    sub.innerText = "📞 Llamada finalizada. Gran aporte.";
+                    if (!bloqueadoMillonario) iniciarRelojPensar();
+                };
+            }
         }
 
         function usarComodinPublico() {
